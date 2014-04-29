@@ -30,10 +30,11 @@ public class PinnwandMapper {
 		try{
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO Pinnwand (PinnwandID, ErstellungsZeitpunkt)"
+			stmt.executeUpdate("INSERT INTO Pinnwand (PinnwandID, ErstellungsZeitpunkt, Eigentuemer)"
 					+ "VALUES ("
 					+ "NULL,'"
 					+ pinnwand.getErstellungsZeitpunkt()
+					+ 
 					+"')");
 		}
 		catch (SQLException e2) {

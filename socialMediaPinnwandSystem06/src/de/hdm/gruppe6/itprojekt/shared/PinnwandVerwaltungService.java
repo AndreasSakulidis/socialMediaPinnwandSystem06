@@ -32,6 +32,14 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public void userLoeschen(User user) throws Exception;
 	
 	public int zaehleTextbeitraegeVonUser(User user) throws Exception;
+	
+	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user) throws Exception;
+	
+	public int zaehleAbosVonUser(User user) throws Exception;
+	
+	public int zaehleKommentareVonUser(User user) throws Exception;
+	
+	public User findeAbosAnhandUser(User user) throws Exception;
 
 	
 
@@ -52,7 +60,6 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public Abonnement findeAboAnhandID (int abonnementID) throws Exception;
  
-	public Abonnement findeAbosAnhandUser(User user)throws Exception; 
  
 
  
@@ -80,6 +87,11 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 			
 	public Vector <Textbeitrag> findeAlleTextbeitraege() throws Exception;
+	
+	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
+	 
+	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception;
+	 
 					
 		     
 	public Like likeAnlegen() throws Exception;

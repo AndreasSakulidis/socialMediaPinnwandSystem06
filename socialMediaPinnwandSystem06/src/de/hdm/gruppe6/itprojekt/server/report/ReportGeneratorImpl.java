@@ -1,6 +1,7 @@
 package de.hdm.gruppe6.itprojekt.server.report;
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -13,6 +14,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.Column;
 import de.hdm.gruppe6.itprojekt.shared.report.CompositeParagraph;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenBeitraegenReport;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenUsernReport;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonBeitragReport;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
@@ -56,7 +58,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
    * aufgerufen wird, um eine Initialisierung der Instanz vorzunehmen.
    * </p>
    */
-  public ReportGeneratorImpl() throws IllegalArgumentException {
+  public ReportGeneratorImpl() {
   }
 
   /**
@@ -64,7 +66,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
    * 
    * @see #ReportGeneratorImpl()
    */
-  public void init() throws IllegalArgumentException {
+  public void init() {
     /*
      * Ein ReportGeneratorImpl-Objekt instantiiert für seinen Eigenbedarf eine
      * BankVerwaltungImpl-Instanz.
@@ -91,7 +93,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
  * @throws IllegalArgumentException 
    */
   public InfosVonUserReport erstelleInfosVonUserReport (User user, Date anfangszeitpunkt,Date endzeitpunkt) 
-	  throws IllegalArgumentException {
+	 {
 	  
     if (this.getPinnwandVerwaltungService() == null)
       return null;
@@ -178,9 +180,15 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
     */
     Row userRow = new Row();
    
-    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleTextbeitraegeVonUser(user))));
-    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleAbosVonUser(user))));
-    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleKommentareVonUser(user))));
+    try {
+		userRow.addColumn(new Column(String.valueOf(usermapper.zaehleTextbeitraegeVonUser(user))));
+		userRow.addColumn(new Column(String.valueOf(usermapper.zaehleAbosVonUser(user))));
+	    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleKommentareVonUser(user))));
+	    
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     
     result.addRow(userRow);
     return result;
@@ -198,7 +206,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
    * @return der fertige Report
    */
   public InfosVonBeitragReport erstelleInfosVonBeitragReport(Textbeitrag textbeitrag, Date anfangszeitpunkt, Date endzeitpunkt)
-      throws IllegalArgumentException {
+      {
 
     if (this.getPinnwandVerwaltungService() == null)
       return null;
@@ -267,16 +275,22 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
     
   Row textbeitragRow = new Row();
  
-  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.findeUserZuTextbeitrag(textbeitrag))));
-  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleKommentareVonTextbeitrag(textbeitrag))));
-  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleLikesZuTextbeitrag(textbeitrag))));
-  
-  result.addRow(textbeitragRow);
+  try {
+	
+	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.findeUserZuTextbeitrag(textbeitrag))));
+	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleKommentareVonTextbeitrag(textbeitrag))));
+	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleLikesZuTextbeitrag(textbeitrag))));
+	  
+} catch (Exception e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+   result.addRow(textbeitragRow);
   return result;
 }
   
   public InfosVonAllenUsernReport erstelleInfosVonAllenUsernReport(Date anfangszeitpunkt, Date endzeitpunkt)
-	      throws IllegalArgumentException {
+  {
 
 	    if (this.getPinnwandVerwaltungService() == null)
 	      return null;
@@ -296,7 +310,54 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
 	     */
 	    result.setCreated(new Date());
 	    
-	    
-  
-  }
+	    Vector<User> alleUser;
+		try {
+			alleUser = this.pinnwandverwaltung.findeAlleUser();
+			 for (User u : alleUser){
+			    	result.addSubReport(this.erstelleInfosVonUserReport(u, anfangszeitpunkt, endzeitpunkt));
+			    }
+			    	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 
+	     }
+  
+  
+  public InfosVonAllenBeitraegenReport erstelleInfosVonAllenBeitraegenReport(Date anfangszeitpunkt, Date endzeitpunkt)
+	      {
+
+	    if (this.getPinnwandVerwaltungService() == null)
+	      return null;
+
+	    /*
+	     * Zunächst legen wir uns einen leeren Report an.
+	     */
+	    InfosVonAllenBeitraegenReport result = new InfosVonAllenBeitraegenReport();
+
+	    // Jeder Report hat einen Titel (Bezeichnung / überschrift).
+	    result.setTitle("Infos von allen Beitraegen");
+
+
+	    /*
+	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
+	    result.setCreated(new Date());
+	    
+	    Vector<Textbeitrag> alleTextbeitraege;
+		try {
+			alleTextbeitraege = this.pinnwandverwaltung.findeAlleTextbeitraege();
+			   for (Textbeitrag t : alleTextbeitraege){
+			    	result.addSubReport(this.erstelleInfosVonBeitragReport(t, anfangszeitpunkt, endzeitpunkt));
+			    }
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    	return result;
+  }
+}
