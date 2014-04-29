@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 
 public class TextbeitragMapper {
@@ -199,6 +200,55 @@ public class TextbeitragMapper {
 			DBVerbindung.closeAll(rs, stmt, con);
 		}
 		
+	}
+	
+	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		  try {
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlKommentare FROM Kommentar WHERE TextbeitragID = " + textbeitrag.getId());
+				
+			
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+			
+		} finally {
+			DBVerbindung.closeAll(rs, stmt, con);
+		}
+		  return rs.getInt("AnzahlKommentare");
+	}
+	
+	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws Exception{
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		  try {
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery("SELECT User.Vorname, User.Nachname, Textbeitrag.Text FROM User INNER JOIN Textbeitrag ON User.UserID = Textbeitrag.UserID WHERE Textbeitrag.TextbeitragID = " + textbeitrag.getId());
+			
+			
+				User user = new User();
+				user.setId(rs.getInt("TextbeitragID"));
+				user.setVorname(rs.getString("User.Vorname"));
+				user.setNachname(rs.getString("User.Nachname"));
+				
+				return user;
+			
+		  } catch (SQLException e2) {
+				e2.printStackTrace();
+				throw new Exception("Datenbank fehler!" + e2.toString());
+				
+			} finally {
+				DBVerbindung.closeAll(rs, stmt, con);
+			}
 	}
 	
 	

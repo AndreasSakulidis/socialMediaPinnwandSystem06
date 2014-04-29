@@ -47,6 +47,8 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandNachname(String nachname, AsyncCallback<User> callback);
 
+	void zaehleTextbeitraegeVonUser(User user, AsyncCallback<Integer> callback);
+	
 	void kommentarAnlegen(String text, AsyncCallback<Kommentar> callback);
 
 	void kommentarEditieren(Kommentar kommentar,

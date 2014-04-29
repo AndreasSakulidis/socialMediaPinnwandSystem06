@@ -56,7 +56,7 @@ public interface ReportGenerator extends RemoteService {
 	public void init() throws IllegalArgumentException;
 	
 	public abstract InfosVonUserReport erstelleInfosVonUserReport(User user, Date anfangszeitpunkt, Date endzeitpunkt)
-	throws IllegalArgumentException;
+	throws  IllegalArgumentException;
 	
 	public abstract InfosVonBeitragReport erstelleInfosVonBeitragReport(Textbeitrag textbeitrag, Date anfangszeitpunkt, Date endzeitpunkt) 
 	throws IllegalArgumentException;

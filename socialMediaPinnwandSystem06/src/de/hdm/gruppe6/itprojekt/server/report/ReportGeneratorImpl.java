@@ -1,16 +1,20 @@
 package de.hdm.gruppe6.itprojekt.server.report;
 
 import java.util.Date;
-import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.PinnwandVerwaltungImpl;
+import de.hdm.gruppe6.itprojekt.server.db.TextbeitragMapper;
+import de.hdm.gruppe6.itprojekt.server.db.UserMapper;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.ReportGenerator;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.Column;
 import de.hdm.gruppe6.itprojekt.shared.report.CompositeParagraph;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenUsernReport;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonBeitragReport;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 import de.hdm.gruppe6.itprojekt.shared.report.Row;
 import de.hdm.gruppe6.itprojekt.shared.report.SimpleParagraph;
@@ -34,6 +38,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
    * bo-Package) bietet.
    */
   protected PinnwandVerwaltungService pinnwandverwaltung = null;
+  protected UserMapper usermapper = null;
+  protected TextbeitragMapper textbeitragmapper = null;
 
   /**
    * <p>
@@ -82,10 +88,11 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
    * 
    * @param user das Userobjekt bzgl. dessen der Report erstellt werden soll.
    * @return der fertige Report
+ * @throws IllegalArgumentException 
    */
   public InfosVonUserReport erstelleInfosVonUserReport (User user, Date anfangszeitpunkt,Date endzeitpunkt) 
-       throws IllegalArgumentException {
-
+	  throws IllegalArgumentException {
+	  
     if (this.getPinnwandVerwaltungService() == null)
       return null;
 
@@ -142,7 +149,6 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
      * Überschriften ab.
      */
     headline.addColumn(new Column("Anzahl Beitraege"));
-    headline.addColumn(new Column("Anzahl Likes"));
     headline.addColumn(new Column("Anzahl Abonnements"));
     headline.addColumn(new Column("Anzahl Kommentare"));
 
@@ -153,7 +159,8 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
      * Nun werden sämtliche Daten der User ausgelesen und deren Anfangszeitpunkt und
      * Endzeitpunkt in die Tabelle eingetragen.
      */
-    Vector<User> user1 = this.pinnwandverwaltung.erstelleInfosVonUserReport(user1);
+   /* User 
+    int user1 = this.pinnwandverwaltung.zaehleTextbeitraegeVonUser(user);
 
     for (User user : user) {
       // Eine leere Zeile anlegen.
@@ -168,35 +175,42 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
 
       // und schließlich die Zeile dem Report hinzufügen.
       result.addRow(accountRow);
-    }
+    */
+    Row userRow = new Row();
+   
+    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleTextbeitraegeVonUser(user))));
+    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleAbosVonUser(user))));
+    userRow.addColumn(new Column(String.valueOf(usermapper.zaehleKommentareVonUser(user))));
+    
+    result.addRow(userRow);
+    return result;
+  }
+
+  
 
     /*
      * Zum Schluss müssen wir noch den fertigen Report zurückgeben.
      */
-    return result;
-  }
 
   /**
    * Erstellen von <code>AllAccountsOfAllCustomersReport</code>-Objekten.
    * 
    * @return der fertige Report
    */
-  public InfosVonUserReport erstelleInfosVonUserReport()
+  public InfosVonBeitragReport erstelleInfosVonBeitragReport(Textbeitrag textbeitrag, Date anfangszeitpunkt, Date endzeitpunkt)
       throws IllegalArgumentException {
 
-    if (this.getPinnwandVerwaltung() == null)
+    if (this.getPinnwandVerwaltungService() == null)
       return null;
 
     /*
      * Zunächst legen wir uns einen leeren Report an.
      */
-    AllAccountsOfAllCustomersReport result = new AllAccountsOfAllCustomersReport();
+    InfosVonBeitragReport result = new InfosVonBeitragReport();
 
     // Jeder Report hat einen Titel (Bezeichnung / überschrift).
-    result.setTitle("Alle Konten aller Kunden");
+    result.setTitle("Infos von Beitrag");
 
-    // Imressum hinzufügen
-    this.addImprint(result);
 
     /*
      * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
@@ -205,33 +219,84 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
     result.setCreated(new Date());
 
     /*
-     * Da AllAccountsOfAllCustomersReport-Objekte aus einer Sammlung von
-     * AllAccountsOfCustomerReport-Objekten besteht, benötigen wir keine
-     * Kopfdaten für diesen Report-Typ. Wir geben einfach keine Kopfdaten an...
+     * Ab hier erfolgt die Zusammenstellung der Kopfdaten (die Dinge, die oben
+     * auf dem Report stehen) des Reports. Die Kopfdaten sind mehrzeilig, daher
+     * die Verwendung von CompositeParagraph.
      */
+    CompositeParagraph header = new CompositeParagraph();
+
+    // Name und Vorname des Users aufnehmen
+    header.addSubParagraph(new SimpleParagraph(textbeitrag.getText() + ", "
+        + textbeitrag.getErstellungsZeitpunkt()));
+
+    // Anfangszeitpunkt aufnehmen
+    header.addSubParagraph(new SimpleParagraph("Anfangszeitpunkt: " + result.getAnfangszeitpunkt()));
+ 
+    
+    // Endzeitpunkt aufnehmen
+    header.addSubParagraph(new SimpleParagraph("Endzeitpunkt: " + result.getEndzeitpunkt()));
+    
+    
+    // Hinzufügen der zusammengestellten Kopfdaten zu dem Report
+    result.setHeaderData(header);
 
     /*
-     * Nun müssen sämtliche Kunden-Objekte ausgelesen werden. Anschließend wir
-     * für jedes Kundenobjekt c ein Aufruf von
-     * createAllAccountsOfCustomerReport(c) durchgeführt und somit jeweils ein
-     * AllAccountsOfCustomerReport-Objekt erzeugt. Diese Objekte werden
-     * sukzessive der result-Variable hinzugefügt. Sie ist vom Typ
-     * AllAccountsOfAllCustomersReport, welches eine Subklasse von
-     * CompositeReport ist.
+     * Ab hier erfolgt ein zeilenweises Hinzufügen von Konto-Informationen.
      */
-    Vector<Customer> allCustomers = this.administration.getAllCustomers();
-
-    for (Customer c : allCustomers) {
-      /*
-       * Anlegen des jew. Teil-Reports und Hinzufügen zum Gesamt-Report.
-       */
-      result.addSubReport(this.createAllAccountsOfCustomerReport(c));
-    }
+    
+    /*
+     * Zunächst legen wir eine Kopfzeile für die Kundeninfos-Tabelle an.
+     */
+    Row headline = new Row();
 
     /*
-     * Zu guter Letzt müssen wir noch den fertigen Report zurückgeben.
+     * Wir wollen Zeilen mit 3 Spalten in der Tabelle erzeugen. In die erste
+     * Spalte schreiben wir den jeweiligen User, in die zweite Spalte schreiben wir den Anfangszeitpunkt und 
+     * in die letzte Zeile schreiben wir den Endzeitpunkt.
+     *  In der Kopfzeile legen wir also entsprechende
+     * Überschriften ab.
      */
-    return result;
+    headline.addColumn(new Column("Verfasser"));
+    headline.addColumn(new Column("Anzahl Kommentare"));
+    headline.addColumn(new Column("Anzahl Likes"));
+
+    // Hinzufügen der Kopfzeile
+    result.addRow(headline);
+    
+
+    
+  Row textbeitragRow = new Row();
+ 
+  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.findeUserZuTextbeitrag(textbeitrag))));
+  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleKommentareVonTextbeitrag(textbeitrag))));
+  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleLikesZuTextbeitrag(textbeitrag))));
+  
+  result.addRow(textbeitragRow);
+  return result;
+}
+  
+  public InfosVonAllenUsernReport erstelleInfosVonAllenUsernReport(Date anfangszeitpunkt, Date endzeitpunkt)
+	      throws IllegalArgumentException {
+
+	    if (this.getPinnwandVerwaltungService() == null)
+	      return null;
+
+	    /*
+	     * Zunächst legen wir uns einen leeren Report an.
+	     */
+	    InfosVonAllenUsernReport result = new InfosVonAllenUsernReport();
+
+	    // Jeder Report hat einen Titel (Bezeichnung / überschrift).
+	    result.setTitle("Infos von allen Usern");
+
+
+	    /*
+	     * Datum der Erstellung hinzufügen. new Date() erzeugt autom. einen
+	     * "Timestamp" des Zeitpunkts der Instantiierung des Date-Objekts.
+	     */
+	    result.setCreated(new Date());
+	    
+	    
+  
   }
 
-}

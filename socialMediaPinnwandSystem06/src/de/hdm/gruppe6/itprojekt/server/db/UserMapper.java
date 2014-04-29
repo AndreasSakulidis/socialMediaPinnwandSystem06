@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 
 
 public class UserMapper {
@@ -31,7 +32,7 @@ public class UserMapper {
 		try{
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt)"
+			stmt.executeUpdate("INSERT INTO User (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt)"
 					+ "VALUES ("
 					+ "NULL,'"
 					+ user.getVorname()
@@ -59,7 +60,7 @@ public class UserMapper {
 	Statement stmt = null;
 	try {
 		stmt = con.createStatement(); 
-		stmt.executeUpdate ("UPDATE user " + "SET Nachname =\""
+		stmt.executeUpdate ("UPDATE User " + "SET Nachname =\""
 				+ user.getNachname() + "\", Vorname =\""
 				+ user.getVorname() + "\", Nickname =\""
 				+ user.getNickname() + "\", Email =\""
@@ -83,7 +84,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM user " + "WHERE UserID="
+			stmt.executeUpdate("DELETE FROM User " + "WHERE UserID="
 					+ user.getId());
 			
 		} catch (SQLException e2) {
@@ -170,7 +171,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT * FROM user "
+			rs = stmt.executeQuery("SELECT * FROM User "
 					+ "ORDER BY UserID");
 			
 			while (rs.next()) {
@@ -194,49 +195,67 @@ public class UserMapper {
 		return result;
 		}
 	
-	public int zaehleLikesVonUser(User user) throws Exception {
-		Connection con = DBVerbindung.connection();
-		ResultSet rs = null;
-		Statement stmt = null;
-		
-		  try {
-			stmt = con.createStatement();
-			
-			rs = stmt.executeQuery("SELECT COUNT(LikeID) AS AnzahlLikes FROM Like WHERE UserID = " + user.getId());
-				
-			return rs.getInt("AnzahlLikes");
-			
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
-			
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-		}
-		
-	}
+
 	
 	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
 		
+		InfosVonUserReport report = new InfosVonUserReport();
+		
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM Textbeitrag WHERE UserID = " + user.getId());
+			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM Textbeitrag WHERE UserID = " + user.getId() + "AND ErstellungsZeitpunkt >= " + report.getAnfangszeitpunkt() + "AND ErstellungsZeitpunkt <= " + report.getEndzeitpunkt() );
 				
-			return rs.getInt("AnzahlTextbeiraege");
+		
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 			
+		} 
+		  
+		  
+		  finally {
+			DBVerbindung.closeAll(rs, stmt, con);
+			
+		}
+		  return rs.getInt("AnzahlTextbeitraege");
+		  
+	}
+	
+	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
+		
+		
+		try {
+			stmt = con.createStatement();
+			
+			rs = stmt.executeQuery("SELECT TextbeitragID, Text, ErstellungsZeitpunkt FROM Textbeitrag INNER JOIN User ON textbeitrag.UserID = " + user.getId());
+			
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
+				textbeitrag.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				
+				result.addElement(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
 		} finally {
 			DBVerbindung.closeAll(rs, stmt, con);
 		}
-		
-	}
+
+		return result;
+		}
 	
 	public int zaehleAbosVonUser(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -248,15 +267,15 @@ public class UserMapper {
 			
 			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlAbos FROM Abonnement WHERE UserID = " + user.getId());
 				
-			return rs.getInt("AnzahlAbos");
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-			
+						
 		} finally {
 			DBVerbindung.closeAll(rs, stmt, con);
 		}
+		  return rs.getInt("AnzahlAbos");
 		
 	}
 	
@@ -270,7 +289,7 @@ public class UserMapper {
 			
 			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlKommentare FROM Kommentar WHERE UserID = " + user.getId());
 				
-			return rs.getInt("AnzahlKommentare");
+			
 			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -279,8 +298,10 @@ public class UserMapper {
 		} finally {
 			DBVerbindung.closeAll(rs, stmt, con);
 		}
-		
+		  return rs.getInt("AnzahlKommentare");
 	}
+	
+	
 	
 	/** GEZIM & ANDI BITTE ÜBERARBEITEN! 
 	 * public User findeAbosAnhandUser(User user) throws Exception {

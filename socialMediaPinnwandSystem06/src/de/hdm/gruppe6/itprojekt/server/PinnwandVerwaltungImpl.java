@@ -90,6 +90,11 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 
 		    return this.userMapper.findeAlle();
 		  }
+	 
+	 public int zaehleTextbeitraegeVonUser(User user) throws Exception{
+		 
+		 return this.userMapper.zaehleTextbeitraegeVonUser(user);
+	 }
 	
 	
 	 // Methoden Pinnwand

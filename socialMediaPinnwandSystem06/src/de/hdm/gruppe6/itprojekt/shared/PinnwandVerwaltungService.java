@@ -30,6 +30,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public User findeUserAnhandNachname(String nachname) throws Exception;
 
 	public void userLoeschen(User user) throws Exception;
+	
+	public int zaehleTextbeitraegeVonUser(User user) throws Exception;
 
 	
 
