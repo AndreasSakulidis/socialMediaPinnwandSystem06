@@ -25,16 +25,25 @@ public class LikeMapper {
 	public Like anlegen(Like like) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
-		
 		try{
 			stmt = con.createStatement();
 			
+			ResultSet rs = stmt.executeQuery("SELECT MAX(LikeID) AS maxid "
+					+ "FROM like");
+			// TODO ?? Methode ohne Autoincr. soll aber mit dann ohne
+			if (rs.next()){
+				like.setId(rs.getInt("maxid") +1);
+			
+			
 			stmt.executeUpdate("INSERT INTO liken (TextbeitragID,ErstellungsZeitpunkt)"
 					+ "VALUES ("
-					+ "NULL,'"
+					// TODO ?? meth mit autoincr
+					+ like.getId()
 					+ "','"
 					+ like.getErstellungsZeitpunkt() +"')");
+			}
 		}
+			
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
