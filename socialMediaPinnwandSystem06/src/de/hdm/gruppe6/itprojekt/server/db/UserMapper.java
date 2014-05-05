@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
@@ -322,27 +324,30 @@ public class UserMapper {
 	
 	
 	
-	/** GEZIM & ANDI BITTE ÜBERARBEITEN! 
-	 * public User findeAbosAnhandUser(User user) throws Exception {
+
+	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception {
 	 
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
 		
+		ArrayList<User> result = new ArrayList<User>();	
+		
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT userID, ErstellungsZeitpunkt, abonnement.UserID, abonnement.PinnwandID, abonnement.ErstellungsZeitpunkt FROM user INNER JOIN abonnement" 
-					+ "WHERE UserID=" + user.getId() + " ORDER BY abonnement.ErstellungsZeitpunkt");
+			rs = stmt.executeQuery("SELECT User.UserID, Pinnwand.Eigentuemer "
+					+ "FROM User INNER JOIN (Pinnwand INNER JOIN Abonnement "
+					+ " ON Pinnwand.PinnwandID = Abonnement.PinnwandID) ON User.UserID = Abonnement.UserID"
+					+ "WHERE UserID=" + user.getId());
 			
-			if(rs.next()){
+			while (rs.next()){
 				User u = new User();
-				beitrag.setId(rs.getInt("TextbeitragID"));
-				beitrag.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
-				beitrag.setText("text");
+				u = userMapper.findeAnhandID(u.getId());
 				
-				return textbeitrag;
+				result.add(u);
 			}
+			
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
@@ -350,9 +355,9 @@ public class UserMapper {
 			DBVerbindung.closeAll(rs, stmt, con);
 		}
 		
-		return null;
+		return result;
 	}
-	 **/ 
+
 	
 	
 	}

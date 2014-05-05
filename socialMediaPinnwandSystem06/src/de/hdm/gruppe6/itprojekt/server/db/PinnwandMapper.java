@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 
 public class PinnwandMapper {
@@ -23,19 +24,27 @@ public class PinnwandMapper {
 		return pinnwandMapper;
 	}
 	
-	public Pinnwand anlegen(Pinnwand pinnwand) throws Exception {
+	public Pinnwand anlegen(Pinnwand pinnwand, User eigentuemer) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
-		
 		try{
 			stmt = con.createStatement();
 			
+			ResultSet rs = stmt.executeQuery("SELECT MAX(PinnwandID) AS maxid "
+					+ "FROM pinnwand");
+			
+			if (rs.next()){
+			pinnwand.setId(rs.getInt("maxid") +1);
+			
+			stmt = con.createStatement();
+				
 			stmt.executeUpdate("INSERT INTO Pinnwand (PinnwandID, ErstellungsZeitpunkt, Eigentuemer)"
 					+ "VALUES ("
-					+ "NULL,'"
+					+ pinnwand.getId()
 					+ pinnwand.getErstellungsZeitpunkt()
-					+ 
-					+"')");
+					+ eigentuemer.getNickname()
+					+ "')");
+			}
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
@@ -47,13 +56,17 @@ public class PinnwandMapper {
 		return pinnwand;
 	}
 		
-	public Pinnwand editieren (Pinnwand pinnwand) throws Exception{
+	public Pinnwand editieren (Pinnwand pinnwand, User eigentuemer) throws Exception{
 	Connection con = DBVerbindung.connection();
 	Statement stmt = null;
 	try {
 		stmt = con.createStatement(); 
 		stmt.executeUpdate ("UPDATE Pinnwand " + "SET ErstellungsZeitpunkt =\""
-				+ pinnwand.getErstellungsZeitpunkt () + "\" WHERE PinnwandID=" 
+				+ pinnwand.getErstellungsZeitpunkt () 
+				+ "\","
+				+ "eigentuemer=\""
+				+ eigentuemer.getNickname()
+				+ "\" WHERE PinnwandID=" 
 				+ pinnwand.getId());
 		
 	} catch (SQLException e2) {
@@ -94,13 +107,14 @@ public class PinnwandMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT PinnwandID, ErstellungsZeitpunkt" 
+			rs = stmt.executeQuery("SELECT PinnwandID, ErstellungsZeitpunkt, Eigentuemer" 
 					+ "WHERE pinnwandID=" + pinnwandID + " ORDER BY ErstellungsZeitpunkt");
 			
 			if(rs.next()){
 				Pinnwand pinnwand = new Pinnwand();
 				pinnwand.setId(rs.getInt("PinnwandID"));
 				pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 				
 				return pinnwand;
 			}
@@ -131,6 +145,7 @@ public class PinnwandMapper {
 				Pinnwand pinnwand = new Pinnwand();
 				pinnwand.setId(rs.getInt("PinnwandID"));
 				pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 				
 				result.addElement(pinnwand);
 			}
