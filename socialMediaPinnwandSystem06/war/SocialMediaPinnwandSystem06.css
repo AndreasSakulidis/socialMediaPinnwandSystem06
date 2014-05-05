@@ -1,27 +1,92 @@
 /** Add css rules here for your application. */
 
+/* Formatting specific to the StockWatcher application */
+
+body {
+  padding: 10px;
+ background-color: white;
+ text-align: center;
+}
+
+div#TopLevelFrame {
+	width: 1000px;
+	min-width: 500px;
+	border: 1px solid silver;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	align: center;
+ }
+ 
+div#Details {
+	margin-left: 20em;
+	min-height: 400px;
+	max-height: 500px;
+	padding: 1em 1em;
+	border-top: 1px dashed silver;
+	border-left: 1px dashed silver;
+	overflow:scroll;
+}
+
+div#Navigator {
+	float: left;
+	width: 18em;
+	min-height: 300px;
+	padding: 1em 1em;
+	border-top: 1px dashed silver;
+	text-align: left;
+}
+
+.sendSucheButton {
+	display: block;
+	font-size: 14pt;
+}
+
+div#Header {
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	/* border: 1px dashed silver; */
+}
+
+div#Trailer {
+	clear: both;
+	padding: 10px 0;
+	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
+	border-top: 1px dashed silver;
+	font-size: 80%;
+	text-align: center;
+}
+
+
+.watchListHeader {
+  background-color: #2062B8;
+  color: white;
+  font-style: italic;
+  align: center;
+}
 
 /** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
-}
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
+
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
   width: 400px;
 }
 
+/* .gwt-Button {
+    background:transparent url(images/hborder.png) repeat-x scroll 0px -27px;
+    border:1px outset #CCCCCC;
+    cursor:pointer;
+    font-size:small;
+    margin:0pt;
+    padding:3px 5px;
+    text-decoration:none;
+} */
+
 .dialogVPanel {
-  margin: 5px;
+  margin: 15px;
+}
+
+.reportMenu {
+	text-align:center;
 }
 
 .serverResponseLabelError {
@@ -31,4 +96,27 @@ h1 {
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
+}
+
+/* Add Stock panel */
+.addPanel {
+  margin: 10px 0px 15px 0px;
+}
+
+/* stock list, the Remove button */
+.gwt-Button-remove {
+  width: 50px;
+}
+
+/* stock list flex table */
+.watchList {
+  border: 1px solid silver;
+  padding: 2px;
+  margin-bottom:6px;
+  align: center;
+}
+
+/* stock list Remove column */
+.watchListRemoveColumn {
+  text-align: center;
 }
