@@ -32,10 +32,28 @@ public class UserMapper {
 		try{
 			stmt = con.createStatement();
 			
+			/*
+		       * Zunächst schauen wir nach, welches der momentan höchste
+		       * Primärschlüsselwert ist.
+		       */
+		      ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
+		          + "FROM User ");
+		      
+		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      if (rs.next()) {
+		        /*
+		         * a erhält den bisher maximalen, nun um 1 inkrementierten
+		         * Primärschlüssel.
+		         */
+		        user.setId(rs.getInt("maxid") + 1);
+		        
+		        stmt = con.createStatement();
+			
 			stmt.executeUpdate("INSERT INTO User (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt)"
 					+ "VALUES ("
-					+ "NULL,'"
-					+ user.getVorname()
+			        + user.getId()
+			        + "','"
+			        + user.getVorname()
 					+ "','"
 					+ user.getNachname() 
 					+ "','"
@@ -44,6 +62,7 @@ public class UserMapper {
 					+ user.getNickname()
 					+ "','"
 					+ user.getErstellungsZeitpunkt() +"')");
+		}
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();

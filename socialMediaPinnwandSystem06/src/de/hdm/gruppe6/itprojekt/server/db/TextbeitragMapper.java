@@ -32,13 +32,32 @@ public class TextbeitragMapper {
 		try{
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, ErstellungsZeitpunkt, Text)"
+			/*
+		       * Zunächst schauen wir nach, welches der momentan höchste
+		       * Primärschlüsselwert ist.
+		       */
+		      ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
+		          + "FROM Textbeitrag ");
+		      
+		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      if (rs.next()) {
+		        /*
+		         * a erhält den bisher maximalen, nun um 1 inkrementierten
+		         * Primärschlüssel.
+		         */
+		        textbeitrag.setId(rs.getInt("maxid") + 1);
+		        
+		        stmt = con.createStatement();
+			
+			stmt.executeUpdate("INSERT INTO Textbeitrag (TextbeitragID, ErstellungsZeitpunkt, Text)"
 					+ "VALUES ("
-					+ "NULL,'"
+					+ textbeitrag.getId()
+					+ "','"
 					+ textbeitrag.getErstellungsZeitpunkt()
 					+"','"
 					+ textbeitrag.getText()
 					+"')");
+		}
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();
