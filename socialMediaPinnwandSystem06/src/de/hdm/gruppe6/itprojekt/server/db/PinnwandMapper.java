@@ -34,7 +34,6 @@ public class PinnwandMapper {
 					+ "FROM pinnwand");
 			
 			if (rs.next()){
-			// TODO ohne autoincr
 			pinnwand.setId(rs.getInt("maxid") +1);
 			
 			stmt = con.createStatement();
@@ -43,7 +42,7 @@ public class PinnwandMapper {
 					+ "VALUES ("
 					+ pinnwand.getId()
 					+ pinnwand.getErstellungsZeitpunkt()
-					// TODO nickname? + eigentuemer.getNickname()
+					+ eigentuemer.getNickname()
 					+ "')");
 			}
 		}
@@ -115,7 +114,7 @@ public class PinnwandMapper {
 				Pinnwand pinnwand = new Pinnwand();
 				pinnwand.setId(rs.getInt("PinnwandID"));
 				pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
-				// TODO SET Eigentuemerpinnwand.setEigentuemer(rs.getInt("Eigentuemer"));
+				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 				
 				return pinnwand;
 			}
@@ -146,7 +145,7 @@ public class PinnwandMapper {
 				Pinnwand pinnwand = new Pinnwand();
 				pinnwand.setId(rs.getInt("PinnwandID"));
 				pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
-				// TODO Eigentumer pinnwand.setEigentuemer(rs.getEigentuemer("Eigentuemer"));
+				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 				
 				result.addElement(pinnwand);
 			}

@@ -30,14 +30,13 @@ public class LikeMapper {
 			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(LikeID) AS maxid "
 					+ "FROM like");
-			// TODO ?? Methode ohne Autoincr. soll aber mit dann ohne
+		
 			if (rs.next()){
 				like.setId(rs.getInt("maxid") +1);
 			
 			
 			stmt.executeUpdate("INSERT INTO liken (TextbeitragID,ErstellungsZeitpunkt)"
 					+ "VALUES ("
-					// TODO ?? meth mit autoincr
 					+ like.getId()
 					+ "','"
 					+ like.getErstellungsZeitpunkt() +"')");

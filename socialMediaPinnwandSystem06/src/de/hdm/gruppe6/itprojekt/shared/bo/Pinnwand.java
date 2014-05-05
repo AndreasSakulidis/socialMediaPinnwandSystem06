@@ -10,8 +10,10 @@ public class Pinnwand extends BusinessObject {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	//  TODO Pinnwand mit Eigentuemer + getter u setter private User eigentuemer = new User();
+	private User user = new User(); 
 	
+	private String eigentuemer = user.getNickname();
+
 	private Vector<Abonnement> abo = new Vector<Abonnement>();
 
 //Konstruktor
@@ -28,15 +30,16 @@ public Vector<Abonnement> getAbo() {
 }
 
 public void setAbonnement(Vector<Abonnement> abo) {
-	this.abo = abo;
+	this.abo = abo
+			;
 }
 
-/* TODO public User getEigentuemer() {
+public String getEigentuemer() {
 	return eigentuemer;
 }
 
-public void setEigentuemer(User eigentuemer) {
+public void setEigentuemer(String eigentuemer) {
 	this.eigentuemer = eigentuemer;
 }
-*/
+
 }
