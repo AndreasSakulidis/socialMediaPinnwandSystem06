@@ -29,12 +29,29 @@ public class KommentarMapper {
 		Statement stmt = null;
 		
 		try{
+			 Statement stm = con.createStatement();
+
+		      /*
+		       * Zunächst schauen wir nach, welches der momentan höchste
+		       * Primärschlüsselwert ist.
+		       */
+		      ResultSet rs = stm.executeQuery("SELECT MAX(id) AS maxid "
+		          + "FROM Abonnement ");
+
+		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      if (rs.next()) {
+		        /*
+		         * a erhält den bisher maximalen, nun um 1 inkrementierten
+		         * Primärschlüssel.
+		         */
+		        kommentar.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
 			
 			stmt.executeUpdate("INSERT INTO kommentar (KommentarID, ErstellungsZeitpunkt)"
 					+ "VALUES ("
-					+ "NULL,'"
+					+ kommentar.getId()
 					+ kommentar.getErstellungsZeitpunkt() +"')");
+		}
 		}
 		catch (SQLException e2) {
 			e2.printStackTrace();

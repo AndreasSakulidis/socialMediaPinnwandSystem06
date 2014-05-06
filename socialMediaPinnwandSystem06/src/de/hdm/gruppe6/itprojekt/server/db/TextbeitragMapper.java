@@ -185,7 +185,7 @@ public class TextbeitragMapper {
 			kommentar.setId(rs.getInt("KommentarID"));
 			kommentar.setErstellungsZeitpunkt(rs.getDate("kommentar.ErstellungsZeitpunkt"));
 			kommentar.setText(rs.getString("kommentar.Text"));
-			kommentar.setBeitragsId(rs.getInt("TextbeitragID"));
+			kommentar.setId(rs.getInt("TextbeitragID"));
 				
 			
 			}

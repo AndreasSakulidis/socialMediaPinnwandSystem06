@@ -1,5 +1,6 @@
 package de.hdm.gruppe6.itprojekt.server;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -115,7 +116,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 return this.userMapper.zaehleKommentareVonUser(user);
 	 }
 	
-	 public User findeAbosAnhandUser(User user) 
+	 public ArrayList<User> findeAbosAnhandUser(User user) 
 			 throws Exception {
 		 
 		 return this.userMapper.findeAbosAnhandUser(user);
@@ -123,17 +124,16 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	 
 	 // Methoden Pinnwand
 	 
-	 public Pinnwand pinnwandAnlegen() throws Exception {
+	 public Pinnwand pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer) throws Exception {
 
-			Pinnwand pinnwand= new Pinnwand();
-			return pinnwandMapper.anlegen(pinnwand);
+			return pinnwandMapper.anlegen(pinnwand, eigentuemer);
 		}
 
-		public Pinnwand pinnwandEditieren(Pinnwand pinnwand) throws Exception { 
+		public Pinnwand pinnwandEditieren(Pinnwand pinnwand, User eigentuemer) throws Exception { 
 
-			return pinnwandMapper.editieren(pinnwand);
+			return pinnwandMapper.editieren(pinnwand, eigentuemer);
 	}
-		public void pinnwandLoeschen(Pinnwand pinnwand) throws Exception {
+		public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception {
 
 			return;
 		}
@@ -151,12 +151,12 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 
 		 
 	// Methoden Abonnement
-		public Abonnement aboAnlegen(int userID,
-					int pinnwandID) throws Exception {
+		public Abonnement aboAnlegen(User user,
+					Pinnwand pinnwand) throws Exception {
 
 				Abonnement abonnement= new Abonnement();
-				abonnement.setUserID(userID);
-				abonnement.setPinnwandID(pinnwandID);
+				abonnement.setUser(user);
+				abonnement.setPinnwand(pinnwand);
 				return abonnementMapper.anlegen(abonnement);
 			}
 

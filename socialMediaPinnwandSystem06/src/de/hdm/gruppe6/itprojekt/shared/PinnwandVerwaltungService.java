@@ -1,5 +1,6 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -39,22 +40,22 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public int zaehleKommentareVonUser(User user) throws Exception;
 	
-	public User findeAbosAnhandUser(User user) throws Exception;
+	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception;
 
 	
 
-	public Pinnwand pinnwandAnlegen() throws Exception;
+	public Pinnwand pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer) throws Exception;
 
-	Pinnwand pinnwandEditieren(Pinnwand pinnwand)throws Exception;
+	public Pinnwand pinnwandEditieren(Pinnwand pinnwand, User eigentuemer)throws Exception;
 
 	public Vector<Pinnwand> findeAllePinnwaende() throws Exception;
 
 	public Pinnwand findePinnwandAnhandID(int pinnwandID) throws Exception;
 
-	public void pinnwandLoeschen(Pinnwand pinnwand) throws Exception;
+	public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception;
 
 	
-	public Abonnement aboAnlegen(int userID,int pinnwandID) throws Exception; 
+	public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception; 
 
 	public void aboLoeschen(Abonnement abonnement) throws Exception;
 	

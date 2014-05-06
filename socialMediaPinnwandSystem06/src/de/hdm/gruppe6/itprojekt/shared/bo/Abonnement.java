@@ -21,6 +21,7 @@ public class Abonnement extends BusinessObject{
 	}
 	
 	public Abonnement(){
+		super();
 		}
 
 	//Getter und Setter
@@ -40,13 +41,5 @@ public class Abonnement extends BusinessObject{
 		this.pinnwand = pinnwand;
 	}
 
-	public void setUserID(int userID) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public void setPinnwandID(int pinnwandID) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

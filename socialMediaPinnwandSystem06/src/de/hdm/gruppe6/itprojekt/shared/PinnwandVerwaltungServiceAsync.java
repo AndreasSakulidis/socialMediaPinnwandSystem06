@@ -1,5 +1,6 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -13,14 +14,14 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public interface PinnwandVerwaltungServiceAsync {
 
-	void aboAnlegen(int userID, int pinnwandID,
+	void aboAnlegen(User user, Pinnwand pinnwand,
 			AsyncCallback<Abonnement> callback);
 
 	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
 
 	void findeAboAnhandID(int abonnementID, AsyncCallback<Abonnement> callback);
 
-	void findeAbosAnhandUser(User user, AsyncCallback<User> callback);
+	void findeAbosAnhandUser(User user, AsyncCallback<ArrayList<User>> callback);
 
 	void findeAlleKommentare(AsyncCallback<Vector<Kommentar>> callback);
 
@@ -60,11 +61,11 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void likeLoeschen(Like like, AsyncCallback<Void> callback);
 
-	void pinnwandAnlegen(AsyncCallback<Pinnwand> callback);
+	void pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Pinnwand> callback);
 
-	void pinnwandEditieren(Pinnwand pinnwand, AsyncCallback<Pinnwand> callback);
+	void pinnwandEditieren(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Pinnwand> callback);
 
-	void pinnwandLoeschen(Pinnwand pinnwand, AsyncCallback<Void> callback);
+	void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Void> callback);
 
 	void textbeitragAnlegen(String text, AsyncCallback<Textbeitrag> callback);
 
