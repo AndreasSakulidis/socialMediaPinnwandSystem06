@@ -6,10 +6,14 @@ import java.util.Vector;
 public class Pinnwand extends BusinessObject {
 
 	/**
-	 * @author Özlem Gül, Michael Schelkle, Bharti Kumar
+	 * @author ï¿½zlem Gï¿½l, Michael Schelkle, Bharti Kumar
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private User user = new User(); 
+	
+	private String eigentuemer = user.getNickname();
+
 	private Vector<Abonnement> abo = new Vector<Abonnement>();
 
 //Konstruktor
@@ -26,6 +30,16 @@ public Vector<Abonnement> getAbo() {
 }
 
 public void setAbonnement(Vector<Abonnement> abo) {
-	this.abo = abo;
+	this.abo = abo
+			;
 }
+
+public String getEigentuemer() {
+	return eigentuemer;
+}
+
+public void setEigentuemer(String eigentuemer) {
+	this.eigentuemer = eigentuemer;
+}
+
 }

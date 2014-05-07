@@ -20,7 +20,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeAboAnhandID(int abonnementID, AsyncCallback<Abonnement> callback);
 
-	void findeAbosAnhandUser(User user, AsyncCallback<Abonnement> callback);
+	void findeAbosAnhandUser(User user, AsyncCallback<User> callback);
 
 	void findeAlleKommentare(AsyncCallback<Vector<Kommentar>> callback);
 
@@ -47,6 +47,8 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandNachname(String nachname, AsyncCallback<User> callback);
 
+	void zaehleTextbeitraegeVonUser(User user, AsyncCallback<Integer> callback);
+	
 	void kommentarAnlegen(String text, AsyncCallback<Kommentar> callback);
 
 	void kommentarEditieren(Kommentar kommentar,
@@ -80,6 +82,19 @@ public interface PinnwandVerwaltungServiceAsync {
 	void userLoeschen(User user, AsyncCallback<Void> callback);
 
 	void zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag,
+			AsyncCallback<Integer> callback);
+
+	void findeTextbeitragAnhandVonUser(User user,
+			AsyncCallback<Vector<Textbeitrag>> callback);
+
+	void zaehleAbosVonUser(User user, AsyncCallback<Integer> callback);
+
+	void zaehleKommentareVonUser(User user, AsyncCallback<Integer> callback);
+
+	void findeUserZuTextbeitrag(Textbeitrag textbeitrag,
+			AsyncCallback<User> callback);
+
+	void zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag,
 			AsyncCallback<Integer> callback);
 
 }

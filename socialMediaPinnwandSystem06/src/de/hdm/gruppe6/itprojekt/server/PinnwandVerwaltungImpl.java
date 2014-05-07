@@ -90,8 +90,37 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 
 		    return this.userMapper.findeAlle();
 		  }
+	 
+	 public int zaehleTextbeitraegeVonUser(User user) 
+			 throws Exception{
+		 
+		 return this.userMapper.zaehleTextbeitraegeVonUser(user);
+	 }
+	 
+	 public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user)
+			 throws Exception {
+		 
+		 return this.userMapper.findeTextbeitragAnhandVonUser(user);
+	 }
 	
+	 public int zaehleAbosVonUser(User user) 
+			 throws Exception {
+		 
+		 return this.userMapper.zaehleAbosVonUser(user);
+	 }
+	 
+	 public int zaehleKommentareVonUser(User user) 
+			 throws Exception {
+		 
+		 return this.userMapper.zaehleKommentareVonUser(user);
+	 }
 	
+	 public User findeAbosAnhandUser(User user) 
+			 throws Exception {
+		 
+		 return this.userMapper.findeAbosAnhandUser(user);
+	 }
+	 
 	 // Methoden Pinnwand
 	 
 	 public Pinnwand pinnwandAnlegen() throws Exception {
@@ -142,14 +171,10 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 				    return this.abonnementMapper.findeAnhandID(abonnementID);
 				  }
 		 
-		 public Abonnement findeAbosAnhandUser(User user)
-				      throws Exception {
-
-				    return this.abonnementMapper.findeAbosAnhandUser(user);
-				  }
 		
 		 
 		// Methoden Kommentar
+		 
 			public Kommentar kommentarAnlegen(String text) throws Exception {
 
 					Kommentar kommentar= new Kommentar();
@@ -222,6 +247,19 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 
 						    return this.textbeitragMapper.findeAlle();
 						  }
+		    
+		     
+		     public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
+		     				throws Exception {
+		    	 
+		    	 return this.textbeitragMapper.findeUserZuTextbeitrag(textbeitrag);
+		     }
+		     
+		     public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag)
+		     				throws Exception {
+		    	 			
+		    	 		return this.textbeitragMapper.zaehleKommentareVonTextbeitrag(textbeitrag);
+		     }
 					
 		     
 		 // Methoden Like

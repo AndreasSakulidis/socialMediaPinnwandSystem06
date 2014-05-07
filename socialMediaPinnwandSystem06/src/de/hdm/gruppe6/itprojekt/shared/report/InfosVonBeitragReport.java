@@ -17,21 +17,6 @@ public class InfosVonBeitragReport extends SimpleReport {
 	 */
 	
 	private static final long serialVersionUID = 1L;
-	private Date anfangszeitpunkt;
-	private Date endzeitpunkt;
-	
-	
-	public Date getAnfangszeitpunkt() {
-		return anfangszeitpunkt;
-	}
-	public void setAnfangszeitpunkt(Date anfangszeitpunkt) {
-		this.anfangszeitpunkt = anfangszeitpunkt;
-	}
-	public Date getEndzeitpunkt() {
-		return endzeitpunkt;
-	}
-	public void setEndzeitpunkt(Date endzeitpunkt) {
-		this.endzeitpunkt = endzeitpunkt;
-	}
+
 	
 }
