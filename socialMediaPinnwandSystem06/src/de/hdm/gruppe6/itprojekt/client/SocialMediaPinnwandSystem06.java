@@ -34,6 +34,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 import de.hdm.gruppe6.itprojekt.shared.FieldVerifier;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 
 import java.util.Date;
 
@@ -273,6 +276,7 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 
    }
 
+
 	/**
 	 * Add stock to FlexTable. Executed when the user clicks the addStockButton or
 	 * presses enter in the newSymbolTextBox.
@@ -280,15 +284,31 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 	private void addPost() {
 	    final String symbol = newSymbolTextBox.getText().trim();
 	    newSymbolTextBox.setFocus(true);
-
 	    newSymbolTextBox.setText("");
 
-	    // Don't add the stock if it's already in the table.
+	/*    // Don't add the stock if it's already in the table.
 	    if (posts.contains(symbol))
 	      return;
-
-	    // Add the stock to the table.
+	*/    
+	   	    
+	   String text = newSymbolTextBox.getText();
+	   PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
+				.create(PinnwandVerwaltungService.class);
 	    
+	    pinnwandVerwaltung.textbeitragAnlegen(text,
+				new AsyncCallback<Textbeitrag>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Fehler beim posten!");
+					}
+
+					public void onSuccess(Textbeitrag textbeitrag) {
+						Window.alert("Dein Textbeitrag wurde gepostet!");
+						//clearFields();
+					}
+				});
+	    
+	    // Add the stock to the table.
 	    int row = postFlexTable.getRowCount();
 	    posts.add(symbol);
 	    postFlexTable.setText(row, 0, symbol);

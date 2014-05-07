@@ -11,7 +11,7 @@ import com.google.appengine.api.rdbms.AppEngineDriver;
 /**
  * *Enthält alle Elemente und nötigen Methoden für das Durchführungs Formular
  * 
- * @author Yasemin Karakoc, Jan Plank, Selim Karazehir, Julia Hammerer, Denis Fuerst, Daniel Krakow
+ * @author �zlem G�l, Michael Schelkle, Bharti Kumar
  *In Anlehnung an Hr. Prof. Dr. Thies
  */
 public class DBVerbindung {
@@ -22,10 +22,8 @@ public class DBVerbindung {
 
 	
 //	cloud sql
-	private static String url = "jdbc:google:rdbms://itprojectgruppe3:group3three/stundenplanverwaltung?user=root&";
-	
-	
-	
+	private static String url = "jdbc:mysql://localhost:3306/Social-Media?user=root&password=root";
+		
 	
 	/**
 	 * Baut die Verbindung zur Datenbank auf die Google Cloud SQL
