@@ -7,13 +7,13 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>de.hdm.gruppe6.itprojekt.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>pinnwandVerwaltung</servlet-name>
+    <servlet-class>de.hdm.gruppe6.itprojekt.server.PinnwandVerwaltungImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/socialmediapinnwandsystem06/greet</url-pattern>
+    <servlet-name>pinnwandVerwaltung</servlet-name>
+    <url-pattern>/socialmediapinnwandsystem06/pinnwandVerwaltung</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->

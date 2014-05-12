@@ -3,6 +3,8 @@ package de.hdm.gruppe6.itprojekt.server;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -15,6 +17,7 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
 import de.hdm.gruppe6.itprojekt.shared.bo.Like;
+import de.hdm.gruppe6.itprojekt.shared.bo.LoginInfo;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
@@ -23,11 +26,10 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
  * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies
  */
-
-
+@SuppressWarnings("serial")
 public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements PinnwandVerwaltungService {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	private UserMapper userMapper = null;
 
@@ -279,6 +281,24 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 	public Like findeLikeAnhandID (int likeID) throws Exception {
 		 		    return this.likeMapper.findeAnhandID(likeID);
 		 		  }
+		 	
+			@Override
+			public LoginInfo login(String requestUri) {
+				UserService userService = UserServiceFactory.getUserService();
+			    com.google.appengine.api.users.User user = userService.getCurrentUser();
+			    LoginInfo loginInfo = new LoginInfo();
+
+			    if (user != null) {
+			      loginInfo.setLoggedIn(true);
+			      loginInfo.setEmailAddress(user.getEmail());
+			      loginInfo.setNickname(user.getNickname());
+			      loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
+			    } else {
+			      loginInfo.setLoggedIn(false);
+			      loginInfo.setLoginUrl(userService.createLoginURL(requestUri));
+			    }
+			    return loginInfo;
+			}
 		 	
 		 
 }

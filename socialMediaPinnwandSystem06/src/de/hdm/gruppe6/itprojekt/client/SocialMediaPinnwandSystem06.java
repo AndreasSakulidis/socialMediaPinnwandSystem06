@@ -1,44 +1,45 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.MenuBar;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe6.itprojekt.shared.FieldVerifier;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.LoginInfo;
 
-import java.util.Date;
 
-
-public class SocialMediaPinnwandSystem06 implements EntryPoint {
+public class SocialMediaPinnwandSystem06 implements EntryPoint{
 
   private static final int REFRESH_INTERVAL = 5000; // ms
   private HorizontalPanel addPanel = new HorizontalPanel();
@@ -53,16 +54,67 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
   private static final String SERVER_ERROR = "An error occurred while "
 			+ "attempting to contact the server. Please check your network "
 			+ "connection and try again.";
+  
+  //Login infos
+  
+  private LoginInfo loginInfo = null;
+  private VerticalPanel loginPanel = new VerticalPanel();
+  private Label loginLabel = new Label("Please sign in to your "
+  		+ "Google Account to access the StockWatcher application.");
+  private Anchor signInLink = new Anchor("Sign In");
+  
+  
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
+	
+	private final PinnwandVerwaltungServiceAsync pinnwand = GWT
+			.create(PinnwandVerwaltungService.class);
+	
+	 private void loadLogin() {
+		    // Assemble login panel.
+		    signInLink.setHref(loginInfo.getLoginUrl());
+		    loginPanel.add(loginLabel);
+		    loginPanel.add(signInLink);
+		    RootPanel.get().add(loginPanel);
+		  }
+	 
   /**
    * Entry point method.
    */
   public void onModuleLoad() {
+	  
+	    // Check login status using login service.
+
+	  PinnwandVerwaltungServiceAsync pinnwandLogin = GWT
+				.create(PinnwandVerwaltungService.class);
+	  
+	  pinnwandLogin.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+	      public void onFailure(Throwable error) {
+	      }
+
+	      public void onSuccess(LoginInfo result) {
+	        loginInfo = result;
+	        if(loginInfo.isLoggedIn()) {
+	        	// Wenn einlogen erfolgreich, dann...
+	        	final DialogBox dialogBox = new DialogBox();
+	    		dialogBox.setText("LogIn");
+	    		dialogBox.setAnimationEnabled(true);
+	        } else {
+	        	final DialogBox dialogBox = new DialogBox();
+	    		dialogBox.setText("Vor loadLogin");
+	    		dialogBox.setAnimationEnabled(true);
+	          loadLogin();
+//			dialogBox.setText("Nach loadLogin");
+//			dialogBox.setAnimationEnabled(true);
+		      
+	        }
+	      }
+	    });
+	
 	      
 	// Add Textbox panel
 	    TextArea ta = new TextArea();

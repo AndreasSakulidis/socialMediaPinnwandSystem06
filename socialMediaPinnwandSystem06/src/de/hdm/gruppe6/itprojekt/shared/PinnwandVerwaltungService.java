@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
 import de.hdm.gruppe6.itprojekt.shared.bo.Like;
+import de.hdm.gruppe6.itprojekt.shared.bo.LoginInfo;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
@@ -19,6 +20,8 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 @RemoteServiceRelativePath("pinnwandVerwaltung")
 public interface PinnwandVerwaltungService extends RemoteService {
+	
+	public LoginInfo login(String requestUri);
 
 	public User userAnlegen(String vorname, String nachname, String nickname, String email) throws Exception;
 

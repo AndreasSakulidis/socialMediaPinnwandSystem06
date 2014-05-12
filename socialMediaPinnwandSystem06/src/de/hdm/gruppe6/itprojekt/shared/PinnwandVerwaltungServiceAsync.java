@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
 import de.hdm.gruppe6.itprojekt.shared.bo.Like;
+import de.hdm.gruppe6.itprojekt.shared.bo.LoginInfo;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
@@ -97,5 +98,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag,
 			AsyncCallback<Integer> callback);
+
+	void login(String requestUri, AsyncCallback<LoginInfo> callback);
 
 }
