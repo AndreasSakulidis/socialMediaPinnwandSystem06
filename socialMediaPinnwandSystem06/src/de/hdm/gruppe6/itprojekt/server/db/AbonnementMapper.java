@@ -29,30 +29,31 @@ public class AbonnementMapper {
 			Statement stm = con.createStatement();
 
 			/*
-			 * Zunächst schauen wir nach, welches der momentan höchste
-			 * Primärschlüsselwert ist.
+			 * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+			 * Primï¿½rschlï¿½sselwert ist.
 			 */
-			ResultSet rs = stm.executeQuery("SELECT MAX(id) AS maxid "
-					+ "FROM Abonnement ");
+			ResultSet rs = stm.executeQuery("SELECT MAX(AboID) AS maxid "
+					+ "FROM abonnement ");
 
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 				/*
-				 * abo erhält den bisher maximalen, nun um 1 inkrementierten
-				 * Primärschlüssel.
+				 * abo erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+				 * Primï¿½rschlï¿½ssel.
 				 */
 				abo.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
 
-				stmt.executeUpdate("INSERT INTO Abonnement (AbonnementID, User, Pinnwand, ErstellungsZeitpunkt)"
+				stmt.executeUpdate("INSERT INTO abonnement (AboID, User, Pinnwand, ErstellungsZeitpunkt)"
 						+ "VALUES ("
 						+ abo.getId()
-						+ abo.getUser()
+						+ ","
+						+ abo.getUser() // TODO OBJEKT? eig-> String oder int (Methodenparameter auch Ã¤ndern
 						+ "','"
-						+ abo.getPinnwand()
-						+ "','"
-						+ abo.getErstellungsZeitpunkt() + "')");
+						+ abo.getPinnwand() //TODO OBJEKT? eig-> String oder int
+						+ "',"
+						+ abo.getErstellungsZeitpunkt() + ")");
 			}
 		}
 
@@ -72,8 +73,8 @@ public class AbonnementMapper {
 		try {
 			stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM Abonnement "
-					+ "WHERE AbonnementID=" + abo.getId());
+			stmt.executeUpdate("DELETE FROM abonnement "
+					+ "WHERE AboID=" + abo.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -84,7 +85,7 @@ public class AbonnementMapper {
 		return;
 	}
 
-	public Abonnement findeAnhandID(int abonnementID) throws Exception {
+	public Abonnement findeAnhandID(int aboID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -93,15 +94,15 @@ public class AbonnementMapper {
 			stmt = con.createStatement();
 
 			rs = stmt
-					.executeQuery("SELECT AbonnementID, User, Pinnwand ErstellungsZeitpunkt"
-							+ "WHERE AbonnementID="
-							+ abonnementID
-							+ " ORDER BY AbonnementID");
-			// Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+					.executeQuery("SELECT AboID, User, Pinnwand, ErstellungsZeitpunkt" // TODO OBJEKT wird Ã¼bergeben kein WERT
+							+ "WHERE AboID="
+							+ aboID
+							+ " ORDER BY AboID");
+			// Fï¿½r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
 			// erstellt.
 			if (rs.next()) {
 				Abonnement abonnement = new Abonnement();
-				abonnement.setId(rs.getInt("AbonnementID"));
+				abonnement.setId(rs.getInt("AboID"));
 				abonnement.setUser(((Abonnement) rs).getUser());
 				abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
 				abonnement.setErstellungsZeitpunkt(rs

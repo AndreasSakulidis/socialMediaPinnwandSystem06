@@ -29,7 +29,7 @@ public class LikeMapper {
 			stmt = con.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(LikeID) AS maxid "
-					+ "FROM like");
+					+ "FROM liken");
 		
 			if (rs.next()){
 				like.setId(rs.getInt("maxid") +1);
@@ -38,8 +38,8 @@ public class LikeMapper {
 			stmt.executeUpdate("INSERT INTO liken (TextbeitragID,ErstellungsZeitpunkt)"
 					+ "VALUES ("
 					+ like.getId()
-					+ "','"
-					+ like.getErstellungsZeitpunkt() +"')");
+					+ ","
+					+ like.getErstellungsZeitpunkt() +")");
 			}
 		}
 			
@@ -83,6 +83,7 @@ public class LikeMapper {
 			stmt = con.createStatement();
 			
 			rs = stmt.executeQuery("SELECT LikeID, ErstellungsZeitpunkt" 
+					+ "FROM liken"
 					+ "WHERE LikeID=" + likeID + " ORDER BY TextbeitragID");
 			
 			if(rs.next()){

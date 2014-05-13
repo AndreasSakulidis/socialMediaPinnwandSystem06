@@ -33,28 +33,28 @@ public class TextbeitragMapper {
 			stmt = con.createStatement();
 			
 			/*
-		       * Zunächst schauen wir nach, welches der momentan höchste
-		       * Primärschlüsselwert ist.
+		       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+		       * Primï¿½rschlï¿½sselwert ist.
 		       */
-		      ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-		          + "FROM Textbeitrag ");
+		      ResultSet rs = stmt.executeQuery("SELECT MAX(TextbeitragID) AS maxid "
+		          + "FROM textbeitrag ");
 		      
-		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 		      if (rs.next()) {
 		        /*
-		         * a erhält den bisher maximalen, nun um 1 inkrementierten
-		         * Primärschlüssel.
+		         * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+		         * Primï¿½rschlï¿½ssel.
 		         */
 		        textbeitrag.setId(rs.getInt("maxid") + 1);
 		        
 		        stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO Textbeitrag (TextbeitragID, ErstellungsZeitpunkt, Text)"
+			stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, ErstellungsZeitpunkt, Text)"
 					+ "VALUES ("
 					+ textbeitrag.getId()
-					+ "','"
+					+ ","
 					+ textbeitrag.getErstellungsZeitpunkt()
-					+"','"
+					+",'"
 					+ textbeitrag.getText()
 					+"')");
 		}
@@ -116,7 +116,8 @@ public class TextbeitragMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT TextbeitragID, ErstellungsZeitpunkt" 
+			rs = stmt.executeQuery("SELECT TextbeitragID, ErstellungsZeitpunkt"
+					+ "FROM textbeitrag"
 					+ "WHERE TextbeitragID=" + textbeitragID + " ORDER BY TextbeitragID");
 			
 			if(rs.next()){
@@ -208,7 +209,7 @@ public class TextbeitragMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlLikes FROM Like WHERE TextbeitragID = " + textbeitrag.getId());
+			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlLikes FROM like WHERE TextbeitragID = " + textbeitrag.getId());
 				
 				return rs.getInt("AnzahlLikes");
 			
@@ -229,7 +230,7 @@ public class TextbeitragMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlKommentare FROM Kommentar WHERE TextbeitragID = " + textbeitrag.getId());
+			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlKommentare FROM kommentar WHERE TextbeitragID = " + textbeitrag.getId());
 				
 			
 			
@@ -251,7 +252,7 @@ public class TextbeitragMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT User.Vorname, User.Nachname, Textbeitrag.Text FROM User INNER JOIN Textbeitrag ON User.UserID = Textbeitrag.UserID WHERE Textbeitrag.TextbeitragID = " + textbeitrag.getId());
+			rs = stmt.executeQuery("SELECT user.Vorname, user.Nachname, textbeitrag.Text FROM user INNER JOIN textbeitrag ON user.UserID = textbeitrag.UserID WHERE textbeitrag.TextbeitragID = " + textbeitrag.getId());
 			
 			
 				User user = new User();

@@ -32,17 +32,17 @@ public class KommentarMapper {
 			 Statement stm = con.createStatement();
 
 		      /*
-		       * Zunächst schauen wir nach, welches der momentan höchste
-		       * Primärschlüsselwert ist.
+		       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+		       * Primï¿½rschlï¿½sselwert ist.
 		       */
-		      ResultSet rs = stm.executeQuery("SELECT MAX(id) AS maxid "
-		          + "FROM Abonnement ");
+		      ResultSet rs = stm.executeQuery("SELECT MAX(KommentarID) AS maxid "
+		          + "FROM kommentar ");
 
-		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 		      if (rs.next()) {
 		        /*
-		         * a erhält den bisher maximalen, nun um 1 inkrementierten
-		         * Primärschlüssel.
+		         * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+		         * Primï¿½rschlï¿½ssel.
 		         */
 		        kommentar.setId(rs.getInt("maxid") + 1);
 			stmt = con.createStatement();
@@ -50,7 +50,8 @@ public class KommentarMapper {
 			stmt.executeUpdate("INSERT INTO kommentar (KommentarID, ErstellungsZeitpunkt)"
 					+ "VALUES ("
 					+ kommentar.getId()
-					+ kommentar.getErstellungsZeitpunkt() +"')");
+					+ ","
+					+ kommentar.getErstellungsZeitpunkt() +")");
 		}
 		}
 		catch (SQLException e2) {
@@ -110,6 +111,7 @@ public class KommentarMapper {
 			stmt = con.createStatement();
 			
 			rs = stmt.executeQuery("SELECT KommentarID, ErstellungsZeitpunkt"
+					+ "FROM kommentar"
 					+ "WHERE KommentarID=" + kommentarID + "ORDER BY KommentarID");
 			
 			if(rs.next()){

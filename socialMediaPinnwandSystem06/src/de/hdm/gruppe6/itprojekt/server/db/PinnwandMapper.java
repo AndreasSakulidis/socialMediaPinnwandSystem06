@@ -38,10 +38,12 @@ public class PinnwandMapper {
 			
 			stmt = con.createStatement();
 				
-			stmt.executeUpdate("INSERT INTO Pinnwand (PinnwandID, ErstellungsZeitpunkt, Eigentuemer)"
+			stmt.executeUpdate("INSERT INTO pinnwand (PinnwandID, ErstellungsZeitpunkt, Eigentuemer)"
 					+ "VALUES ("
 					+ pinnwand.getId()
+					+ ","
 					+ pinnwand.getErstellungsZeitpunkt()
+					+ ",'"
 					+ eigentuemer.getNickname()
 					+ "')");
 			}
@@ -61,10 +63,10 @@ public class PinnwandMapper {
 	Statement stmt = null;
 	try {
 		stmt = con.createStatement(); 
-		stmt.executeUpdate ("UPDATE Pinnwand " + "SET ErstellungsZeitpunkt =\""
+		stmt.executeUpdate ("UPDATE pinnwand " + "SET ErstellungsZeitpunkt =\""
 				+ pinnwand.getErstellungsZeitpunkt () 
 				+ "\","
-				+ "eigentuemer=\""
+				+ "Eigentuemer=\""
 				+ eigentuemer.getNickname()
 				+ "\" WHERE PinnwandID=" 
 				+ pinnwand.getId());
@@ -85,7 +87,7 @@ public class PinnwandMapper {
 		try {
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM Pinnwand " + "WHERE PinnwandID="
+			stmt.executeUpdate("DELETE FROM pinnwand " + "WHERE PinnwandID="
 					+ pinnwand.getId());
 			
 		} catch (SQLException e2) {
@@ -108,7 +110,8 @@ public class PinnwandMapper {
 			stmt = con.createStatement();
 			
 			rs = stmt.executeQuery("SELECT PinnwandID, ErstellungsZeitpunkt, Eigentuemer" 
-					+ "WHERE pinnwandID=" + pinnwandID + " ORDER BY ErstellungsZeitpunkt");
+					+ "FROM pinnwand"
+					+ "WHERE PinnwandID=" + pinnwandID + " ORDER BY ErstellungsZeitpunkt");
 			
 			if(rs.next()){
 				Pinnwand pinnwand = new Pinnwand();
@@ -138,7 +141,7 @@ public class PinnwandMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT * FROM Pinnwand "
+			rs = stmt.executeQuery("SELECT * FROM pinnwand "
 					+ "ORDER BY PinnwandID");
 			
 			while (rs.next()) {

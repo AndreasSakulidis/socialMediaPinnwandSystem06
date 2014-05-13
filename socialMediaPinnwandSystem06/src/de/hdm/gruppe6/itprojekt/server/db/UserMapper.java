@@ -35,26 +35,26 @@ public class UserMapper {
 			stmt = con.createStatement();
 			
 			/*
-		       * Zunächst schauen wir nach, welches der momentan höchste
-		       * Primärschlüsselwert ist.
+		       * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+		       * Primï¿½rschlï¿½sselwert ist.
 		       */
-		      ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS maxid "
-		          + "FROM User ");
+		      ResultSet rs = stmt.executeQuery("SELECT MAX(UserID) AS maxid "
+		          + "FROM user ");
 		      
-		      // Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+		      // Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 		      if (rs.next()) {
 		        /*
-		         * a erhält den bisher maximalen, nun um 1 inkrementierten
-		         * Primärschlüssel.
+		         * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+		         * Primï¿½rschlï¿½ssel.
 		         */
 		        user.setId(rs.getInt("maxid") + 1);
 		        
 		        stmt = con.createStatement();
 			
-			stmt.executeUpdate("INSERT INTO User (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt)"
+			stmt.executeUpdate("INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt)"
 					+ "VALUES ("
 			        + user.getId()
-			        + "','"
+			        + ",'"
 			        + user.getVorname()
 					+ "','"
 					+ user.getNachname() 
@@ -62,8 +62,8 @@ public class UserMapper {
 					+ user.getEmail()
 					+ "','"
 					+ user.getNickname()
-					+ "','"
-					+ user.getErstellungsZeitpunkt() +"')");
+					+ "',"
+					+ user.getErstellungsZeitpunkt() +")");
 		}
 		}
 		catch (SQLException e2) {
@@ -81,7 +81,7 @@ public class UserMapper {
 	Statement stmt = null;
 	try {
 		stmt = con.createStatement(); 
-		stmt.executeUpdate ("UPDATE User " + "SET Nachname =\""
+		stmt.executeUpdate ("UPDATE user " + "SET Nachname =\""
 				+ user.getNachname() + "\", Vorname =\""
 				+ user.getVorname() + "\", Nickname =\""
 				+ user.getNickname() + "\", Email =\""
@@ -105,7 +105,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM User " + "WHERE UserID="
+			stmt.executeUpdate("DELETE FROM user " + "WHERE UserID="
 					+ user.getId());
 			
 		} catch (SQLException e2) {
@@ -126,6 +126,7 @@ public class UserMapper {
 			stmt = con.createStatement();
 
 			rs = stmt.executeQuery("SELECT UserID, Vorname, Nachname, Nickname, Email, ErstellungsZeitpunkt"
+					+ "FROM user"
 					+ "WHERE Nachname=" + nachname + "ORDER BY Nachname");
 			
 			if(rs.next()){
@@ -159,6 +160,7 @@ public class UserMapper {
 			stmt = con.createStatement();
 			
 			rs = stmt.executeQuery("SELECT UserID, Vorname, Nachname, Nickname, Email, ErstellungsZeitpunkt" 
+					+ "FROM user"
 					+ "WHERE UserID=" + userID + " ORDER BY Nachname");
 			
 			if(rs.next()){
@@ -192,7 +194,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT * FROM User "
+			rs = stmt.executeQuery("SELECT * FROM user "
 					+ "ORDER BY UserID");
 			
 			while (rs.next()) {
@@ -228,7 +230,7 @@ public class UserMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM Textbeitrag WHERE UserID = " + user.getId() + "AND ErstellungsZeitpunkt >= " + report.getAnfangszeitpunkt() + "AND ErstellungsZeitpunkt <= " + report.getEndzeitpunkt() );
+			rs = stmt.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM textbeitrag WHERE UserID = " + user.getId() + "AND ErstellungsZeitpunkt >= " + report.getAnfangszeitpunkt() + "AND ErstellungsZeitpunkt <= " + report.getEndzeitpunkt() );
 				
 		
 			
@@ -258,7 +260,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT TextbeitragID, Text, ErstellungsZeitpunkt FROM Textbeitrag INNER JOIN User ON textbeitrag.UserID = " + user.getId());
+			rs = stmt.executeQuery("SELECT TextbeitragID, Text, ErstellungsZeitpunkt FROM textbeitrag INNER JOIN user ON textbeitrag.UserID = " + user.getId());
 			
 			while (rs.next()) {
 				Textbeitrag textbeitrag = new Textbeitrag();
@@ -286,7 +288,7 @@ public class UserMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlAbos FROM Abonnement WHERE UserID = " + user.getId());
+			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlAbos FROM abonnement WHERE UserID = " + user.getId());
 				
 			
 		} catch (SQLException e2) {
@@ -308,7 +310,7 @@ public class UserMapper {
 		  try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlKommentare FROM Kommentar WHERE UserID = " + user.getId());
+			rs = stmt.executeQuery("SELECT COUNT(UserID) AS AnzahlKommentare FROM kommentar WHERE UserID = " + user.getId());
 				
 			
 			
@@ -336,9 +338,9 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 			
-			rs = stmt.executeQuery("SELECT User.UserID, Pinnwand.Eigentuemer "
-					+ "FROM User INNER JOIN (Pinnwand INNER JOIN Abonnement "
-					+ " ON Pinnwand.PinnwandID = Abonnement.PinnwandID) ON User.UserID = Abonnement.UserID"
+			rs = stmt.executeQuery("SELECT user.UserID, pinnwand.Eigentuemer "
+					+ "FROM user INNER JOIN (pinnwand INNER JOIN abonnement "
+					+ " ON pinnwand.PinnwandID = abonnement.PinnwandID) ON user.UserID = abonnement.UserID"
 					+ "WHERE UserID=" + user.getId());
 			
 			while (rs.next()){
