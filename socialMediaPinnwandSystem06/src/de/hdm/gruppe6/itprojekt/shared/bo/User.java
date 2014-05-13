@@ -31,7 +31,7 @@ public class User extends BusinessObject {
 
 	
 	public User() {
-	// TODO Auto-generated constructor stub
+	super();
 }
 
 	//Alle Set und Get Methoden dieser Klasse

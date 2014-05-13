@@ -21,6 +21,7 @@ public class Abonnement extends BusinessObject{
 	}
 	
 	public Abonnement(){
+		super();
 		}
 
 	//Getter und Setter
