@@ -14,7 +14,8 @@ public class InfosVonAllenUsernReport extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable postFlexTable = new FlexTable();
 
-	/**
+	/*
+	 * 
 	 * Konstruktor 
 	 * @param content
 	 */
