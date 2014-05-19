@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.google.appengine.api.rdbms.AppEngineDriver;
-
 /**
  * *Enthält alle Elemente und nötigen Methoden für das Durchführungs Formular
  * 
- * @author Yasemin Karakoc, Jan Plank, Selim Karazehir, Julia Hammerer, Denis Fuerst, Daniel Krakow
+ * @author �zlem G�l, Michael Schelkle, Bharti Kumar
  *In Anlehnung an Hr. Prof. Dr. Thies
  */
 public class DBVerbindung {
@@ -22,37 +20,66 @@ public class DBVerbindung {
 
 	
 //	cloud sql
-	private static String url = "jdbc:google:rdbms://itprojectgruppe3:group3three/stundenplanverwaltung?user=root&";
-	
-	
-	
+	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=root";
+		
 	
 	/**
 	 * Baut die Verbindung zur Datenbank auf die Google Cloud SQL
 	 * @return Die Verbindung
 	 * @throws Exception 
 	 */
-	public static Connection connection() throws Exception  {
+//	public static Connection connection() throws Exception  {
+//		//Verbindung erstllen wenn es noch keine gibt
+////		if (con.isClosed() || con == null) {
+//			try {
+//				//Google connection
+//				DriverManager.registerDriver(new AppEngineDriver());
+//				
+//				con = DriverManager.getConnection(url);
+//			} 
+//			catch (SQLException e1) {
+//				con = null;
+//				e1.printStackTrace();
+//				throw new Exception("DBVerbindung Fehler!" + e1.toString());
+//			} 
+//			
+//			
+////		}
+//		
+//		//Die Verbindung
+//		return con;
+//	}
+	
+	public static Connection connection()  {
 		//Verbindung erstllen wenn es noch keine gibt
-//		if (con.isClosed() || con == null) {
-			try {
-				//Google connection
-				DriverManager.registerDriver(new AppEngineDriver());
+		if ( con == null ) {
+		//	try {
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-				con = DriverManager.getConnection(url);
+				try {
+					con = DriverManager.getConnection(url);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			} 
-			catch (SQLException e1) {
-				con = null;
-				e1.printStackTrace();
-				throw new Exception("DBVerbindung Fehler!" + e1.toString());
-			} 
-			
-			
-//		}
+//			catch (SQLException e1) {
+//				con = connectToGoogle();
+//			} 
+		return con;	
+	}
 		
 		//Die Verbindung
-		return con;
-	}
+//		return con;
+//}
+
 	
 	/**
 	 * Schließt das ResultSet, das Statement und die Connection
