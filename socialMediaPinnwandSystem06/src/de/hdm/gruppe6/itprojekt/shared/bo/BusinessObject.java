@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.shared.bo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import de.hdm.gruppe6.itprojekt.shared.bo.BusinessObject;
 
 /**
  * @author Özlem Gül, Michael Schelkle, Bharti Kumar
@@ -23,7 +23,15 @@ public void setId(int id){
 	this.id=id;
 }
 
-private Date erstellungsZeitpunkt;
+private Date erstellungsZeitpunkt = new Date();
+private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//private Date erstellungsZeitpunktFormattiert = format.parseObject(erstellungsZeitpunkt);
+//private String erstellungsZeitpunktFormattiert = sdf.format(erstellungsZeitpunkt);
+//private Date datum = sdf.parse(erstellungsZeitpunktFormattiert);
+
+
+	
+
 
 public Date getErstellungsZeitpunkt() {
 	return erstellungsZeitpunkt;
