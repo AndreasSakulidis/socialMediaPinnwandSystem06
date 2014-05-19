@@ -3,6 +3,9 @@ package de.hdm.gruppe6.itprojekt.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -127,6 +130,34 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 
 			}
 		});
+		
+	    nameField.addKeyPressHandler(new KeyPressHandler() {
+		      public void onKeyPress(KeyPressEvent event) {
+		    	  System.out.println("Keypress ");
+					System.out.println(nameField.getText());
+					String text = nameField.getText();
+					System.out.println(("Event von Key: "+event.getCharCode()));
+					if (text.isEmpty() && event.getCharCode() == KeyCodes.KEY_ENTER) {
+																																				
+						UserTrefferliste ut = new UserTrefferliste();
+						mainPanel.clear();
+						mainPanel.add(ut.zeigeTabelle());	
+
+					}
+					else if (event.getCharCode() == KeyCodes.KEY_ENTER){
+						
+						boolean test = nameField.equals("");
+						System.out.println("Else Block, Keypress ist: "+nameField.getText());
+						UserTrefferliste ut = new UserTrefferliste();
+						mainPanel.clear();
+						mainPanel.add(ut.zeigeUserNameTabelle(text));
+						
+					}
+
+		      }
+//		        if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+		         // addPost();
+	    });
 		
 		// Add it to the root panel.
 	    RootPanel.get("Navigator").add(addNavPanel);
