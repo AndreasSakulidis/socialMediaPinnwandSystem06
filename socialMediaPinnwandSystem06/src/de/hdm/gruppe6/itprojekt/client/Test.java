@@ -1,6 +1,7 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 
+import java.sql.Date;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -45,6 +46,7 @@ public class Test {
 		user.setNachname(nachname);
 		user.setNickname(nickname);
 		user.setEmail(email);
+//		user.setErstellungsZeitpunkt(EZ);
 		return userMapper.anlegen(user);
 	}
 	
@@ -52,7 +54,7 @@ public class Test {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		init();
-		userAnlegen("bumbun","bubuu","buuum","bubum@");
+		userAnlegen("Alisia","Koch","Lisia","koch@");
 		
 
 	}

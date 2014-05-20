@@ -20,7 +20,7 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 
 	private static final int REFRESH_INTERVAL = 5000; // ms
 	private HorizontalPanel addPanel = new HorizontalPanel();
-	private VerticalPanel mainPanel = new VerticalPanel();
+//	private VerticalPanel mainPanel = new VerticalPanel(); //wird nicht benötigt
 	private TextArea ta = new TextArea();
 	private Button textbeitragPosten = new Button("Add Post");
 	private HorizontalPanel addNavPanel = new HorizontalPanel();
@@ -113,8 +113,8 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 				if (text.isEmpty()) {
 					
 					UserTrefferliste ut = new UserTrefferliste();
-					mainPanel.clear();
-					mainPanel.add(ut.zeigeTabelle());	
+					addPanel.clear();
+					addPanel.add(ut.zeigeTabelle());	
 //					mainPanel.add(ut.zeigeUserNameTabelle("Simpson"));
 
 				}
@@ -122,9 +122,9 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 					boolean test = nameField.equals("");
 					System.out.println("Else Block, Namefeld ist: "+nameField.getText());
 					UserTrefferliste ut = new UserTrefferliste();
-					mainPanel.clear();
+					addPanel.clear();
 //					mainPanel.add(ut.zeigeTabelle());	
-					mainPanel.add(ut.zeigeUserNameTabelle(text));
+					addPanel.add(ut.zeigeUserNameTabelle(text));
 					
 				}
 
@@ -140,8 +140,8 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 					if (text.isEmpty() && event.getCharCode() == KeyCodes.KEY_ENTER) {
 																																				
 						UserTrefferliste ut = new UserTrefferliste();
-						mainPanel.clear();
-						mainPanel.add(ut.zeigeTabelle());	
+						addPanel.clear();
+						addPanel.add(ut.zeigeTabelle());	
 
 					}
 					else if (event.getCharCode() == KeyCodes.KEY_ENTER){
@@ -149,8 +149,8 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 						boolean test = nameField.equals("");
 						System.out.println("Else Block, Keypress ist: "+nameField.getText());
 						UserTrefferliste ut = new UserTrefferliste();
-						mainPanel.clear();
-						mainPanel.add(ut.zeigeUserNameTabelle(text));
+						addPanel.clear();
+						addPanel.add(ut.zeigeUserNameTabelle(text));
 						
 					}
 
