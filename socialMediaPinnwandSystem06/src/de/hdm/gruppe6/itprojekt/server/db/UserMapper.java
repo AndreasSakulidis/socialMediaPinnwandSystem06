@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -49,8 +50,22 @@ public class UserMapper {
 				user.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-				String sql = "INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt, PinnwandID)  VALUES ("+user.getId()+" ,'"+user.getVorname()+"','"+user.getNachname()+"','"+user.getEmail()+"','"+user.getNickname()+"','2014-05-20', 1)";
-				stmt.executeUpdate(sql);
+				
+				
+				int pid = 0;
+				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+//				String sql = "INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt, PinnwandID)  VALUES ("+user.getId()+" ,'"+user.getVorname()+"','"+user.getNachname()+"','"+user.getEmail()+"','"+user.getNickname()+"','2014-05-20', 1)";
+//				stmt.executeUpdate(sql);
+				stmt.executeUpdate("INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt, PinnwandID)"
+						+"VALUES ('" +
+						user.getId() + "','" +
+						user.getVorname() + "','" +
+						user.getNachname() + "','" +
+						user.getEmail() + "','" +
+						user.getNickname() + "','" +
+						tmstamp + "','" +
+						pid + "') ");
+				
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -130,7 +145,7 @@ public class UserMapper {
 				user.setNachname(rs.getString("Nachname"));
 				user.setNickname(rs.getString("Nickname"));
 				user.setEmail(rs.getString("Email"));
-				user.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				user.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(user);
 
@@ -169,7 +184,7 @@ public class UserMapper {
 				u.setNachname(rs.getString("Nachname"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setEmail(rs.getString("Email"));
-				u.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				u.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 
 				return u;
 			}
@@ -202,7 +217,7 @@ public class UserMapper {
 				user.setNachname(rs.getString("Nachname"));
 				user.setNickname(rs.getString("Nickname"));
 				user.setEmail(rs.getString("Email"));
-				user.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				user.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(user);
 			}
@@ -269,7 +284,7 @@ public class UserMapper {
 				textbeitrag.setId(rs.getInt("TextbeitragID"));
 				textbeitrag.setText(rs.getString("Text"));
 				textbeitrag.setErstellungsZeitpunkt(rs
-						.getDate("ErstellungsZeitpunkt"));
+						.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(textbeitrag);
 			}

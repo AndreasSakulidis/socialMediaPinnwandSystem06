@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 
@@ -45,15 +46,25 @@ abo.setId(rs.getInt("maxid") + 1);
 
 stmt = con.createStatement();
 
+int pid = 0;
+int uid = 0;
+
+Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 stmt.executeUpdate("INSERT INTO abonnement (AboID, User, Pinnwand, ErstellungsZeitpunkt)"
-+ "VALUES ("
-+ abo.getId()
-+ ","
-+ abo.getUser() // TODO OBJEKT? eig-> String oder int (Methodenparameter auch ändern
-+ "','"
-+ abo.getPinnwand() //TODO OBJEKT? eig-> String oder int
-+ "',"
-+ abo.getErstellungsZeitpunkt() + ")");
+//+ "VALUES ("
+//+ abo.getId()
+//+ ","
+//+ abo.getUser() // TODO OBJEKT? eig-> String oder int (Methodenparameter auch ändern
+//+ "','"
+//+ abo.getPinnwand() //TODO OBJEKT? eig-> String oder int
+//+ "',"
+//+ abo.getErstellungsZeitpunkt() + ")");
+		
+		+"VALUES ('" +
+		abo.getId() + "','" +
+		uid + "','" +
+		pid + "','" +
+		tmstamp + "') ");
 }
 }
 
@@ -105,8 +116,7 @@ Abonnement abonnement = new Abonnement();
 abonnement.setId(rs.getInt("AboID"));
 abonnement.setUser(((Abonnement) rs).getUser());
 abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
-abonnement.setErstellungsZeitpunkt(rs
-.getDate("ErstellungsZeitpunkt"));
+abonnement.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 
 return abonnement;
 }

@@ -2,16 +2,27 @@ package de.hdm.gruppe6.itprojekt.client;
 
 import java.util.Date;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
+
 public class Beitrag extends Composite {
+	
+	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
+			.create(PinnwandVerwaltungService.class);
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable postFlexTable = new FlexTable();
@@ -51,7 +62,7 @@ public class Beitrag extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				final dialogBox comment = new dialogBox("Kommentieren");
+				final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
 				comment.setText("Kommentieren");
 
 				comment.abbrechen.addClickHandler(new ClickHandler() {
@@ -68,7 +79,7 @@ public class Beitrag extends Composite {
 					public void onClick(ClickEvent event) {
 						comment.hide();
 						postFlexTable.setText(postFlexTable.getRowCount(), 0,
-								comment.getContent());
+								comment.getContent());						
 						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
 								kloeschen);
 						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
@@ -82,7 +93,8 @@ public class Beitrag extends Composite {
 				});
 
 				comment.show();
-
+				
+		
 			}
 
 		});
@@ -92,7 +104,7 @@ public class Beitrag extends Composite {
 		bearbeiten.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				final dialogBox comment = new dialogBox("Bearbeiten");
+				final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
 				comment.setText("Bearbeiten");
 				comment.setContent(post.getText());
 
@@ -119,6 +131,26 @@ public class Beitrag extends Composite {
 
 		});
 		post.setText(content);
+
+
+
+		String text = post.getText();
+					    
+				    pinnwandVerwaltung.textbeitragAnlegen(text,
+							new AsyncCallback<Textbeitrag>() {
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert("Fehler beim posten!");
+								}
+
+								@Override
+								public void onSuccess(Textbeitrag textbeitrag) {
+									Window.alert("Der Textbeitrag wurde gepostet!");
+									
+								}
+							});
+
+
 		lastUpdatedLabel.setText("Es wurde gepostet um: "
 				+ DateTimeFormat.getMediumDateFormat().format(new Date()));
 		

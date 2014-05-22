@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
@@ -38,14 +39,12 @@ pinnwand.setId(rs.getInt("maxid") +1);
 
 stmt = con.createStatement();
 
+Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 stmt.executeUpdate("INSERT INTO pinnwand (PinnwandID, ErstellungsZeitpunkt, Eigentuemer)"
-+ "VALUES ("
-+ pinnwand.getId()
-+ ","
-+ pinnwand.getErstellungsZeitpunkt()
-+ ",'"
-+ eigentuemer.getNickname()
-+ "')");
++ "VALUES ('" + 
+pinnwand.getId() + "','" + 
+tmstamp + "','" + 
+eigentuemer.getNickname() + "')");
 }
 }
 catch (SQLException e2) {
@@ -116,7 +115,7 @@ rs = stmt.executeQuery("SELECT PinnwandID, ErstellungsZeitpunkt, Eigentuemer"
 if(rs.next()){
 Pinnwand pinnwand = new Pinnwand();
 pinnwand.setId(rs.getInt("PinnwandID"));
-pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+pinnwand.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 
 return pinnwand;
@@ -147,7 +146,7 @@ rs = stmt.executeQuery("SELECT * FROM pinnwand "
 while (rs.next()) {
 Pinnwand pinnwand = new Pinnwand();
 pinnwand.setId(rs.getInt("PinnwandID"));
-pinnwand.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+pinnwand.setErstellungsZeitpunkt(rs.getTimestamp("ErstellungsZeitpunkt"));
 pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
 
 result.addElement(pinnwand);
