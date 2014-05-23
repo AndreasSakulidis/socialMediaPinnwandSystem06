@@ -85,8 +85,8 @@ div#Trailer {
   margin: 15px;
 }
 
-.reportMenu {
-	text-align:center;
+.reportmenu {
+	text-align:left;
 }
 
 .serverResponseLabelError {
@@ -119,4 +119,19 @@ div#Trailer {
 /* stock list Remove column */
 .watchListRemoveColumn {
   text-align: center;
+}
+
+.flextable {
+  border: 1px solid silver;
+  padding: 2px;
+  margin-bottom:6px;
+  
+}
+.title {
+	text-align: center;
+	font-size: 16pt;
+}
+
+.Kommentare {
+	background-color: silver;
 }

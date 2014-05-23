@@ -21,7 +21,9 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 @RemoteServiceRelativePath("pinnwandVerwaltung")
 public interface PinnwandVerwaltungService extends RemoteService {
 
-	public User userAnlegen(String vorname, String nachname, String nickname, String email) throws Exception;
+	public User userAnlegen(String vorname, String nachname, String nickname, String email, String passwort) throws Exception;
+	
+	public User userAnmelden(String name, String passwort) throws Exception;
 
 	public User userEditieren(User user)throws Exception;
 

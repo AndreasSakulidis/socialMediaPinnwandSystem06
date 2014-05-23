@@ -3,6 +3,8 @@ package de.hdm.gruppe6.itprojekt.server;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -28,6 +30,8 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements PinnwandVerwaltungService {
 
 	private static final long serialVersionUID = 1L;
+	
+	
 
 	private UserMapper userMapper = null;
 
@@ -58,14 +62,22 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	// Methoden User
 	
 	public User userAnlegen(String vorname,
-			String nachname, String nickname, String email) throws Exception {
+			String nachname, String nickname, String email, String passwort) throws Exception {
 
-		User user= new User();
+		User user = new User();
 		user.setVorname(vorname);
 		user.setNachname(nachname);
 		user.setNickname(nickname);
 		user.setEmail(email);
-		return userMapper.anlegen(user);
+		user.setPasswort(passwort);
+		Pinnwand pinnwand = new Pinnwand();
+		pinnwand.setEigentuemer(user.getNickname());
+		pinnwandMapper.anlegen(pinnwand, user);
+		return userMapper.anlegen(user, pinnwand);
+	}
+	
+	public User userAnmelden(String name, String passwort) throws Exception{
+		return this.userMapper.anmelden(name, passwort);
 	}
 
 	public User userEditieren(User user) throws Exception { 
@@ -152,12 +164,10 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 
 		 
 	// Methoden Abonnement
-		public Abonnement aboAnlegen(User user,
-					Pinnwand pinnwand) throws Exception {
+		public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception {
 
-				Abonnement abonnement= new Abonnement();
-				abonnement.setUser(user);
-				abonnement.setPinnwand(pinnwand);
+				Abonnement abonnement = new Abonnement();
+			
 				return abonnementMapper.anlegen(abonnement);
 			}
 
@@ -210,6 +220,9 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 
 						Textbeitrag textbeitrag= new Textbeitrag();
 						textbeitrag.setText(text);
+						
+
+						
 						return textbeitragMapper.anlegen(textbeitrag);
 					}
 

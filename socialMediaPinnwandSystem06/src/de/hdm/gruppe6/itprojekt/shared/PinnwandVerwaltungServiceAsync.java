@@ -16,6 +16,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void aboAnlegen(User user, Pinnwand pinnwand,
 			AsyncCallback<Abonnement> callback);
+	
 
 	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
 
@@ -76,7 +77,9 @@ public interface PinnwandVerwaltungServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void userAnlegen(String vorname, String nachname, String nickname,
-			String email, AsyncCallback<User> callback);
+			String email, String passwort, AsyncCallback<User> callback);
+	
+	void userAnmelden(String name, String passwort, AsyncCallback<User> callback);
 
 	void userEditieren(User user, AsyncCallback<User> callback);
 
@@ -100,5 +103,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandNachname(String nachname,
 			AsyncCallback<Vector<User>> callback);
+	
+	
 
 }

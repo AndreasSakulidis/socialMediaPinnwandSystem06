@@ -2,20 +2,35 @@ package de.hdm.gruppe6.itprojekt.client;
 
 import java.util.Date;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
+import de.hdm.gruppe6.itprojekt.shared.bo.Like;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
+
 public class Beitrag extends Composite {
+
+	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
+			.create(PinnwandVerwaltungService.class);
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable postFlexTable = new FlexTable();
-	// private FlexTable postBeitrag = new FlexTable();
+	
+	private VerticalPanel kommentarPanel = new VerticalPanel();
+	private FlexTable kommentarTable = new FlexTable();
+	
 
 	private Label post = new Label();
 	private Button loeschen = new Button("X");
@@ -32,8 +47,6 @@ public class Beitrag extends Composite {
 	// private TextArea ta = new TextArea();
 
 	public Beitrag(String content) {
-		
-		
 
 		label.setText(content);
 		initWidget(this.vPanel);
@@ -51,7 +64,8 @@ public class Beitrag extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				final dialogBox comment = new dialogBox("Kommentieren");
+				final MeineDialogBox comment = new MeineDialogBox(
+						"Kommentieren");
 				comment.setText("Kommentieren");
 
 				comment.abbrechen.addClickHandler(new ClickHandler() {
@@ -67,32 +81,106 @@ public class Beitrag extends Composite {
 					@Override
 					public void onClick(ClickEvent event) {
 						comment.hide();
-						postFlexTable.setText(postFlexTable.getRowCount(), 0,
+						
+						kommentarTable.setText(kommentarTable.getRowCount(), 0,
 								comment.getContent());
-						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+						kommentarTable.setWidget(kommentarTable.getRowCount(), 0,
 								kloeschen);
-						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+						kommentarTable.setWidget(kommentarTable.getRowCount(), 0,
 								kbearbeiten);
-						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+						kommentarTable.setWidget(kommentarTable.getRowCount(), 0,
 								commentUpdatedLabel);
+								
+								kommentarPanel.add(kommentarTable);
+								
+								vPanel.add(kommentarPanel);
+								kommentarPanel.addStyleName("Kommentare");
+						
+//						postFlexTable.setText(postFlexTable.getRowCount(), 0,
+//								comment.getContent());
+//						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+//								kloeschen);
+//						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+//								kbearbeiten);
+//						postFlexTable.setWidget(postFlexTable.getRowCount(), 0,
+//								commentUpdatedLabel);
+								
+								String text = comment.getText();
 
-						kloeschen.addClickHandler(new Loeschen());
+								pinnwandVerwaltung.kommentarAnlegen(text,
+										new AsyncCallback<Kommentar>() {
 
-					}
-				});
+											@Override
+											public void onFailure(Throwable caught) {
+												System.out.println(caught.getMessage());
+												Window.alert("Fehler beim Anlegen!");
+											}
 
+											@Override
+											public void onSuccess(Kommentar kommentar) {
+												Window.alert("Kommentar wurde angelegt!");
+											}
+										});
+
+								kloeschen.addClickHandler(new ClickHandler() {
+
+									@Override
+									public void onClick(ClickEvent event) {
+										
+										 Kommentar kommentar = null;
+										pinnwandVerwaltung.kommentarLoeschen(kommentar,
+										new AsyncCallback<Void>() {
+											@Override
+											public void onFailure(Throwable caught) {
+												Window.alert("Fehler beim loeschen!");
+											}
+								
+											@Override
+											public void onSuccess(Void result) {
+												Window.alert("Kommentar wurde gelöscht!");
+												kommentarTable.removeFromParent();
+											}
+										});
+									}
+									
+								});
+								
+
+							}
+						});
 				comment.show();
 
 			}
 
 		});
 
-		loeschen.addClickHandler(new Loeschen());
+		loeschen.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				 Textbeitrag textbeitrag = null;
+				pinnwandVerwaltung.textbeitragLoeschen(textbeitrag,
+				new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Fehler beim loeschen!");
+					}
+		
+					@Override
+					public void onSuccess(Void result) {
+						Window.alert("Textbeitrag wurde gelöscht!");
+						postFlexTable.removeFromParent();
+					}
+				});
+			}
+			
+		});
 
 		bearbeiten.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				final dialogBox comment = new dialogBox("Bearbeiten");
+				final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
 				comment.setText("Bearbeiten");
 				comment.setContent(post.getText());
 
@@ -111,6 +199,20 @@ public class Beitrag extends Composite {
 					public void onClick(ClickEvent event) {
 						comment.hide();
 						post.setText(comment.getContent());
+//						Textbeitrag textbeitrag = null;
+//						pinnwandVerwaltung.textbeitragEditieren(textbeitrag,
+//								new AsyncCallback<Textbeitrag>() {
+//
+//									@Override
+//									public void onFailure(Throwable caught) {
+//										Window.alert("Fehler beim Editieren!");
+//									}
+//
+//									@Override
+//									public void onSuccess(Textbeitrag result) {
+//										Window.alert("Textbeitrag wurde editiert!");
+//									}
+//								});
 					}
 				});
 
@@ -118,71 +220,50 @@ public class Beitrag extends Composite {
 			}
 
 		});
+		
+
+		liken.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				pinnwandVerwaltung.likeAnlegen(new AsyncCallback<Like>(){
+					public void onFailure(Throwable caught) {
+						Window.alert("Fehler beim Liken!");
+					}
+					public void onSuccess(Like like) {
+						Window.alert("Erfolgreich geliked!");
+					}
+				});
+			}
+		});
+				
+		
+		
+		
 		post.setText(content);
+
+		String text = post.getText();
+
+		pinnwandVerwaltung.textbeitragAnlegen(text,
+				new AsyncCallback<Textbeitrag>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Fehler beim posten!");
+					}
+
+					@Override
+					public void onSuccess(Textbeitrag textbeitrag) {
+						Window.alert("Der Textbeitrag wurde gepostet!");
+
+					}
+				});
+
 		lastUpdatedLabel.setText("Es wurde gepostet um: "
 				+ DateTimeFormat.getMediumDateFormat().format(new Date()));
-		
+
 		commentUpdatedLabel.setText("Es wurde kommentiert um: "
 				+ DateTimeFormat.getMediumDateFormat().format(new Date()));
 	}
 
-	class Loeschen implements ClickHandler {
+	
 
-		@Override
-		public void onClick(ClickEvent event) {
-			postFlexTable.clear();
-
-		}
-
-	}
-
-	class Kommentieren implements ClickHandler {
-
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
-			
-
-		// postFlexTable.setWidget(0, 0, post);
-		// postFlexTable.setWidget(3, 1, loeschen);
-		// postFlexTable.setWidget(3, 2, bearbeiten);
-		// postFlexTable.setWidget(3, 1, kommentieren);
-		// postFlexTable.setWidget(3, 2, liken);
-		//
-		// // kommentieren.addClickHandler(new ClickHandler() {
-		// //
-		// // @Override
-		// // public void onClick(ClickEvent event) {
-		// // String s = ta.getText();
-		// // Label l = new Label(s);
-		// // postBeitrag.add(l);
-		// // }
-		// // });
-		//
-		// // //TODO proxy Objrkt zum speichern
-		// // if(label!=null){
-		// // postBeitrag.setWidget(1,1, label);
-		// // postFlexTable.setWidget(1,2,postBeitrag);
-		// // postFlexTable.setWidget(2, 1, ta);
-		// // }
-		// //
-		// // vPanel.add(postFlexTable);
-		// }
-
-		// protected void setBeitrag(String text) {
-
-		// if (text == null) {
-		// throw new IllegalArgumentException("text == null");
-		// }
-		// if (text.trim().isEmpty()) {
-		// throw new IllegalArgumentException("Text ist leer");
-		// }
-		// this.text = text;
-		// }
-		//
-
-	}
-
+}

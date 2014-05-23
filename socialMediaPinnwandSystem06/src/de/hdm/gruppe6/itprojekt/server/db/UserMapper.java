@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
+import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
@@ -26,7 +27,7 @@ public class UserMapper {
 		return userMapper;
 	}
 
-	public User anlegen(User user) throws Exception {
+	public User anlegen(User user, Pinnwand pinnwand) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -49,16 +50,85 @@ public class UserMapper {
 				user.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-				String sql = "INSERT INTO user (UserID, Vorname, Nachname, Email, Nickname, ErstellungsZeitpunkt, PinnwandID)  VALUES ("+user.getId()+" ,'"+user.getVorname()+"','"+user.getNachname()+"','"+user.getEmail()+"','"+user.getNickname()+"','2014-05-20', 1)";
-				stmt.executeUpdate(sql);
+
+				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+
+				stmt.executeUpdate("INSERT INTO user (UserID, Vorname, Nachname, Email, Passwort, Nickname, ErstellungsZeitpunkt, PinnwandID)"
+						+ "VALUES ('"
+						+ user.getId()
+						+ "','"
+						+ user.getVorname()
+						+ "','"
+						+ user.getNachname()
+						+ "','"
+						+ user.getEmail()
+						+ "','"
+						+ user.getPasswort()
+						+ "','"
+						+ user.getNickname()
+						+ "','"
+						+ tmstamp
+						+ "',"
+						+ pinnwand.getId() + ") ");
+
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
 		}
+		// finally {
+		// DBVerbindung.closeAll(null, stmt, con);
+		// }
 		return user;
+	}
+
+
+	public User anmelden(String name, String passwort) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		System.out.println("Anfang von anmelden passwort: "+passwort+" und Nickname: "+name);
+		try {
+			 stmt = con.createStatement();
+
+			 ResultSet rs = stmt.executeQuery("SELECT * FROM `user` WHERE Nickname= '"+ name +"'" );
+			 
+			 System.out.println("UserMapper im Try");
+			if (rs.next()) {
+				User u = new User();
+				u.setId(rs.getInt("UserID"));
+				u.setVorname(rs.getString("Vorname"));
+				u.setNachname(rs.getString("Nachname"));
+				u.setNickname(rs.getString("Nickname"));
+				u.setPasswort(rs.getString("Passwort"));
+				u.setEmail(rs.getString("Email"));
+//				u.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				
+				System.out.println("in dem ersten if Block passwort von DB: "+u.getPasswort()+" und passwort von Parameter: "+passwort);
+				if(u.getPasswort().equals(passwort)){
+					System.out.println("Passwort ist richtig...Passwort von DB " + u.getPasswort()+" Passswort von user: " + passwort );
+					return u;
+				
+				}else { 
+					System.out.println("Passwort ist falsch...Passwort von Datenbank: " +u.getPasswort());
+					return null;
+				}
+
+				// System.out.println("erster If User Mapper Name von User: "+ u.getNickname());
+			//	System.out.println("erster If User Mapper Passwort von User: "+u.getPasswort());
+				
+				//return u;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		Nur benützen, wenn man mit Google SQL Cloud verbidet!!!
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
 	}
 
 	public User editieren(User user) throws Exception {
@@ -130,7 +200,8 @@ public class UserMapper {
 				user.setNachname(rs.getString("Nachname"));
 				user.setNickname(rs.getString("Nickname"));
 				user.setEmail(rs.getString("Email"));
-				user.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				user.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(user);
 
@@ -138,10 +209,10 @@ public class UserMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} 
-//		finally {
-//			DBVerbindung.closeAll(rs, stmt, con);
-//		}
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
 
 		return result;
 
@@ -169,7 +240,8 @@ public class UserMapper {
 				u.setNachname(rs.getString("Nachname"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setEmail(rs.getString("Email"));
-				u.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				u.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
 
 				return u;
 			}
@@ -202,17 +274,18 @@ public class UserMapper {
 				user.setNachname(rs.getString("Nachname"));
 				user.setNickname(rs.getString("Nickname"));
 				user.setEmail(rs.getString("Email"));
-				user.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+				user.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(user);
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} 
-//		finally {
-//			DBVerbindung.closeAll(rs, stmt, con);
-//		}
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
 
 		return result;
 	}
@@ -269,7 +342,7 @@ public class UserMapper {
 				textbeitrag.setId(rs.getInt("TextbeitragID"));
 				textbeitrag.setText(rs.getString("Text"));
 				textbeitrag.setErstellungsZeitpunkt(rs
-						.getDate("ErstellungsZeitpunkt"));
+						.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.addElement(textbeitrag);
 			}

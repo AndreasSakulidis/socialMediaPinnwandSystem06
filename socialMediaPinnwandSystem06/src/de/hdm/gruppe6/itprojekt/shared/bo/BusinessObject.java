@@ -1,9 +1,7 @@
 package de.hdm.gruppe6.itprojekt.shared.bo;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * @author Özlem Gül, Michael Schelkle, Bharti Kumar
@@ -23,21 +21,16 @@ public abstract class BusinessObject implements Serializable {
 		this.id = id;
 	}
 
-	private Date erstellungsZeitpunkt = new Date();
+	private Timestamp erstellungsZeitpunkt;
 
-	// private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	// private Date erstellungsZeitpunktFormattiert =
-	// format.parseObject(erstellungsZeitpunkt);
-	// private String erstellungsZeitpunktFormattiert =
-	// sdf.format(erstellungsZeitpunkt);
-	// private Date datum = sdf.parse(erstellungsZeitpunktFormattiert);
 
-	public Date getErstellungsZeitpunkt() {
+
+	public Timestamp getErstellungsZeitpunkt() {
 		return erstellungsZeitpunkt;
 
 	}
 
-	public void setErstellungsZeitpunkt(Date erstellungsZeitpunkt) {
+	public void setErstellungsZeitpunkt(Timestamp erstellungsZeitpunkt) {
 		this.erstellungsZeitpunkt = erstellungsZeitpunkt;
 	}
 

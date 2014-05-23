@@ -10,6 +10,7 @@ import de.hdm.gruppe6.itprojekt.server.db.LikeMapper;
 import de.hdm.gruppe6.itprojekt.server.db.PinnwandMapper;
 import de.hdm.gruppe6.itprojekt.server.db.TextbeitragMapper;
 import de.hdm.gruppe6.itprojekt.server.db.UserMapper;
+import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class Test {
@@ -46,8 +47,10 @@ public class Test {
 		user.setNachname(nachname);
 		user.setNickname(nickname);
 		user.setEmail(email);
+		Pinnwand pinnwand = new Pinnwand();
+		pinnwand.setEigentuemer(user.getNickname());
 //		user.setErstellungsZeitpunkt(EZ);
-		return userMapper.anlegen(user);
+		return userMapper.anlegen(user, pinnwand);
 	}
 	
 

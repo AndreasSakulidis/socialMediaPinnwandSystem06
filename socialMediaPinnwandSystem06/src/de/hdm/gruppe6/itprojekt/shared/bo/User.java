@@ -17,14 +17,16 @@ public class User extends BusinessObject {
 	private String vorname;
 	private String nachname;
 	private String email;
+	private String passwort;
 	private String nickname;
 	private Vector<Abonnement> abo = new Vector<Abonnement>();
 	
 	//Konstruktor
-	public User(String vorname, String nachname, String email, String nickname, Vector<Abonnement> abo){
+	public User(String vorname, String nachname, String email, String passwort, String nickname, Vector<Abonnement> abo){
 		this.vorname=vorname;
 		this.nachname=nachname;
 		this.email=email;
+		this.passwort=passwort;
 		this.nickname=nickname;
 		this.abo=abo;
 	}
@@ -77,7 +79,27 @@ public class User extends BusinessObject {
 	}
 	
 	public String toString() {
-	    return super.toString() + " " + this.vorname + " " + this.nachname +" " + this.email + " "+" " + this.nickname + " ";
+	    return super.toString() + " " + this.vorname + " " + this.nachname +" " + this.email + " "+" " + this.passwort + " " + this.nickname + " ";
 	  }
+
+
+	public String getPasswort() {
+		return passwort;
+	}
+
+
+	public void setPasswort(String passwort) {
+		this.passwort = passwort;
+	}
+	
+	// User Attribute auf Null setzten beim ausloggen
+	public void abmelden(){
+		vorname = null;
+		nachname = null;
+		email = null;
+		passwort = null;
+		nickname = null;
+		abo = null;
+	}
 		
 }

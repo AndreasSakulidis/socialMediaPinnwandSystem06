@@ -4,120 +4,141 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
+import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class AbonnementMapper {
 
-private static AbonnementMapper abonnementMapper = null;
+	private static AbonnementMapper abonnementMapper = null;
 
-protected AbonnementMapper() {
-}
+	protected AbonnementMapper() {
+	}
 
-public static AbonnementMapper abonnementMapper() {
-if (abonnementMapper == null) {
-abonnementMapper = new AbonnementMapper();
-}
-return abonnementMapper;
-}
+	public static AbonnementMapper abonnementMapper() {
+		if (abonnementMapper == null) {
+			abonnementMapper = new AbonnementMapper();
+		}
+		return abonnementMapper;
+	}
 
-public Abonnement anlegen(Abonnement abo) throws Exception {
-Connection con = DBVerbindung.connection();
-Statement stmt = null;
+	public Abonnement anlegen(Abonnement abo) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
 
-try {
-Statement stm = con.createStatement();
+		try {
+			Statement stm = con.createStatement();
 
-/*
-* Zunächst schauen wir nach, welches der momentan höchste
-* Primärschlüsselwert ist.
-*/
-ResultSet rs = stm.executeQuery("SELECT MAX(AboID) AS maxid "
-+ "FROM abonnement ");
+			/*
+			 * Zunächst schauen wir nach, welches der momentan höchste
+			 * Primärschlüsselwert ist.
+			 */
+			ResultSet rs = stm.executeQuery("SELECT MAX(AboID) AS maxid "
+					+ "FROM abonnement ");
 
-// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
-if (rs.next()) {
-/*
-* abo erhält den bisher maximalen, nun um 1 inkrementierten
-* Primärschlüssel.
-*/
-abo.setId(rs.getInt("maxid") + 1);
+			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			if (rs.next()) {
+				/*
+				 * abo erhält den bisher maximalen, nun um 1 inkrementierten
+				 * Primärschlüssel.
+				 */
+				abo.setId(rs.getInt("maxid") + 1);
 
-stmt = con.createStatement();
+				stmt = con.createStatement();
 
-stmt.executeUpdate("INSERT INTO abonnement (AboID, User, Pinnwand, ErstellungsZeitpunkt)"
-+ "VALUES ("
-+ abo.getId()
-+ ","
-+ abo.getUser() // TODO OBJEKT? eig-> String oder int (Methodenparameter auch ändern
-+ "','"
-+ abo.getPinnwand() //TODO OBJEKT? eig-> String oder int
-+ "',"
-+ abo.getErstellungsZeitpunkt() + ")");
-}
-}
+				int pid = 0;
+				int uid = 0;
 
-catch (SQLException e2) {
-e2.printStackTrace();
-throw new Exception("Datenbank fehler!" + e2.toString());
-} finally {
-DBVerbindung.closeAll(null, stmt, con);
-}
-return abo;
-}
+				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+				stmt.executeUpdate("INSERT INTO abonnement (AboID, UserID, PinnwandID, ErstellungsZeitpunkt)"
+						// + "VALUES ("
+						// + abo.getId()
+						// + ","
+						// + abo.getUser() // TODO OBJEKT? eig-> String oder int
+						// (Methodenparameter auch ändern
+						// + "','"
+						// + abo.getPinnwand() //TODO OBJEKT? eig-> String oder
+						// int
+						// + "',"
+						// + abo.getErstellungsZeitpunkt() + ")");
 
-public void loeschen(Abonnement abo) throws Exception {
-Connection con = DBVerbindung.connection();
-Statement stmt = null;
+						+ "VALUES ('"
+						+ abo.getId()
+						+ "','"
+						+ uid
+						+ "','"
+						+ pid
+						+ "','" 
+						+ tmstamp + "') ");
+			}
+		}
 
-try {
-stmt = con.createStatement();
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} finally {
+			DBVerbindung.closeAll(null, stmt, con);
+		}
+		return abo;
+	}
 
-stmt.executeUpdate("DELETE FROM abonnement "
-+ "WHERE AboID=" + abo.getId());
+	public void loeschen(Abonnement abo) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
 
-} catch (SQLException e2) {
-e2.printStackTrace();
-throw new Exception("Datenbankfehler!" + e2.toString());
-} finally {
-DBVerbindung.closeAll(null, stmt, con);
-}
-return;
-}
+		try {
+			stmt = con.createStatement();
 
-public Abonnement findeAnhandID(int aboID) throws Exception {
-Connection con = DBVerbindung.connection();
-ResultSet rs = null;
-Statement stmt = null;
+			stmt.executeUpdate("DELETE FROM abonnement " + "WHERE AboID="
+					+ abo.getId());
 
-try {
-stmt = con.createStatement();
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbankfehler!" + e2.toString());
+		} finally {
+			DBVerbindung.closeAll(null, stmt, con);
+		}
+		return;
+	}
 
-rs = stmt
-.executeQuery("SELECT AboID, User, Pinnwand, ErstellungsZeitpunkt" // TODO OBJEKT wird übergeben kein WERT
-+ "WHERE AboID="
-+ aboID
-+ " ORDER BY AboID");
-// Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
-// erstellt.
-if (rs.next()) {
-Abonnement abonnement = new Abonnement();
-abonnement.setId(rs.getInt("AboID"));
-abonnement.setUser(((Abonnement) rs).getUser());
-abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
-abonnement.setErstellungsZeitpunkt(rs
-.getDate("ErstellungsZeitpunkt"));
+	public Abonnement findeAnhandID(int aboID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
 
-return abonnement;
-}
-} catch (SQLException e2) {
-e2.printStackTrace();
-throw new Exception("Datenbank fehler!" + e2.toString());
-} finally {
-DBVerbindung.closeAll(rs, stmt, con);
-}
+		try {
+			stmt = con.createStatement();
 
-return null;
-}
+			rs = stmt
+					.executeQuery("SELECT AboID, User, Pinnwand, ErstellungsZeitpunkt" // TODO
+																						// OBJEKT
+																						// wird
+																						// übergeben
+																						// kein
+																						// WERT
+							+ "WHERE AboID=" + aboID + " ORDER BY AboID");
+			// Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+			// erstellt.
+			if (rs.next()) {
+				Abonnement abonnement = new Abonnement();
+				abonnement.setId(rs.getInt("AboID"));
+				abonnement.setUser(((Abonnement) rs).getUser());
+				abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
+				abonnement.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				return abonnement;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} finally {
+			DBVerbindung.closeAll(rs, stmt, con);
+		}
+
+		return null;
+	}
 
 }
