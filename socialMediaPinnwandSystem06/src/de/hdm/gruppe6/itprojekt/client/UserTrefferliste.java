@@ -93,21 +93,7 @@ public class UserTrefferliste{
 
 								@Override
 								public void onClick(ClickEvent event) {
-									// setzt den click handler auf den
-									// Modifizieren Button und ruft dann das
-									// Form
-									// auf und setzt das in der for schleife
-									// aktuell durchlaufene Element in das Form.
-									
-									/**
-									DoForm dozForm = new DoForm();
-									doForm.setSelected(d);*/
-									
-									// Panel leeren und das Formular dafür
-									// einfügen
-									mainPanelUser.clear();
-									//mainPanelUser.add(doForm);
-
+								//Abonnieren hinzuf�gen
 								}
 
 							});

@@ -77,6 +77,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 	public User userAnmelden(String name, String passwort) throws Exception{
+		System.out.println("userAnmelden im Impl... Name: "+name+" und PW "+passwort);
 		return this.userMapper.anmelden(name, passwort);
 	}
 

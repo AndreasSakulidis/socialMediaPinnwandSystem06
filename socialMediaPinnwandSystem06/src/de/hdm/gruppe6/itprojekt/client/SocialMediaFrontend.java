@@ -1,14 +1,11 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 
-import java.util.Date;
-
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -19,7 +16,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class SocialMediaFrontend extends Composite {
 	
@@ -38,40 +34,40 @@ public SocialMediaFrontend (){
 			// Menübar erstellen
 			Command cmd1 = new Command() {
 				public void execute() {
-					addPanel.clear();
+					mainPanel.clear();
 					InfosVonUserReport eins = new InfosVonUserReport("");
-					addPanel.add(eins);
+					mainPanel.add(eins);
 				}
 			};
 			
 			Command cmd2 = new Command() {
 				public void execute() {
-					addPanel.clear();
+					mainPanel.clear();
 					InfosVonBeitragReport zwei = new InfosVonBeitragReport("");
-					addPanel.add(zwei);
+					mainPanel.add(zwei);
 				}
 			};
 			
 			Command cmd3 = new Command() {
 				public void execute() {
-					addPanel.clear();
+					mainPanel.clear();
 					InfosVonAllenUsernReport drei = new InfosVonAllenUsernReport("");
-					addPanel.add(drei);
+					mainPanel.add(drei);
 				}
 			};
 			
 			Command cmd4 = new Command() {
 				public void execute() {
-					addPanel.clear();
+					mainPanel.clear();
 					InfosVonAllenBeitraegenReport vier = new InfosVonAllenBeitraegenReport("");
-					addPanel.add(vier);
+					mainPanel.add(vier);
 				}
 			};
 			Command cmd5 = new Command() {
 				public void execute() {
-					addPanel.clear();
+					mainPanel.clear();
 					PinnwandForm pF = new PinnwandForm ();
-					addPanel.add(pF);
+					mainPanel.add(pF.zeigePost());
 				}
 			};
 			
@@ -120,7 +116,9 @@ public SocialMediaFrontend (){
 				public void onClick(ClickEvent event) {
 					System.out.println("On Click in der User Trefferliste ");
 					System.out.println(nameField.getText());
+
 					String text = nameField.getText();
+					
 					if (text.isEmpty()) {
 						
 						UserTrefferliste ut = new UserTrefferliste();
@@ -131,6 +129,7 @@ public SocialMediaFrontend (){
 					}
 					else {
 //						boolean test = nameField.equals("");
+						mainPanel.clear();
 						System.out.println("Else Block, Namefeld ist: "+nameField.getText());
 						UserTrefferliste ut = new UserTrefferliste();
 //						mainPanel.clear();
@@ -142,7 +141,36 @@ public SocialMediaFrontend (){
 				}
 			});
 			
+			//Add it to the root Panel
+			RootPanel.get("Details").add(mainPanel);
 			
+			nameField.addKeyPressHandler(new KeyPressHandler() {
+			      public void onKeyPress(KeyPressEvent event) {
+			    	  System.out.println("Keypress ");
+						System.out.println(nameField.getText());
+						String text = nameField.getText();
+						System.out.println(("Event von Key: "+event.getCharCode()));
+						if (text.isEmpty() && event.getCharCode() == KeyCodes.KEY_ENTER) {
+																																					
+							UserTrefferliste ut = new UserTrefferliste();
+							mainPanel.clear();
+							mainPanel.add(ut.zeigeTabelle());	
+
+						}
+						else if (event.getCharCode() == KeyCodes.KEY_ENTER){
+							
+							boolean test = nameField.equals("");
+							System.out.println("Else Block, Keypress ist: "+nameField.getText());
+							UserTrefferliste ut = new UserTrefferliste();
+							mainPanel.clear();
+							mainPanel.add(ut.zeigeUserNameTabelle(text));
+							
+						}
+
+			      }
+//			        if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+			         // addPost();
+		    });
 			// Add it to the root panel.
 		    RootPanel.get("Navigator").add(addNavPanel);
 			
