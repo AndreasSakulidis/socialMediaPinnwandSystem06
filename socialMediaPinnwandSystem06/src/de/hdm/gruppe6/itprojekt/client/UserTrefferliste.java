@@ -6,6 +6,7 @@ import java.util.Vector;
 
 
 
+
 //import com.google.appengine.api.users.User;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -94,7 +95,12 @@ public class UserTrefferliste{
 								@Override
 								public void onClick(ClickEvent event) {
 								//Abonnieren hinzufügen
+//									pinnwandVerwaltung.aboAnlegen(new AsyncCallback<Vector<Abonnement>>(){
+//										
+//									}
+//									
 								}
+								
 
 							});
 
@@ -107,6 +113,7 @@ public class UserTrefferliste{
 				}
 
 				);
+							
 		mainPanelUser.add(flexTableUser);
 		// das Flextable wird dem mainPanelUser hinzugefügt.
 		return mainPanelUser;
@@ -176,21 +183,7 @@ public class UserTrefferliste{
 
 						@Override
 						public void onClick(ClickEvent event) {
-							// setzt den click handler auf den
-							// Modifizieren Button und ruft dann das
-							// Form
-							// auf und setzt das in der for schleife
-							// aktuell durchlaufene Element in das Form.
-							
-							/**
-							DoForm dozForm = new DoForm();
-							doForm.setSelected(d);*/
-							
-							// Panel leeren und das Formular dafÃ¼r
-							// einfÃ¼gen
-							mainPanelUser.clear();
-							//mainPanelUser.add(doForm);
-
+							//abonnieren
 						}
 
 					});
