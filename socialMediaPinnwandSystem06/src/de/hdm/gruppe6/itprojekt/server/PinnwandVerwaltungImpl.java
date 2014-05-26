@@ -22,16 +22,14 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 /**
- * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
- * In Anlehnung an Hr. Prof. Dr. Thies
+ * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas
+ *         Sakulidis, Michael Schelkle In Anlehnung an Hr. Prof. Dr. Thies
  */
 
-
-public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements PinnwandVerwaltungService {
+public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
+		PinnwandVerwaltungService {
 
 	private static final long serialVersionUID = 1L;
-	
-	
 
 	private UserMapper userMapper = null;
 
@@ -44,11 +42,12 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	private LikeMapper likeMapper = null;
 
 	private TextbeitragMapper textbeitragMapper = null;
-	
+
 	public PinnwandVerwaltungImpl() throws IllegalArgumentException {
 	}
+
 	public void init() throws IllegalArgumentException {
-		
+
 		// Kommunikation mit der Datenbank
 
 		userMapper = UserMapper.userMapper();
@@ -58,11 +57,11 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		likeMapper = LikeMapper.likeMapper();
 		textbeitragMapper = TextbeitragMapper.textbeitragMapper();
 	}
-	
+
 	// Methoden User
-	
-	public User userAnlegen(String vorname,
-			String nachname, String nickname, String email, String passwort) throws Exception {
+
+	public User userAnlegen(String vorname, String nachname, String nickname,
+			String email, String passwort) throws Exception {
 
 		User user = new User();
 		user.setVorname(vorname);
@@ -75,224 +74,228 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		pinnwandMapper.anlegen(pinnwand, user);
 		return userMapper.anlegen(user, pinnwand);
 	}
-	
-	public User userAnmelden(String name, String passwort) throws Exception{
+
+	public User userAnmelden(String name, String passwort) throws Exception {
+		System.out.println("userAnmelden im Impl... Name: " + name + " und PW "
+				+ passwort);
 		return this.userMapper.anmelden(name, passwort);
 	}
 
-	public User userEditieren(User user) throws Exception { 
+	public User userEditieren(User user) throws Exception {
 
 		return userMapper.editieren(user);
-}
+	}
+
 	public void userLoeschen(User user) throws Exception {
 
 		return;
 	}
-	
-	 public User findeUserAnhandID(int userID) throws Exception {
-		    return this.userMapper.findeAnhandID(userID);
-		  }
-	 
-	 public Vector<User> findeUserAnhandNachname(String nachname) throws Exception {
 
-		    return this.userMapper.findeAnhandNachname(nachname);
-		  }
-
-	
-	 public Vector <User> findeAlleUser()
-		      throws Exception {
-
-		    return this.userMapper.findeAlle();
-		  }
-	 
-	 public int zaehleTextbeitraegeVonUser(User user) 
-			 throws Exception{
-		 
-		 return this.userMapper.zaehleTextbeitraegeVonUser(user);
-	 }
-	 
-	 public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user)
-			 throws Exception {
-		 
-		 return this.userMapper.findeTextbeitragAnhandVonUser(user);
-	 }
-	
-	 public int zaehleAbosVonUser(User user) 
-			 throws Exception {
-		 
-		 return this.userMapper.zaehleAbosVonUser(user);
-	 }
-	 
-	 public int zaehleKommentareVonUser(User user) 
-			 throws Exception {
-		 
-		 return this.userMapper.zaehleKommentareVonUser(user);
-	 }
-	
-	 public ArrayList<User> findeAbosAnhandUser(User user) 
-			 throws Exception {
-		 
-		 return this.userMapper.findeAbosAnhandUser(user);
-	 }
-	 
-	 // Methoden Pinnwand
-	 
-	 public Pinnwand pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer) throws Exception {
-
-			return pinnwandMapper.anlegen(pinnwand, eigentuemer);
-		}
-
-		public Pinnwand pinnwandEditieren(Pinnwand pinnwand, User eigentuemer) throws Exception { 
-
-			return pinnwandMapper.editieren(pinnwand, eigentuemer);
+	public User findeUserAnhandID(int userID) throws Exception {
+		return this.userMapper.findeAnhandID(userID);
 	}
-		public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception {
 
-			return;
-		}
-		
-		 public Pinnwand findePinnwandAnhandID (int pinnwandID) throws Exception {
-			    return this.pinnwandMapper.findeAnhandID(pinnwandID);
-			  }
-		 
-		
-		 public Vector<Pinnwand> findeAllePinnwaende()
-			      throws Exception {
+	public Vector<User> findeUserAnhandNachname(String nachname)
+			throws Exception {
 
-			    return this.pinnwandMapper.findeAlle();
-			  }
-		 
-		 
+		return this.userMapper.findeAnhandNachname(nachname);
+	}
+
+	public Vector<User> findeAlleUser() throws Exception {
+
+		return this.userMapper.findeAlle();
+	}
+
+	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
+
+		return this.userMapper.zaehleTextbeitraegeVonUser(user);
+	}
+
+	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user)
+			throws Exception {
+
+		return this.userMapper.findeTextbeitragAnhandVonUser(user);
+	}
+
+	public int zaehleAbosVonUser(User user) throws Exception {
+
+		return this.userMapper.zaehleAbosVonUser(user);
+	}
+
+	public int zaehleKommentareVonUser(User user) throws Exception {
+
+		return this.userMapper.zaehleKommentareVonUser(user);
+	}
+
+	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception {
+
+		return this.userMapper.findeAbosAnhandUser(user);
+	}
+
+	// Methoden Pinnwand
+
+	public Pinnwand pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer)
+			throws Exception {
+
+		return pinnwandMapper.anlegen(pinnwand, eigentuemer);
+	}
+
+	public Pinnwand pinnwandEditieren(Pinnwand pinnwand, User eigentuemer)
+			throws Exception {
+
+		return pinnwandMapper.editieren(pinnwand, eigentuemer);
+	}
+
+	public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer)
+			throws Exception {
+
+		return;
+	}
+
+	public Pinnwand findePinnwandAnhandID(int pinnwandID) throws Exception {
+		return this.pinnwandMapper.findeAnhandID(pinnwandID);
+	}
+
+	public Vector<Pinnwand> findeAllePinnwaende() throws Exception {
+
+		return this.pinnwandMapper.findeAlle();
+	}
+
 	// Methoden Abonnement
-		public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception {
+	public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception {
 
-				Abonnement abonnement = new Abonnement();
-			
-				return abonnementMapper.anlegen(abonnement);
-			}
+		Abonnement abonnement = new Abonnement();
 
+		return abonnementMapper.anlegen(abonnement);
+	}
+
+	public void aboLoeschen(Abonnement abonnement) throws Exception {
+
+		return;
+	}
+
+	public Abonnement findeAboAnhandID(int abonnementID) throws Exception {
+		return this.abonnementMapper.findeAnhandID(abonnementID);
+	}
+
+	// Methoden Kommentar
+
+	public Kommentar kommentarAnlegen(String text) throws Exception {
+
+		Kommentar kommentar = new Kommentar();
+		kommentar.setText(text);
+		return kommentarMapper.anlegen(kommentar);
+	}
+
+	public Kommentar kommentarEditieren(String text, int id) throws Exception {
+		
+		Kommentar kommentar = new Kommentar();
+		kommentar.setId(id);
+		kommentar.setText(text);
+		
+		return kommentarMapper.editieren(kommentar);
+		
+	}
+
+	public void kommentarLoeschen(String text, int id) throws Exception {
+
+		Kommentar kommentar = new Kommentar();
+		kommentar.setId(id);
+		kommentar.setText(text);
+		
+		kommentarMapper.loeschen(kommentar);
+	}
+
+	public Kommentar findeKommentarAnhandID(int kommentarID) throws Exception {
+		return this.kommentarMapper.findeAnhandID(kommentarID);
+	}
+
+	public Vector<Kommentar> findeAlleKommentare() throws Exception {
+
+		return this.kommentarMapper.findeAlle();
+	}
+
+	// Methoden Textbeitrag
+	public Textbeitrag textbeitragAnlegen(String text) throws Exception {
+
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setText(text);
+
+		return textbeitragMapper.anlegen(textbeitrag);
+	}
+
+	public Textbeitrag textbeitragEditieren(String text, int id) throws Exception {
+
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setId(id);
+		textbeitrag.setText(text);
+
+		return textbeitragMapper.editieren(textbeitrag);
+	}
+
+	public void textbeitragLoeschen(String text, int id) throws Exception {
+
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setId(id);
+		textbeitrag.setText(text);
+		textbeitragMapper.loeschen(textbeitrag);
+	}
+
+	public Textbeitrag findeTextbeitragAnhandID(int textbeitragID)
+			throws Exception {
+		return this.textbeitragMapper.findeAnhandID(textbeitragID);
+	}
+
+	public Vector<Kommentar> findeKommentareZuTextbeitrag(
+			Textbeitrag textbeitrag) throws Exception {
+
+		return this.textbeitragMapper.findeKommentareZuTextbeitrag(textbeitrag);
+	}
+
+	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag)
+			throws Exception {
+
+		return this.textbeitragMapper.zaehleLikesZuTextbeitrag(textbeitrag);
+	}
+
+	public Vector<Textbeitrag> findeAlleTextbeitraege() throws Exception {
+
+		return this.textbeitragMapper.findeAlle();
+	}
+
+	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
+			throws Exception {
+
+		return this.textbeitragMapper.findeUserZuTextbeitrag(textbeitrag);
+	}
+
+	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag)
+			throws Exception {
+
+		return this.textbeitragMapper
+				.zaehleKommentareVonTextbeitrag(textbeitrag);
+	}
+
+	// Methoden Like
+
+	public Like likeAnlegen() throws Exception {
+
+		Like like = new Like();
+		return likeMapper.anlegen(like);
+	}
+
+	public void likeLoeschen(Like like) throws Exception {
+
+		return;
+	}
+
+	public Like findeLikeAnhandID(int likeID) throws Exception {
+		return this.likeMapper.findeAnhandID(likeID);
+	}
 	
-		
-		public void aboLoeschen(Abonnement abonnement) throws Exception {
+	@Override
+	public int getUidFromNickname(String nickname) throws Exception {
+		return this.userMapper.getUidFromNickname(nickname);
+	}
 
-				return;
-			}
-			
-		 public Abonnement findeAboAnhandID (int abonnementID) throws Exception {
-				    return this.abonnementMapper.findeAnhandID(abonnementID);
-				  }
-		 
-		
-		 
-		// Methoden Kommentar
-		 
-			public Kommentar kommentarAnlegen(String text) throws Exception {
-
-					Kommentar kommentar= new Kommentar();
-					kommentar.setText(text);
-					return kommentarMapper.anlegen(kommentar);
-				}
-
-			public Kommentar kommentarEditieren(Kommentar kommentar) throws Exception { 
-
-					return kommentarMapper.editieren(kommentar);
-			}
-			
-			public void kommentarLoeschen(Kommentar kommentar) throws Exception {
-
-					return;
-				}
-				
-			public Kommentar findeKommentarAnhandID (int kommentarID) throws Exception {
-					    return this.kommentarMapper.findeAnhandID(kommentarID);
-					  }
-				 
-				
-			public Vector <Kommentar> findeAlleKommentare()
-					      throws Exception {
-
-					    return this.kommentarMapper.findeAlle();
-					  }
-				 
-			
-		// Methoden Textbeitrag
-			public Textbeitrag textbeitragAnlegen(String text) throws Exception {
-
-						Textbeitrag textbeitrag= new Textbeitrag();
-						textbeitrag.setText(text);
-						
-
-						
-						return textbeitragMapper.anlegen(textbeitrag);
-					}
-
-			public Textbeitrag textbeitragEditieren(Textbeitrag textbeitrag) throws Exception { 
-
-						return textbeitragMapper.editieren(textbeitrag);
-				}
-			
-			public void textbeitragLoeschen(Textbeitrag textbeitrag) throws Exception {
-
-						return;
-					}
-					
-			
-			 public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception {
-						    return this.textbeitragMapper.findeAnhandID(textbeitragID);
-						  }
-			
-			 
-			 public Vector <Kommentar> findeKommentareZuTextbeitrag( Textbeitrag textbeitrag)
-				      throws Exception {
-
-				    return this.textbeitragMapper.findeKommentareZuTextbeitrag(textbeitrag);
-				  }
-			 
-			 
-			 public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag)
-		 		      throws Exception {
-
-		 		    return this.textbeitragMapper.zaehleLikesZuTextbeitrag(textbeitrag);
-		 		  }
-			
-			 
-		     public Vector <Textbeitrag> findeAlleTextbeitraege()
-						      throws Exception {
-
-						    return this.textbeitragMapper.findeAlle();
-						  }
-		    
-		     
-		     public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
-		     				throws Exception {
-		    	 
-		    	 return this.textbeitragMapper.findeUserZuTextbeitrag(textbeitrag);
-		     }
-		     
-		     public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag)
-		     				throws Exception {
-		    	 			
-		    	 		return this.textbeitragMapper.zaehleKommentareVonTextbeitrag(textbeitrag);
-		     }
-					
-		     
-		 // Methoden Like
-		     
-		     public Like likeAnlegen() throws Exception {
-
-		 		Like like= new Like();
-		 		return likeMapper.anlegen(like);
-		 	}
-
-		     
-		 	public void likeLoeschen(Like like) throws Exception {
-
-		 		return;
-		 	}
-		 	
-		 	public Like findeLikeAnhandID (int likeID) throws Exception {
-		 		    return this.likeMapper.findeAnhandID(likeID);
-		 		  }
-		 	
-		 
 }

@@ -22,7 +22,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 public class Anmelden{
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
-	private Label lbname = new Label("Name   :  ");
+	private Label lbname = new Label("Nickname   :  ");
 	private TextBox tbName = new TextBox();
 	private Label lbPasswort = new Label("Passwort   :  ");
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
@@ -32,7 +32,7 @@ public class Anmelden{
 	// Registrierung
 
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Label lbRname = new Label("Name");
+	private Label lbRname = new Label("Vorname");
 	private TextBox tbRname = new TextBox();
 	private Label lbRs = new Label("Nachname");
 	private TextBox tbNachname = new TextBox();
@@ -43,7 +43,7 @@ public class Anmelden{
 	private Label lbRPasswort = new Label("Passwort");
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Button regButton = new Button("Registrieren");
-	private Label regi = new Label("Registrierung ");
+	//private Label regi = new Label("Registrierung ");
 	
 	private Label lTrennWand = new Label("-");
 	private static final int REFRESH_INTERVAL = 5000; // ms
@@ -86,7 +86,7 @@ public class Anmelden{
 		addPanel.add(lbEmail);
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
-		addPanel.add(regi);
+		//addPanel.add(regi);
 		
 		regButton.addClickHandler(new ClickHandler() {
 			
@@ -136,6 +136,7 @@ public class Anmelden{
 					tbPasswort.setVisible(false);
 					loginButton.setVisible(false);
 					
+//					String nickname = result.getNickname();
 					SocialMediaFrontend hauptseite = new SocialMediaFrontend();
 					
 		
@@ -168,7 +169,7 @@ public class Anmelden{
 		
 		
 		
-		regi.addStyleName("regi‹ber");
+		//regi.addStyleName("regi‹ber");
 		anmelden.addStyleName("Anmelde‹ber");
 		hPanel.addStyleName("Anmelden");
 		vPanel.addStyleName("Regi");

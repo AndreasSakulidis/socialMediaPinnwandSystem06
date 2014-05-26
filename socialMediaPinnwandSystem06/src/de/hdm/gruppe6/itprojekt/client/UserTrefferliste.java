@@ -26,217 +26,203 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 
 public class UserTrefferliste{
 
-	VerticalPanel mainPanelUser = new VerticalPanel();
+VerticalPanel mainPanelUser = new VerticalPanel();
 
-	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
-			.create(PinnwandVerwaltungService.class);
-	
-	public Widget zeigeTabelle() {
-		// Erstellen einer flexiblen Tabelle
-		final FlexTable flexTableUser = new FlexTable();
-		
-		//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
-//		DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
-		
-		//Spaltenbezeichnungen hinzufügen
-		flexTableUser.setText(0, 0, "ID");
-		flexTableUser.setText(0, 1, "Name");
-		flexTableUser.setText(0, 2, "Vorname");
-		flexTableUser.setText(0, 3, "Nickname");
-		flexTableUser.setText(0, 4, "E-Mail");
-		flexTableUser.setText(0, 5, "Abonnieren");
+PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
+.create(PinnwandVerwaltungService.class);
 
-		// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
-		// Bei Fehlern soll eine Fehlermeldung erscheinen
+public Widget zeigeTabelle() {
+// Erstellen einer flexiblen Tabelle
+final FlexTable flexTableUser = new FlexTable();
 
-		pinnwandVerwaltung.findeAlleUser(new AsyncCallback<Vector<User>>() {
+//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
+// DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
+//Spaltenbezeichnungen hinzufügen
+flexTableUser.setText(0, 0, "ID");
+flexTableUser.setText(0, 1, "Name");
+flexTableUser.setText(0, 2, "Vorname");
+flexTableUser.setText(0, 3, "Nickname");
+flexTableUser.setText(0, 4, "E-Mail");
+flexTableUser.setText(0, 5, "Abonnieren");
 
-					}
+// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
+// Bei Fehlern soll eine Fehlermeldung erscheinen
 
-					@Override
-					public void onSuccess(Vector<User> result) {
-						int rowCounter = 1;
+pinnwandVerwaltung.findeAlleUser(new AsyncCallback<Vector<User>>() {
 
-                        // Hier werden die Objekte durchlaufen. 
-						//User ist final, da es in Inner Class ClickHandler verwendet  werden soll			
-						
-						for (final User u : result) {
+@Override
+public void onFailure(Throwable caught) {
+Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
 
-							Button a = new Button("+");
+}
 
-							String nachname, nickname, email, vorname;
-							
-							nachname = u.getNachname();
-							vorname = u.getVorname();
-							nickname = u.getNickname();
-							email = u.getEmail();
-							
-							// Das Label soll mit Inhalt gefüllt werden
-							Label labNach = new Label(nachname);
-							Label labVor = new Label(vorname);
-							Label labNick = new Label(nickname);
-							Label labEm = new Label(email);
-							
-							// Hier werden die Labels in der Tabelle positioniert
-							flexTableUser.setText(rowCounter, 0, String.valueOf(u.getId()));
-							flexTableUser.setWidget(rowCounter, 1, labNach);
-							flexTableUser.setWidget(rowCounter, 2, labVor);
-							flexTableUser.setWidget(rowCounter, 3, labNick);
-							flexTableUser.setWidget(rowCounter, 4, labEm);
-							flexTableUser.setWidget(rowCounter, 5, a);
+@Override
+public void onSuccess(Vector<User> result) {
+int rowCounter = 1;
 
-							a.addClickHandler(new ClickHandler() {
+                        // Hier werden die Objekte durchlaufen.
+//User ist final, da es in Inner Class ClickHandler verwendet werden soll
 
-								@Override
-								public void onClick(ClickEvent event) {
-									// setzt den click handler auf den
-									// Modifizieren Button und ruft dann das
-									// Form
-									// auf und setzt das in der for schleife
-									// aktuell durchlaufene Element in das Form.
-									
-									/**
-									DoForm dozForm = new DoForm();
-									doForm.setSelected(d);*/
-									
-									// Panel leeren und das Formular dafÃ¼r
-									// einfÃ¼gen
-									mainPanelUser.clear();
-									//mainPanelUser.add(doForm);
+for (final User u : result) {
 
-								}
+Button a = new Button("+");
 
-							});
+String nachname, nickname, email, vorname;
 
-							//Zeile hochzÃ¤hlen
-							rowCounter++;
-						}
+nachname = u.getNachname();
+vorname = u.getVorname();
+nickname = u.getNickname();
+email = u.getEmail();
 
-					}
+// Das Label soll mit Inhalt gefüllt werden
+Label labNach = new Label(nachname);
+Label labVor = new Label(vorname);
+Label labNick = new Label(nickname);
+Label labEm = new Label(email);
 
-				}
+// Hier werden die Labels in der Tabelle positioniert
+flexTableUser.setText(rowCounter, 0, String.valueOf(u.getId()));
+flexTableUser.setWidget(rowCounter, 1, labNach);
+flexTableUser.setWidget(rowCounter, 2, labVor);
+flexTableUser.setWidget(rowCounter, 3, labNick);
+flexTableUser.setWidget(rowCounter, 4, labEm);
+flexTableUser.setWidget(rowCounter, 5, a);
 
-				);
-		mainPanelUser.add(flexTableUser);
-		// das Flextable wird dem mainPanelUser hinzugefügt.
-		return mainPanelUser;
-	}
-	
-	public Widget zeigeUserNameTabelle(String name) {
-		// Erstellen einer flexiblen Tabelle
-		final FlexTable flexTableUser = new FlexTable();
-		
-		//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
-//		DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
-		
-		//Spaltenbezeichnungen hinzufügen
-		flexTableUser.setText(0, 0, "ID");
-		flexTableUser.setText(0, 1, "Name");
-		flexTableUser.setText(0, 2, "Vorname");
-		flexTableUser.setText(0, 3, "Nickname");
-		flexTableUser.setText(0, 4, "E-Mail");
-		flexTableUser.setText(0, 5, "Abonnieren");
+a.addClickHandler(new ClickHandler() {
 
-		// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
-		// Bei Fehlern soll eine Fehlermeldung erscheinen
-//		pinnwandVerwaltung.findeUserAnhandNachname(, new AsyncCallbackVector<User>);
-		
-		pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
+@Override
+public void onClick(ClickEvent event) {
+//Abonnieren hinzufügen
+}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
-				
-			}
+});
 
-			@Override
-			public void onSuccess(Vector<User> result) {
-				int rowCounter = 1;
-				System.out.println("TESTTESTTESTTEST");
-//				System.out.println("result test: "+result.toString());
-                // Hier werden die Objekte durchlaufen. 
-				//User ist final, da es in Inner Class ClickHandler verwendet  werden soll			
-				
-				for (final User u : result) {
+//Zeile hochzÃ¤hlen
+rowCounter++;
+}
 
-					Button a = new Button("+");
+}
 
-					String nachname, nickname, email, vorname;
-					
-					nachname = u.getNachname();
-					vorname = u.getVorname();
-					nickname = u.getNickname();
-					email = u.getEmail();
-					
-					// Das Label soll mit Inhalt gefüllt werden
-					Label labNach = new Label(nachname);
-					Label labVor = new Label(vorname);
-					Label labNick = new Label(nickname);
-					Label labEm = new Label(email);
-					
-					// Hier werden die Labels in der Tabelle positioniert
-					flexTableUser.setText(rowCounter, 0, String.valueOf(u.getId()));
-					flexTableUser.setWidget(rowCounter, 1, labNach);
-					flexTableUser.setWidget(rowCounter, 2, labVor);
-					flexTableUser.setWidget(rowCounter, 3, labNick);
-					flexTableUser.setWidget(rowCounter, 4, labEm);
-					flexTableUser.setWidget(rowCounter, 5, a);
+}
 
-					a.addClickHandler(new ClickHandler() {
+);
+mainPanelUser.add(flexTableUser);
+// das Flextable wird dem mainPanelUser hinzugefügt.
+return mainPanelUser;
+}
 
-						@Override
-						public void onClick(ClickEvent event) {
-							// setzt den click handler auf den
-							// Modifizieren Button und ruft dann das
-							// Form
-							// auf und setzt das in der for schleife
-							// aktuell durchlaufene Element in das Form.
-							
-							/**
-							DoForm dozForm = new DoForm();
-							doForm.setSelected(d);*/
-							
-							// Panel leeren und das Formular dafÃ¼r
-							// einfÃ¼gen
-							mainPanelUser.clear();
-							//mainPanelUser.add(doForm);
+public Widget zeigeUserNameTabelle(String name) {
+// Erstellen einer flexiblen Tabelle
+final FlexTable flexTableUser = new FlexTable();
 
-						}
+//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
+// DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
 
-					});
+//Spaltenbezeichnungen hinzufügen
+flexTableUser.setText(0, 0, "ID");
+flexTableUser.setText(0, 1, "Name");
+flexTableUser.setText(0, 2, "Vorname");
+flexTableUser.setText(0, 3, "Nickname");
+flexTableUser.setText(0, 4, "E-Mail");
+flexTableUser.setText(0, 5, "Abonnieren");
 
-					//Zeile hochzÃ¤hlen
-					rowCounter++;
-				}
+// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
+// Bei Fehlern soll eine Fehlermeldung erscheinen
+// pinnwandVerwaltung.findeUserAnhandNachname(, new AsyncCallbackVector<User>);
 
-				
-				
-				
-			}
-		});
-//		pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
+pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
+
+@Override
+public void onFailure(Throwable caught) {
+Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
+
+}
+
+@Override
+public void onSuccess(Vector<User> result) {
+int rowCounter = 1;
+System.out.println("TESTTESTTESTTEST");
+// System.out.println("result test: "+result.toString());
+                // Hier werden die Objekte durchlaufen.
+//User ist final, da es in Inner Class ClickHandler verwendet werden soll
+
+for (final User u : result) {
+
+Button a = new Button("+");
+
+String nachname, nickname, email, vorname;
+
+nachname = u.getNachname();
+vorname = u.getVorname();
+nickname = u.getNickname();
+email = u.getEmail();
+
+// Das Label soll mit Inhalt gefüllt werden
+Label labNach = new Label(nachname);
+Label labVor = new Label(vorname);
+Label labNick = new Label(nickname);
+Label labEm = new Label(email);
+
+// Hier werden die Labels in der Tabelle positioniert
+flexTableUser.setText(rowCounter, 0, String.valueOf(u.getId()));
+flexTableUser.setWidget(rowCounter, 1, labNach);
+flexTableUser.setWidget(rowCounter, 2, labVor);
+flexTableUser.setWidget(rowCounter, 3, labNick);
+flexTableUser.setWidget(rowCounter, 4, labEm);
+flexTableUser.setWidget(rowCounter, 5, a);
+
+a.addClickHandler(new ClickHandler() {
+
+@Override
+public void onClick(ClickEvent event) {
+// setzt den click handler auf den
+// Modifizieren Button und ruft dann das
+// Form
+// auf und setzt das in der for schleife
+// aktuell durchlaufene Element in das Form.
+
+/**
+DoForm dozForm = new DoForm();
+doForm.setSelected(d);*/
+
+// Panel leeren und das Formular dafÃ¼r
+// einfÃ¼gen
+mainPanelUser.clear();
+//mainPanelUser.add(doForm);
+
+}
+
+});
+
+//Zeile hochzÃ¤hlen
+rowCounter++;
+}
+
+
+
+
+}
+});
+// pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
 //
-//					@Override
-//					public void onFailure(Throwable caught) {
+// @Override
+// public void onFailure(Throwable caught) {
 //
-//					}
+// }
 //
-//					@Override
-//					public void onSuccess(Vector<User> result) {
+// @Override
+// public void onSuccess(Vector<User> result) {
 //
-//					}
+// }
 //
-//				}
+// }
 //
-//				);
-		mainPanelUser.add(flexTableUser);
-		// das Flextable wird dem mainPanelUser hinzugefügt.
-		return mainPanelUser;
-	}
+// );
+mainPanelUser.add(flexTableUser);
+// das Flextable wird dem mainPanelUser hinzugefügt.
+return mainPanelUser;
+}
 
 
 

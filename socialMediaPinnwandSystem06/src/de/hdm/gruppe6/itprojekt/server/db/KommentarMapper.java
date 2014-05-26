@@ -71,20 +71,21 @@ public class KommentarMapper {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
-		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE kommentar "
-					+ "SET ErstellungsZeitpunkt =\""
-					+ kommentar.getErstellungsZeitpunkt()
-					+ "\" WHERE KommentarID=" + kommentar.getId());
+			Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+			String sql = "UPDATE kommentar SET ErstellungsZeitpunkt ='"+ tmstamp +"', Text ='" + kommentar.getText() + "' WHERE KommentarID="+ kommentar.getId();
+
+			 try {
+			 stmt = con.createStatement();
+			 stmt.executeUpdate(sql);
 		}
 
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 
 		return kommentar;
 	}
@@ -101,9 +102,11 @@ public class KommentarMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+		
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return;
 	}
 

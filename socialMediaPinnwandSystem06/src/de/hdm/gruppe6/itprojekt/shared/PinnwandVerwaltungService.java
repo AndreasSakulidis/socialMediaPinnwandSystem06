@@ -69,9 +69,9 @@ public interface PinnwandVerwaltungService extends RemoteService {
  
 	public Kommentar kommentarAnlegen(String text) throws Exception;
 
-	public Kommentar kommentarEditieren(Kommentar kommentar) throws Exception;
+	public Kommentar kommentarEditieren(String text, int id) throws Exception;
 
-	public void kommentarLoeschen(Kommentar kommentar) throws Exception;
+	public void kommentarLoeschen(String text, int id) throws Exception;
 	
 	public Kommentar findeKommentarAnhandID (int kommentarID) throws Exception;
 	 
@@ -80,9 +80,9 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public Textbeitrag textbeitragAnlegen(String text) throws Exception ;
 
-	public Textbeitrag textbeitragEditieren(Textbeitrag textbeitrag) throws Exception;
+	Textbeitrag textbeitragEditieren(String text, int id) throws Exception;
 	
-	public void textbeitragLoeschen(Textbeitrag textbeitrag) throws Exception ;
+	public void textbeitragLoeschen(String text, int id) throws Exception ;
 	
 	public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception;
 	
@@ -102,7 +102,9 @@ public interface PinnwandVerwaltungService extends RemoteService {
 
 	public void likeLoeschen(Like like) throws Exception;
 		 	
-	public Like findeLikeAnhandID (int likeID) throws Exception; 	 
+	public Like findeLikeAnhandID (int likeID) throws Exception;
+
+	int getUidFromNickname(String nickname) throws Exception; 	 
 		 	
 		 	
 }

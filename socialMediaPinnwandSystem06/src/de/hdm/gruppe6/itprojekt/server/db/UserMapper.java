@@ -435,4 +435,25 @@ public class UserMapper {
 		return result;
 	}
 
+	public int getUidFromNickname(String nickname) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("Select UserID From user " +
+			"where nickname='" + nickname + "'");
+			rs.next();
+				int uid = rs.getInt("UserID");
+				return uid;
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}finally {
+			DBVerbindung.closeAll(rs, stmt, con);
+		}
+	}
+
 }
