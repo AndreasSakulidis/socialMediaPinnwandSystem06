@@ -76,7 +76,7 @@ public class SocialMediaFrontend extends Composite {
 			public void execute() {
 				mainPanel.clear();
 				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-				mainPanel.add(pAF.zeigePinnwand());
+				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
 			}
 		};
 
