@@ -53,10 +53,9 @@ public interface PinnwandVerwaltungServiceAsync {
 	
 	void kommentarAnlegen(String text, AsyncCallback<Kommentar> callback);
 
-	void kommentarEditieren(Kommentar kommentar,
-			AsyncCallback<Kommentar> callback);
+	void kommentarEditieren(String text, int id, AsyncCallback<Kommentar> callback);
 
-	void kommentarLoeschen(Kommentar kommentar, AsyncCallback<Void> callback);
+	void kommentarLoeschen(String text, int id, AsyncCallback<Void> callback);
 
 	void likeAnlegen(AsyncCallback<Like> callback);
 
@@ -70,10 +69,10 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void textbeitragAnlegen(String text, AsyncCallback<Textbeitrag> callback);
 
-	void textbeitragEditieren(Textbeitrag textbeitrag,
+	void textbeitragEditieren(String text, int id,
 			AsyncCallback<Textbeitrag> callback);
 
-	void textbeitragLoeschen(Textbeitrag textbeitrag,
+	void textbeitragLoeschen(String text, int id,
 			AsyncCallback<Void> callback);
 
 	void userAnlegen(String vorname, String nachname, String nickname,

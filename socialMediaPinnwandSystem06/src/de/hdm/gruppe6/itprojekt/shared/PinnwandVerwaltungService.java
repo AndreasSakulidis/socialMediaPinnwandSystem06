@@ -69,31 +69,31 @@ public interface PinnwandVerwaltungService extends RemoteService {
  
 	public Kommentar kommentarAnlegen(String text) throws Exception;
 
-	public Kommentar kommentarEditieren(Kommentar kommentar) throws Exception;
+	public Kommentar kommentarEditieren(String text, int id) throws Exception;
 
-	public void kommentarLoeschen(Kommentar kommentar) throws Exception;
-	
+	public void kommentarLoeschen(String text, int id) throws Exception;
+
 	public Kommentar findeKommentarAnhandID (int kommentarID) throws Exception;
-	 
+
 	public Vector <Kommentar> findeAlleKommentare() throws Exception;
-	
-	
+
+
 	public Textbeitrag textbeitragAnlegen(String text) throws Exception ;
 
-	public Textbeitrag textbeitragEditieren(Textbeitrag textbeitrag) throws Exception;
-	
-	public void textbeitragLoeschen(Textbeitrag textbeitrag) throws Exception ;
-	
+	public Textbeitrag textbeitragEditieren(String text, int id) throws Exception;
+
+	public void textbeitragLoeschen(String text, int id) throws Exception ;
+
 	public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception;
-	
+
 	public Vector <Kommentar> findeKommentareZuTextbeitrag( Textbeitrag textbeitrag) throws Exception;
-	
+
 	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
-			
+
 	public Vector <Textbeitrag> findeAlleTextbeitraege() throws Exception;
-	
+
 	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
-	 
+
 	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 	 
 					

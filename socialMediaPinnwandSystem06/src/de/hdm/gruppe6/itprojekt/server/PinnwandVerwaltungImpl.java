@@ -77,6 +77,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	}
 	
 	public User userAnmelden(String name, String passwort) throws Exception{
+		System.out.println("userAnmelden im Impl... Name: "+name+" und PW "+passwort);
 		return this.userMapper.anmelden(name, passwort);
 	}
 
@@ -193,15 +194,24 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 					return kommentarMapper.anlegen(kommentar);
 				}
 
-			public Kommentar kommentarEditieren(Kommentar kommentar) throws Exception { 
+			public Kommentar kommentarEditieren(String text, int id) throws Exception {
 
-					return kommentarMapper.editieren(kommentar);
+				Kommentar kommentar = new Kommentar();
+				kommentar.setId(id);
+				kommentar.setText(text);
+
+				return kommentarMapper.editieren(kommentar);
+
 			}
 			
-			public void kommentarLoeschen(Kommentar kommentar) throws Exception {
+			public void kommentarLoeschen(String text, int id) throws Exception {
 
-					return;
-				}
+				Kommentar kommentar = new Kommentar();
+				kommentar.setId(id);
+				kommentar.setText(text);
+
+				kommentarMapper.loeschen(kommentar);
+			}
 				
 			public Kommentar findeKommentarAnhandID (int kommentarID) throws Exception {
 					    return this.kommentarMapper.findeAnhandID(kommentarID);
@@ -226,15 +236,22 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 						return textbeitragMapper.anlegen(textbeitrag);
 					}
 
-			public Textbeitrag textbeitragEditieren(Textbeitrag textbeitrag) throws Exception { 
+			public Textbeitrag textbeitragEditieren(String text, int id) throws Exception {
 
-						return textbeitragMapper.editieren(textbeitrag);
-				}
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(id);
+				textbeitrag.setText(text);
+
+				return textbeitragMapper.editieren(textbeitrag);
+			}
 			
-			public void textbeitragLoeschen(Textbeitrag textbeitrag) throws Exception {
+			public void textbeitragLoeschen(String text, int id) throws Exception {
 
-						return;
-					}
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(id);
+				textbeitrag.setText(text);
+				textbeitragMapper.loeschen(textbeitrag);
+			}
 					
 			
 			 public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception {
