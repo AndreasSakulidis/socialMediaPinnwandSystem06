@@ -33,6 +33,7 @@ public class Anmelden{
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
 	private Button loginButton = new Button("Anmelden");
 	private Label anmelden = new Label("Anmeldung");
+	private HorizontalPanel loginPanel = new HorizontalPanel();
 
 	// Registrierung
 
@@ -48,7 +49,7 @@ public class Anmelden{
 	private Label lbRPasswort = new Label("Passwort");
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Button regButton = new Button("Registrieren");
-	private Label regi = new Label("Registrierung ");
+	private Label regi = new Label("Registrierung: ");
 	
 	private VerticalPanel addPanel = new VerticalPanel();
 
@@ -62,17 +63,19 @@ public class Anmelden{
 	public Widget anmelden() {
 		
 		
-		addPanel.add(lbname);
-		addPanel.add(tbName);
-		addPanel.add(lbPasswort);
-		addPanel.add(tbPasswort);
-		addPanel.add(loginButton);
+		loginPanel.add(lbname);
+		loginPanel.add(tbName);
+		loginPanel.add(lbPasswort);
+		loginPanel.add(tbPasswort);
+		loginPanel.add(loginButton);
 		
+		RootPanel.get("Details").add(loginPanel);
 //		for(int i = 0; i<10; i++){
 //			addPanel.add(lTrennWand);
 //		}
 //		vPanel.add(addPanel);
 		
+		addPanel.add(regi);
 		addPanel.add(lbRname);
 		addPanel.add(tbRname);
 		addPanel.add(lbRs);
@@ -84,7 +87,7 @@ public class Anmelden{
 		addPanel.add(lbEmail);
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
-		addPanel.add(regi);
+
 		
 		regButton.addClickHandler(new ClickHandler() {
 

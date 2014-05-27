@@ -41,6 +41,7 @@ public class Beitrag extends Composite {
 	private Label label = new Label();
 	private Label lastUpdatedLabel = new Label();
 	private Label lbId = new Label();
+	private VerticalPanel mainPanel = new VerticalPanel();
 	
 	public Beitrag(final String content) {
 
@@ -59,6 +60,8 @@ public class Beitrag extends Composite {
 		postFlexTable.setWidget(2, 0, lastUpdatedLabel);
 
 		vPanel.add(postFlexTable);
+		vPanel.addStyleName("Textbeitrag");
+		
 
 
 		kommentieren.addClickHandler(new ClickHandler() {

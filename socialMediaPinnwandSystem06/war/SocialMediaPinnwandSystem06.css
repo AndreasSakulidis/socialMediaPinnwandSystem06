@@ -33,6 +33,7 @@ div#Navigator {
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
 	text-align: left;
+	background-color: ghostwhite;
 }
 
 .sendSucheButton {
@@ -43,6 +44,7 @@ div#Navigator {
 div#Header {
 	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
 	/* border: 1px dashed silver; */
+	background-color: ghostwhite;
 }
 
 div#Trailer {
@@ -52,6 +54,7 @@ div#Trailer {
 	border-top: 1px dashed silver;
 	font-size: 80%;
 	text-align: center;
+	background-color: ghostwhite;
 }
 
 
@@ -133,10 +136,17 @@ div#Trailer {
 }
 
 .Kommentare {
-	background-color: silver;
+	background-color: lavender;
 }
 	
 .linie {
 	color: white;
 	}
 
+.Textbeitrag {
+	background-color: lightsteelblue;
+	border: 1px solid black;
+}
+.abo {
+background-color: ghostwhite;
+}

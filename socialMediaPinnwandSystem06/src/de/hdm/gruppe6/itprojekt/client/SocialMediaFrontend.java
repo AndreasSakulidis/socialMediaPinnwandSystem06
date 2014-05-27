@@ -104,7 +104,6 @@ public class SocialMediaFrontend extends Composite {
 				mainPanel.clear();
 				suchePanel.clear();
 				RootPanel.get("Header").clear();
-				;
 				RootPanel.get().clear();
 				User u = new User();
 				u.abmelden();
@@ -116,8 +115,11 @@ public class SocialMediaFrontend extends Composite {
 				mainPanel.add(tbName);
 				mainPanel.add(tbPasswort);
 				mainPanel.add(loginButton);
+				
 			}
 		};
+		
+
 
 		MenuBar fooMenu = new MenuBar(true);
 
@@ -162,6 +164,7 @@ public class SocialMediaFrontend extends Composite {
 		aboPanel.add(trennlinie);
 		aboPanel.add(abo);
 		aboPanel.add(trennlinie);
+		aboPanel.addStyleName("abo");
 		
 		abo.addClickHandler(new ClickHandler(){
 			VerticalPanel aboPanel= new VerticalPanel();
