@@ -1,4 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse MeineDialogBox ruft eine DialogBox auf, in der man Textbeiträge und Kommentare editieren und hinzufügen kann.
+ */
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.Button;
@@ -23,7 +28,7 @@ public class MeineDialogBox extends DialogBox {
 
 		ta = new TextArea();
 
-		ok = new Button("Posten");
+		ok = new Button("Add");
 		abbrechen = new Button("Abbrechen");
 		commentPanel.add(ta);
 		commentPanel.add(ok);

@@ -1,8 +1,14 @@
 package de.hdm.gruppe6.itprojekt.client;
 
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse Anmelden erhält das Formular Anmelden. Der User kann sich hier registrieren oder mit seinem bereits bestehenden Konto einloggen.
+ */
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -10,7 +16,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,21 +50,14 @@ public class Anmelden{
 	private Button regButton = new Button("Registrieren");
 	private Label regi = new Label("Registrierung ");
 	
-	private Label lTrennWand = new Label("-");
-	private static final int REFRESH_INTERVAL = 5000; // ms
 	private VerticalPanel addPanel = new VerticalPanel();
-	private VerticalPanel mainPanel = new VerticalPanel();
-	private TextArea ta = new TextArea();
-	private Button textbeitragPosten = new Button("Add Post");
-	private HorizontalPanel addNavPanel = new HorizontalPanel();
-	private Button alleUserButton = new Button();
-	private Button alleBeitraegeButton = new Button(); 
 
 	private HorizontalPanel horziPanel= new HorizontalPanel();
 	
 	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
 	
-	
+	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public Widget anmelden() {
 		
@@ -89,25 +87,44 @@ public class Anmelden{
 		addPanel.add(regi);
 		
 		regButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				
-				socialmedia.userAnlegen(tbRname.getText(), tbNachname.getText(), tbNick.getText(), tbEmail.getText(), tbRPasswort.getText(), new AsyncCallback<User>() {
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
 
-					@Override
-					public void onSuccess(User result) {
-						Window.alert("Anlegen erfolgreich!");
-					}
-				});
-				
+				System.out.println("Email: " + tbEmail.getText() + " Vorname "
+						+ tbRname.getText() + " Nachname "
+						+ tbNachname.getText() + " Nickname "
+						+ tbNick.getText() + " Passwort " + tbRPasswort);
+				if (!tbEmail.getText().matches(EMAIL_PATTERN)
+						|| tbRname.getText().equals(null)
+						|| tbNachname.getText().equals(null)
+						|| tbNick.getText().equals(null)
+						|| tbRPasswort.equals(null)) {
+					Window.alert("Gib eine gültige E-Mail Adresse ein!");
+				} else {
+
+					socialmedia.userAnlegen(tbRname.getText(),
+							tbNachname.getText(), tbNick.getText(),
+							tbEmail.getText(), tbRPasswort.getText(),
+							new AsyncCallback<User>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert("Anlegen Fehlgeschlagen: "
+											+ caught.getMessage());
+
+								}
+
+								@Override
+								public void onSuccess(User result) {
+									if (result == null) {
+										Window.alert("Nickname exisitert bereits!");
+									} else {
+										Window.alert("Anlegen erfolgreich!");
+									}
+								}
+							});
+				}
 			}
 		});
 		
@@ -122,47 +139,61 @@ public class Anmelden{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				socialmedia.userAnmelden(tbName.getText(), tbPasswort.getText(), new AsyncCallback<User>() {
-					
-					@Override
-					public void onSuccess(User result) {
-//						System.out.println("Userpasswort und Name "+result.getPasswort()+" "+result.getNickname()); 
-						if(result!= null){
-							
-							RootPanel.get("Details").clear();
+				socialmedia.userAnmelden(tbName.getText(),
+						tbPasswort.getText(), new AsyncCallback<User>() {
 
-					Window.alert("Erfolgreich angemeldet... Nickname: "+result.getNickname()+" und Passwort"+result.getPasswort());	
-					tbName.setVisible(false);
-					tbPasswort.setVisible(false);
-					loginButton.setVisible(false);
-					
-					SocialMediaFrontend hauptseite = new SocialMediaFrontend();
-					
-		
-		
-						
+							@Override
+							public void onSuccess(User result) {
 
-//					--------------------------------------------------------------------------------------------------------
-					
-	
-	
-						}
-						else{
-							Window.alert("User ist leer... ");
-						}
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Ein fehler ist aufgetreten: "+caught.getMessage());
-						
-					}
-				} );
-				
+								// ------------------------------------------------------------------
+
+								if (result.getId() != 0) {
+
+									Cookies.setCookie("SocialMedia6",
+											result.getNickname());
+
+									RootPanel.get("Details").clear();
+
+									Window.alert("Erfolgreich angemeldet... Nickname: "
+											+ result.getNickname()
+											+ " und Passwort"
+											+ result.getPasswort());
+									tbName.setVisible(false);
+									tbPasswort.setVisible(false);
+									loginButton.setVisible(false);
+
+									lbRname.setVisible(false);
+									tbRname.setVisible(false);
+									lbRs.setVisible(false);
+									tbNachname.setVisible(false);
+									lbNick.setVisible(false);
+									tbNick.setVisible(false);
+									lbRPasswort.setVisible(false);
+									tbRPasswort.setVisible(false);
+									lbEmail.setVisible(false);
+									tbEmail.setVisible(false);
+									regButton.setVisible(false);
+									regi.setVisible(false);
+
+//									TODO wie bei EntryPoint Klasse
+									SocialMediaFrontend smf = new SocialMediaFrontend();
+									smf.angemeldet();
+									// --------------------------------------------------------------------------------------------------------
+									// TODO ... Alles was da drunter ist, ist
+									// nicht richtig hier!
+								}
+							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+								Window.alert("Ein fehler ist aufgetreten: "
+										+ caught.getMessage());
+
+							}
+						});
+
 			}
 		});
-		
 
 			
 		

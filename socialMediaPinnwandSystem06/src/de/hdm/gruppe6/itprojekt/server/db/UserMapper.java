@@ -82,6 +82,56 @@ public class UserMapper {
 		return user;
 	}
 
+	public boolean nicknamePrüfen(String name) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		String nick = null;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM user WHERE Nickname = '"+ name + "'");
+			// .executeQuery("SELECT * FROM user WHERE Nickname");
+			// WHERE Nickname = '" + name + "'"
+			
+			//wasNull()
+			if(rs.next()){
+//				User u = new User();
+
+				nick=(rs.getString("Nickname"));
+				if(name.equals(nick)) {
+					return false;
+				}
+				else{
+				return true;
+				}
+			}
+//			while (rs.next()) {
+//			if(nick.equals(null))	{
+//				u.setId(rs.getInt("UserID"));
+//				u.setVorname(rs.getString("Vorname"));
+//				u.setNachname(rs.getString("Nachname"));
+//				u.setNickname(rs.getString("Nickname"));
+//				u.setPasswort(rs.getString("Passwort"));
+//				u.setEmail(rs.getString("Email"));
+//			}
+//				return true;
+//			}
+//
+//			else if (name.equals(u.getNickname())) {
+//				return false;
+//			}
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+		return true;
+	}
+
+	// // finally {
+	// // DBVerbindung.closeAll(rs, stmt, con);
+	// // }
+	// //
 
 	public User anmelden(String name, String passwort) throws Exception {
 		Connection con = DBVerbindung.connection();

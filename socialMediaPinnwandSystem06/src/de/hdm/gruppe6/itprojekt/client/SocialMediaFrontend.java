@@ -1,24 +1,33 @@
 package de.hdm.gruppe6.itprojekt.client;
 
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse SocialMediaFrontend enthält die Menüleiste und ruft die Methode zur Überprüfung der Anmeldung auf. //SO STEHEN LASSEN?
+ */
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MenuBar;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
+
 public class SocialMediaFrontend extends Composite {
 
-	private static final int REFRESH_INTERVAL = 5000; // ms
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label userSuchen = new Label("User suchen:");
 	private VerticalPanel suchePanel = new VerticalPanel();
@@ -27,15 +36,24 @@ public class SocialMediaFrontend extends Composite {
 	private Label beispiel = new Label("Bsp.: Schmidt");
 	private Label trennlinie = new Label("______________");
 	
+	// Registrierung
+	private TextBox tbName = new TextBox();
+	private PasswordTextBox tbPasswort = new PasswordTextBox();
+	private Button loginButton = new Button("Anmelden");
 	
+	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	public SocialMediaFrontend() {
+	//public SocialMediaFrontend() {
+	
+	public Widget angemeldet() {
+	
 		trennlinie.addStyleName("linie");
 		// Menübar erstellen
 		Command cmd1 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				InfosVonUserReport eins = new InfosVonUserReport("");
+				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
 				mainPanel.add(eins);
 			}
 		};
@@ -43,7 +61,7 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd2 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				InfosVonBeitragReport zwei = new InfosVonBeitragReport("");
+				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport("");
 				mainPanel.add(zwei);
 			}
 		};
@@ -51,7 +69,7 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd3 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				InfosVonAllenUsernReport drei = new InfosVonAllenUsernReport("");
+				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport("");
 				mainPanel.add(drei);
 			}
 		};
@@ -59,7 +77,7 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd4 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				InfosVonAllenBeitraegenReport vier = new InfosVonAllenBeitraegenReport(
+				FormInfosVonAllenBeitraegenReport vier = new FormInfosVonAllenBeitraegenReport(
 						"");
 				mainPanel.add(vier);
 			}
@@ -76,7 +94,28 @@ public class SocialMediaFrontend extends Composite {
 			public void execute() {
 				mainPanel.clear();
 				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-				mainPanel.add(pAF.zeigePinnwand());
+				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+			}
+		};
+		
+		Command logout = new Command() {
+			public void execute() {
+				Cookies.removeCookie("SocialMedia6");
+				mainPanel.clear();
+				suchePanel.clear();
+				RootPanel.get("Header").clear();
+				;
+				RootPanel.get().clear();
+				User u = new User();
+				u.abmelden();
+				tbName.setVisible(true);
+				tbPasswort.setVisible(true);
+				loginButton.setVisible(true);
+				tbName.setText("");
+				tbPasswort.setText("");
+				mainPanel.add(tbName);
+				mainPanel.add(tbPasswort);
+				mainPanel.add(loginButton);
 			}
 		};
 
@@ -98,7 +137,7 @@ public class SocialMediaFrontend extends Composite {
 		menu.addItem("Pinnwand", fooMenu);
 		menu.addItem("Reports", reportMenu);
 		menu.addItem("Einstellungen", barMenu);
-		menu.addItem("LogOut", barMenu);
+		menu.addItem("LogOut", logout);
 
 		// Add it to the root panel.
 		RootPanel.get("Header").add(menu);
@@ -106,8 +145,7 @@ public class SocialMediaFrontend extends Composite {
 		// public void suchen(){
 		final Button sendSucheButton = new Button("Suchen");
 		final TextBox nameField = new TextBox();
-		// nameField.setText("");
-		// final Label errorLabel = new Label();
+
 
 		// We can add style names to widgets
 		sendSucheButton.addStyleName("sendSucheButton");
@@ -141,7 +179,6 @@ public class SocialMediaFrontend extends Composite {
 					
 					suchePanel.add(aboTable);
 					aboTable.addStyleName("flextable");
-//					RootPanel.get("Navigator").add(aboPanel);
 		   
 		}
 
@@ -163,16 +200,13 @@ public class SocialMediaFrontend extends Composite {
 					UserTrefferliste ut = new UserTrefferliste();
 					mainPanel.clear();
 					mainPanel.add(ut.zeigeTabelle());
-					// mainPanel.add(ut.zeigeUserNameTabelle("Simpson"));
+
 
 				} else {
-					// boolean test = nameField.equals("");
 					mainPanel.clear();
 					System.out.println("Else Block, Namefeld ist: "
 							+ nameField.getText());
 					UserTrefferliste ut = new UserTrefferliste();
-					// mainPanel.clear();
-					// mainPanel.add(ut.zeigeTabelle());
 					mainPanel.add(ut.zeigeUserNameTabelle(text));
 
 				}
@@ -198,7 +232,7 @@ public class SocialMediaFrontend extends Composite {
 
 				} else if (event.getCharCode() == KeyCodes.KEY_ENTER) {
 
-					boolean test = nameField.equals("");
+//					boolean test = nameField.equals("");
 					System.out.println("Else Block, Keypress ist: "
 							+ nameField.getText());
 					UserTrefferliste ut = new UserTrefferliste();
@@ -208,8 +242,7 @@ public class SocialMediaFrontend extends Composite {
 				}
 
 			}
-			// if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-			// addPost();
+
 		});
 		
 		
@@ -219,6 +252,10 @@ public class SocialMediaFrontend extends Composite {
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
 		nameField.selectAll();
+		
+		return mainPanel;
 	}
+	
+	
 
 }

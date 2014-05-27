@@ -61,24 +61,44 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	
 	// Methoden User
 	
+	@Override
 	public User userAnlegen(String vorname,
-			String nachname, String nickname, String email, String passwort) throws Exception {
-
-		User user = new User();
-		user.setVorname(vorname);
-		user.setNachname(nachname);
-		user.setNickname(nickname);
-		user.setEmail(email);
-		user.setPasswort(passwort);
-		Pinnwand pinnwand = new Pinnwand();
-		pinnwand.setEigentuemer(user.getNickname());
-		pinnwandMapper.anlegen(pinnwand, user);
-		return userMapper.anlegen(user, pinnwand);
+			String nachname, String nickname, String email, String pw) throws Exception {
+		User user = new User(); 
+		Pinnwand pinnwand = new Pinnwand(); 
+		boolean check = this.userMapper.nicknamePrüfen(nickname);
+		System.out.println("Impl userAnlegen check: "+check+" nickname: "+nickname);
+		if(!this.userMapper.nicknamePrüfen(nickname)){
+//			Window.alert("Nickname schon vergeben");
+			System.out.println("Nickname schon vergeben");
+		return null;
+		}
+		else{
+		System.out.println("User Anlegen in Impl: Passwort: "+pw);
+		user.setVorname(vorname); 
+		user.setNachname(nachname); 
+		user.setNickname(nickname); 
+		user.setEmail(email); 
+		user.setPasswort(pw); 
+		
+		pinnwand.setEigentuemer(user.getNickname()); 
+		
+		pinnwandMapper.anlegen(pinnwand, user); 
+		 return userMapper.anlegen(user, pinnwand); 
+		}
+		
+//		return null;
 	}
 	
-	public User userAnmelden(String name, String passwort) throws Exception{
-		System.out.println("userAnmelden im Impl... Name: "+name+" und PW "+passwort);
+	@Override
+	public User userAnmelden(String name, String passwort) throws Exception {
+		
+		
 		return this.userMapper.anmelden(name, passwort);
+		
+		
+		
+		
 	}
 
 	public User userEditieren(User user) throws Exception { 
@@ -194,15 +214,24 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 					return kommentarMapper.anlegen(kommentar);
 				}
 
-			public Kommentar kommentarEditieren(Kommentar kommentar) throws Exception { 
+			public Kommentar kommentarEditieren(String text, int id) throws Exception {
 
-					return kommentarMapper.editieren(kommentar);
+				Kommentar kommentar = new Kommentar();
+				kommentar.setId(id);
+				kommentar.setText(text);
+
+				return kommentarMapper.editieren(kommentar);
+
 			}
 			
-			public void kommentarLoeschen(Kommentar kommentar) throws Exception {
+			public void kommentarLoeschen(String text, int id) throws Exception {
 
-					return;
-				}
+				Kommentar kommentar = new Kommentar();
+				kommentar.setId(id);
+				kommentar.setText(text);
+
+				kommentarMapper.loeschen(kommentar);
+			}
 				
 			public Kommentar findeKommentarAnhandID (int kommentarID) throws Exception {
 					    return this.kommentarMapper.findeAnhandID(kommentarID);
@@ -227,15 +256,22 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 						return textbeitragMapper.anlegen(textbeitrag);
 					}
 
-			public Textbeitrag textbeitragEditieren(Textbeitrag textbeitrag) throws Exception { 
+			public Textbeitrag textbeitragEditieren(String text, int id) throws Exception {
 
-						return textbeitragMapper.editieren(textbeitrag);
-				}
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(id);
+				textbeitrag.setText(text);
+
+				return textbeitragMapper.editieren(textbeitrag);
+			}
 			
-			public void textbeitragLoeschen(Textbeitrag textbeitrag) throws Exception {
+			public void textbeitragLoeschen(String text, int id) throws Exception {
 
-						return;
-					}
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(id);
+				textbeitrag.setText(text);
+				textbeitragMapper.loeschen(textbeitrag);
+			}
 					
 			
 			 public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception {

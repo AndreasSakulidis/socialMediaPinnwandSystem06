@@ -1,5 +1,11 @@
 package de.hdm.gruppe6.itprojekt.client;
 
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse FormInfosVonBeitragReport enthält die Auswahlmaske.
+ */
+
 import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,19 +20,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
-import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
-
-public class InfosVonBeitragReport extends Composite {
+public class FormInfosVonBeitragReport extends Composite {
 
 		private VerticalPanel vPanel = new VerticalPanel();
 		private FlexTable infoFlexTable = new FlexTable();
 		private Label title = new Label("Report:Informationen von einem Beitrag"); 
 		final Button zuruck = new Button("zurueck");
 		
-		public InfosVonBeitragReport(String content) {
+		public FormInfosVonBeitragReport(String content) {
 			  RootPanel.get("Details").add(vPanel);
 			final Button sendSucheButton = new Button("Suchen");
 			final Label beitragSuchen = new Label ("Text eingeben");
@@ -126,7 +129,7 @@ public class InfosVonBeitragReport extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			vPanel.clear();
-			InfosVonBeitragReport infosVonB = new InfosVonBeitragReport("");
+			FormInfosVonBeitragReport infosVonB = new FormInfosVonBeitragReport("");
 			vPanel.add(infosVonB);
 			
 			    

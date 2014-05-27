@@ -1,17 +1,14 @@
 package de.hdm.gruppe6.itprojekt.client;
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse UserTrefferliste erstellt die Flextable von der UserSuche.
+ */
 
 import java.util.Vector;
-
-
-
-
-
-
-//import com.google.appengine.api.users.User;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -123,9 +120,6 @@ public class UserTrefferliste{
 		// Erstellen einer flexiblen Tabelle
 		final FlexTable flexTableUser = new FlexTable();
 		
-		//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
-//		DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
-		
 		//Spaltenbezeichnungen hinzufügen
 		flexTableUser.setText(0, 0, "ID");
 		flexTableUser.setText(0, 1, "Name");
@@ -197,21 +191,7 @@ public class UserTrefferliste{
 				
 			}
 		});
-//		pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
-//
-//					@Override
-//					public void onFailure(Throwable caught) {
-//
-//					}
-//
-//					@Override
-//					public void onSuccess(Vector<User> result) {
-//
-//					}
-//
-//				}
-//
-//				);
+
 		mainPanelUser.add(flexTableUser);
 		// das Flextable wird dem mainPanelUser hinzugefügt.
 		return mainPanelUser;

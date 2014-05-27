@@ -62,38 +62,37 @@ public class TextbeitragMapper {
 						+ uid
 						+ "','"
 						+ tmstamp
-						+ "','" 
-						+ pid + "') ");
+						+ "','" + pid + "') ");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} 
-//		finally {
-//			DBVerbindung.closeAll(null, stmt, con);
-//		}
-		return textbeitrag;
-	}
-
-	public Textbeitrag editieren(Textbeitrag textbeitrag) throws Exception {
-		Connection con = DBVerbindung.connection();
-		Statement stmt = null;
-		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE textbeitrag "
-					+ "SET ErstellungsZeitpunkt =\""
-					+ textbeitrag.getErstellungsZeitpunkt() + "SET Text =\""
-					+ textbeitrag.getText() + "\" WHERE TextbeitragID="
-					+ textbeitrag.getId());
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
 		}
+		// finally {
+		// DBVerbindung.closeAll(null, stmt, con);
+		// }
 		return textbeitrag;
 	}
+
+	 public Textbeitrag editieren(Textbeitrag textbeitrag) throws Exception {
+	 Connection con = DBVerbindung.connection();
+	 Statement stmt = null;
+	 Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+	 String sql = "UPDATE textbeitrag SET ErstellungsZeitpunkt ='"+ tmstamp+"', Text ='" + textbeitrag.getText() + "' WHERE TextbeitragID="+ textbeitrag.getId();
+	 try {
+	 stmt = con.createStatement();
+	 stmt.executeUpdate(sql);
+
+	 } catch (SQLException e2) {
+	 e2.printStackTrace();
+	 throw new Exception("Datenbank fehler!" + e2.toString());
+	 }
+
+	 // finally {
+	 // DBVerbindung.closeAll(null, stmt, con);
+	 // }
+	 return textbeitrag;
+	 }
 
 	public void loeschen(Textbeitrag textbeitrag) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -108,9 +107,11 @@ public class TextbeitragMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
 		}
+
+		// finally {
+		// DBVerbindung.closeAll(null, stmt, con);
+		// }
 		return;
 	}
 

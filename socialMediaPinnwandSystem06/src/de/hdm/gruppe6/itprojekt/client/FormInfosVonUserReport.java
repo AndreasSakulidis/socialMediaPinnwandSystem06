@@ -1,14 +1,15 @@
 package de.hdm.gruppe6.itprojekt.client;
 
-
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse FormInfosVonUserReport enthält die Auswahlmaske.
+ */
 import java.util.Date;
 
-import com.google.gwt.core.client.GWT;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -22,26 +23,18 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
-import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
-import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
-
-public class InfosVonUserReport extends  Composite {
+public class FormInfosVonUserReport extends  Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel dPanel = new HorizontalPanel();
-//	private VerticalPanel d2Panel = new VerticalPanel();
-//	
+
 	private FlexTable infoFlexTable = new FlexTable();
-	private Textbeitrag textb = new Textbeitrag();
-//	final Button datum = new Button ("Datum auswählen");
 	final Button zuruck = new Button ("zurueck");
 	final Label title = new Label("Report: Informationen von einem User");
 	
-	public InfosVonUserReport(String content) {
+	public FormInfosVonUserReport(String content) {
 		RootPanel.get("Details").add(vPanel);
 		RootPanel.get("Details").add(dPanel);
-//		RootPanel.get("Details").add(d2Panel);
-//		
 		
 		
 		final Button sendSucheButton = new Button("Suchen");
@@ -151,7 +144,7 @@ public class InfosVonUserReport extends  Composite {
 		    		public void onClick(ClickEvent event) {
 		    			vPanel.clear();
 		    			dPanel.clear();
-		    			InfosVonUserReport infosVonU = new InfosVonUserReport("");
+		    			FormInfosVonUserReport infosVonU = new FormInfosVonUserReport("");
 		    			vPanel.add(infosVonU);
 		    		
 		    			}

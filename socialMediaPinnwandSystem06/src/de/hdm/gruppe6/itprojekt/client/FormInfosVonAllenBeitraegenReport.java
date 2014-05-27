@@ -1,4 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 
+ * Die Klasse FormInfosVonALlenBeitraegenReport enthält die Auswahlmaske.
+ */
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -6,15 +11,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
+
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 
 
 
-		public class InfosVonAllenBeitraegenReport extends Composite {
+		public class FormInfosVonAllenBeitraegenReport extends Composite {
 			
 			private VerticalPanel vPanel = new VerticalPanel();
 			private FlexTable postFlexTable = new FlexTable();
@@ -28,7 +31,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 			 * @param content
 			 */
 			
-			public InfosVonAllenBeitraegenReport(String content){
+			public FormInfosVonAllenBeitraegenReport(String content){
 				initWidget(this.vPanel);
 				vPanel.add(title);
 				title.addStyleName("title");
