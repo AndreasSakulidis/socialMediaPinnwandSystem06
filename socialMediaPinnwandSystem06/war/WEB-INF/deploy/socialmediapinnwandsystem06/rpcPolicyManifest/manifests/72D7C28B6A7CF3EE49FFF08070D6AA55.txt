@@ -1,0 +1,2 @@
+serviceClass: de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService
+path: A9B8110F6E4B44B8CC7EB9C59973E1AD.gwt.rpc
