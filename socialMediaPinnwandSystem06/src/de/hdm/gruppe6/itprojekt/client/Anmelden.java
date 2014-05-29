@@ -1,13 +1,16 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse Anmelden erhält das Formular Anmelden. Der User kann sich hier registrieren oder mit seinem bereits bestehenden Konto einloggen.
+ * Die Klasse Anmelden erhï¿½lt das Formular Anmelden. Der User kann sich hier registrieren oder mit seinem bereits bestehenden Konto einloggen.
  */
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -26,7 +29,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class Anmelden{
 	/**
-	 * Hier werden die Panels und die Widgets für die Anmeldung festgelegt.
+	 * Hier werden die Panels und die Widgets fï¿½r die Anmeldung festgelegt.
 	 */
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
@@ -39,7 +42,7 @@ public class Anmelden{
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 
 	/**
-	 * Hier werden die Panels und die Widgets für die Registrierung festgelegt.
+	 * Hier werden die Panels und die Widgets fï¿½r die Registrierung festgelegt.
 	 */
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Label lbRname = new Label("Name");
@@ -66,7 +69,7 @@ public class Anmelden{
 	public Widget anmelden() {
 		
 		/**
-		 * Die Widgets für die Anmeldung werden dem loginPanel hinzugefügt.
+		 * Die Widgets fï¿½r die Anmeldung werden dem loginPanel hinzugefï¿½gt.
 		 */
 		loginPanel.add(lbname);
 		loginPanel.add(tbName);
@@ -81,7 +84,7 @@ public class Anmelden{
 //		vPanel.add(addPanel);
 		
 		/**
-		 * Die Widgets für die Registrierung werden dem addPanel hinzugefügt.
+		 * Die Widgets fï¿½r die Registrierung werden dem addPanel hinzugefï¿½gt.
 		 */
 		addPanel.add(regi);
 		addPanel.add(lbRname);
@@ -103,17 +106,18 @@ public class Anmelden{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				String a = "";
 
 				System.out.println("Email: " + tbEmail.getText() + " Vorname "
 						+ tbRname.getText() + " Nachname "
 						+ tbNachname.getText() + " Nickname "
 						+ tbNick.getText() + " Passwort " + tbRPasswort);
 				if (!tbEmail.getText().matches(EMAIL_PATTERN)
-						|| tbRname.getText().equals(null)
-						|| tbNachname.getText().equals(null)
-						|| tbNick.getText().equals(null)
-						|| tbRPasswort.equals(null)) {
-					Window.alert("Gib eine gültige E-Mail Adresse ein!");
+						|| tbRname.getText().equals(a)
+						|| tbNachname.getText().equals(a)
+						|| tbNick.getText().equals(a)
+						|| tbRPasswort.equals(a)) {
+					Window.alert("Gib eine gï¿½ltige E-Mail Adresse ein!");
 				} else {
 
 					socialmedia.userAnlegen(tbRname.getText(),
@@ -167,6 +171,8 @@ public class Anmelden{
 
 									Cookies.setCookie("SocialMedia6",
 											result.getNickname());
+									Cookies.setCookie("SocialMedia6ID",
+											String.valueOf(result.getId()));
 
 									RootPanel.get("Details").clear();
 
@@ -210,15 +216,129 @@ public class Anmelden{
 
 			}
 		});
+		
+		/**
+		 * Der tbEmail Textbox wird der KeyPressHandler hinzugefï¿½gt.
+		 */
 
-			
+		tbEmail.addKeyPressHandler(new KeyPressHandler() {
+			String a = "";
+			public void onKeyPress(KeyPressEvent event) {
+				System.out.println("Email: " + tbEmail.getText() + " Vorname "
+						+ tbRname.getText() + " Nachname "
+						+ tbNachname.getText() + " Nickname "
+						+ tbNick.getText() + " Passwort " + tbRPasswort);
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+					if (!tbEmail.getText().matches(EMAIL_PATTERN)
+							|| tbRname.getText().equals(a)
+							|| tbNachname.getText().equals(a)
+							|| tbNick.getText().equals(a)
+							|| tbRPasswort.equals(a)) {
+						Window.alert("Gib eine gï¿½ltige E-Mail Adresse ein!");
+					} else {
+
+						socialmedia.userAnlegen(tbRname.getText(),
+								tbNachname.getText(), tbNick.getText(),
+								tbEmail.getText(), tbRPasswort.getText(),
+								new AsyncCallback<User>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert("Anlegen Fehlgeschlagen: "
+												+ caught.getMessage());
+
+									}
+
+									@Override
+									public void onSuccess(User result) {
+										if (result == null) {
+											Window.alert("Nickname exisitert bereits!");
+										} else {
+											Window.alert("Anlegen erfolgreich!");
+										}
+									}
+								});
+					}
+
+				}
+			}
+		});
+		
+		/**
+		 * Dem Passworttextbox wird der KeyPressHandler hinzugefï¿½gt.
+		 */
+
+		tbPasswort.addKeyPressHandler(new KeyPressHandler() {
+			public void onKeyPress(KeyPressEvent event) {
+				
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+
+				socialmedia.userAnmelden(tbName.getText(),
+						tbPasswort.getText(), new AsyncCallback<User>() {
+
+							public void onSuccess(User result) {
+
+								// ------------------------------------------------------------------
+								
+									if (result.getId() != 0) {
+
+										Cookies.setCookie("SocialMedia6",
+												result.getNickname());
+										Cookies.setCookie("SocialMedia6ID",
+												String.valueOf(result.getId()));
+
+										RootPanel.get("Details").clear();
+
+										Window.alert("Erfolgreich angemeldet... Nickname: "
+												+ result.getNickname()
+												+ " und Passwort"
+												+ result.getPasswort());
+										tbName.setVisible(false);
+										tbPasswort.setVisible(false);
+										loginButton.setVisible(false);
+
+										lbRname.setVisible(false);
+										tbRname.setVisible(false);
+										lbRs.setVisible(false);
+										tbNachname.setVisible(false);
+										lbNick.setVisible(false);
+										tbNick.setVisible(false);
+										lbRPasswort.setVisible(false);
+										tbRPasswort.setVisible(false);
+										lbEmail.setVisible(false);
+										tbEmail.setVisible(false);
+										regButton.setVisible(false);
+										regi.setVisible(false);
+
+										// TODO wie bei EntryPoint Klasse
+										SocialMediaFrontend smf = new SocialMediaFrontend();
+										smf.angemeldet();
+										// --------------------------------------------------------------------------------------------------------
+										// TODO ... Alles was da drunter ist,
+										// ist
+										// nicht richtig hier!
+									}
+								}
+							
+
+							@Override
+							public void onFailure(Throwable caught) {
+								Window.alert("Ein fehler ist aufgetreten: "
+										+ caught.getMessage());
+
+							}
+						});
+				}//NEUU
+			}
+		});	
 		
 		
 		/**
 		 *  Dem Widgets werden Stylenames zugeordnet. 
 		 */
-		regi.addStyleName("regiÜber");
-		anmelden.addStyleName("AnmeldeÜber");
+		
+		regi.addStyleName("regiï¿½ber");
+		anmelden.addStyleName("Anmeldeï¿½ber");
 		hPanel.addStyleName("Anmelden");
 		vPanel.addStyleName("Regi");
 		

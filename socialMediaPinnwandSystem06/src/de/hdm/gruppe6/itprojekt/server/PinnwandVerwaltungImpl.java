@@ -21,7 +21,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 /**
- * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * @author Ezgi Demirbilek, ï¿½zlem Gï¿½l, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies
  */
 
@@ -89,9 +89,9 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 			String nachname, String nickname, String email, String pw) throws Exception {
 		User user = new User(); 
 		Pinnwand pinnwand = new Pinnwand(); 
-		boolean check = this.userMapper.nicknamePrüfen(nickname);
+		boolean check = this.userMapper.nicknamePruefen(nickname);
 		System.out.println("Impl userAnlegen check: "+check+" nickname: "+nickname);
-		if(!this.userMapper.nicknamePrüfen(nickname)){
+		if(!this.userMapper.nicknamePruefen(nickname)){
 //			Window.alert("Nickname schon vergeben");
 			System.out.println("Nickname schon vergeben");
 		return null;
@@ -134,7 +134,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 }
 
 /**
- * Löschen des Users aus der Datenbank.
+ * Lï¿½schen des Users aus der Datenbank.
  */
 	public void userLoeschen(User user) throws Exception {
 
@@ -166,7 +166,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		  }
 	 
 	 /**
-	  * Zählen der Textbeiträge von einem User.
+	  * Zï¿½hlen der Textbeitrï¿½ge von einem User.
 	  */
 	 public int zaehleTextbeitraegeVonUser(User user) 
 			 throws Exception{
@@ -184,7 +184,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	 }
 	
 	 /**
-	  * Zählen der Abonnenten des Users.
+	  * Zï¿½hlen der Abonnenten des Users.
 	  */
 	 public int zaehleAbosVonUser(User user) 
 			 throws Exception {
@@ -193,7 +193,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	 }
 	 
 	 /**
-	  * Zählen der Kommentare von einem User.
+	  * Zï¿½hlen der Kommentare von einem User.
 	  */
 	 public int zaehleKommentareVonUser(User user) 
 			 throws Exception {
@@ -227,7 +227,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 			return pinnwandMapper.editieren(pinnwand, eigentuemer);
 	}
 		/**
-		 * Löschung des Pinnwands.
+		 * Lï¿½schung des Pinnwands.
 		 */
 		public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception {
 
@@ -242,7 +242,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 			  }
 		 
 		/**
-		 * Finden von allen Pinnwänden.
+		 * Finden von allen Pinnwï¿½nden.
 		 */
 		 public Vector<Pinnwand> findeAllePinnwaende()
 			      throws Exception {
@@ -254,16 +254,18 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Anlegen eines Abonnements.
 	 */
-		public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception {
+		public Abonnement aboAnlegen(User user, String id) throws Exception {
 
 				Abonnement abonnement = new Abonnement();
+				int userID = Integer.parseInt(id); 
+				int pid = pinnwandMapper.findeAnhandUserID(userID);
 			
-				return abonnementMapper.anlegen(abonnement);
+				return abonnementMapper.anlegen(abonnement, userID, pid);
 			}
 
 	
 		/**
-		 * Löschen des Abonnements.
+		 * Lï¿½schen des Abonnements.
 		 */
 		public void aboLoeschen(Abonnement abonnement) throws Exception {
 
@@ -283,11 +285,13 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 * Anlegen eines Kommentars in der Datenbank.
 		 */
 		 
-			public Kommentar kommentarAnlegen(String text) throws Exception {
+			public Kommentar kommentarAnlegen(String text, String uid, int tid) throws Exception {
 
 					Kommentar kommentar= new Kommentar();
 					kommentar.setText(text);
-					return kommentarMapper.anlegen(kommentar);
+					int userID = Integer.parseInt(uid);
+					
+					return kommentarMapper.anlegen(kommentar, userID, tid);
 				}
 
 			/**
@@ -304,7 +308,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 			}
 			
 			/**
-			 * Löschen des Kommentars.
+			 * Lï¿½schen des Kommentars.
 			 */
 			public void kommentarLoeschen(String text, int id) throws Exception {
 
@@ -334,15 +338,19 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		/**
 		 * Anlegen einer Textbeitrag in der Datenbank.
 		 */
-			public Textbeitrag textbeitragAnlegen(String text) throws Exception {
+			public Textbeitrag textbeitragAnlegen(String text, String id) throws Exception {
 
-						Textbeitrag textbeitrag= new Textbeitrag();
-						textbeitrag.setText(text);
-						
+				Textbeitrag textbeitrag= new Textbeitrag();
+				textbeitrag.setText(text);
+				
+				int userID = Integer.parseInt(id); 
+				int pid = pinnwandMapper.findeAnhandUserID(userID);
+				System.out.println("Das ist die PinnwandID " + pinnwandMapper.findeAnhandUserID(userID) + " Das ist die UserID" + userID);
 
-						
-						return textbeitragMapper.anlegen(textbeitrag);
-					}
+				
+				return textbeitragMapper.anlegen(textbeitrag, userID, pid);
+			}
+
 
 			/**
 			 * Bearbeitung eines Textbeitrags.
@@ -357,7 +365,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 			}
 			
 			/**
-			 * Löschen eines Textbeitrags.
+			 * Lï¿½schen eines Textbeitrags.
 			 */
 			public void textbeitragLoeschen(String text, int id) throws Exception {
 
@@ -377,7 +385,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 						  }
 			
 			 /**
-			  * Finden von Kommentaren zu Textbeiträgen.
+			  * Finden von Kommentaren zu Textbeitrï¿½gen.
 			  */
 			 public Vector <Kommentar> findeKommentareZuTextbeitrag( Textbeitrag textbeitrag)
 				      throws Exception {
@@ -386,7 +394,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 				  }
 			 
 			 /**
-			  * Zählen von Likes zu einem Textbeitrag.
+			  * Zï¿½hlen von Likes zu einem Textbeitrag.
 			  */
 			 public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag)
 		 		      throws Exception {
@@ -395,7 +403,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 		  }
 			 
 			/**
-			 * Finden von allen Textbeiträgen.
+			 * Finden von allen Textbeitrï¿½gen.
 			 */
 			 
 		     public Vector <Textbeitrag> findeAlleTextbeitraege()
@@ -414,7 +422,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		    	 return this.textbeitragMapper.findeUserZuTextbeitrag(textbeitrag);
 		     }
 		     /**
-		      * Zählen von Kommentaren zu einem Textbeitrag.
+		      * Zï¿½hlen von Kommentaren zu einem Textbeitrag.
 		      */
 		     public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag)
 		     				throws Exception {
@@ -427,14 +435,15 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	 * 	Anlegen einer Like in der Datenbank.
 	 */
 		     
-		     public Like likeAnlegen() throws Exception {
+		     public Like likeAnlegen(String uid, int tid) throws Exception {
 
-		 		Like like= new Like();
-		 		return likeMapper.anlegen(like);
-		 	}
+			 		Like like= new Like();
+			 		int userID = Integer.parseInt(uid);
+			 		return likeMapper.anlegen(like, userID, tid);
+			 	}
 
 		     /**
-		      * Löschen einer Like.
+		      * Lï¿½schen einer Like.
 		      */
 		     
 		 	public void likeLoeschen(Like like) throws Exception {

@@ -14,9 +14,9 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 /**
- * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * @author Ezgi Demirbilek, ï¿½zlem Gï¿½l, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies
- * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Verwaltung von Pinnwänden.
+ * Synchrone Schnittstelle fï¿½r eine RPC-fï¿½hige Klasse zur Verwaltung von Pinnwï¿½nden.
  */
 
 @RemoteServiceRelativePath("pinnwandVerwaltung")
@@ -53,12 +53,12 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	  */
 	public Vector<User> findeUserAnhandNachname(String nachname) throws Exception;
 	/**
-	 * Löschen des Users aus der Datenbank.
+	 * Lï¿½schen des Users aus der Datenbank.
 	 */
 
 	public void userLoeschen(User user) throws Exception;
 	 /**
-	  * Zählen der Textbeiträge von einem User.
+	  * Zï¿½hlen der Textbeitrï¿½ge von einem User.
 	  */
 	public int zaehleTextbeitraegeVonUser(User user) throws Exception;
 	 /**
@@ -67,11 +67,11 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user) throws Exception;
 	 /**
-	  * Zählen der Abonnements des Users.
+	  * Zï¿½hlen der Abonnements des Users.
 	  */
 	public int zaehleAbosVonUser(User user) throws Exception;
 	 /**
-	  * Zählen der Kommentare von einem User.
+	  * Zï¿½hlen der Kommentare von einem User.
 	  */
 	
 	public int zaehleKommentareVonUser(User user) throws Exception;
@@ -90,7 +90,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	  */
 	public Pinnwand pinnwandEditieren(Pinnwand pinnwand, User eigentuemer)throws Exception;
 	/**
-	 * Finden von allen Pinnwänden.
+	 * Finden von allen Pinnwï¿½nden.
 	 */
 	public Vector<Pinnwand> findeAllePinnwaende() throws Exception;
 	/**
@@ -98,16 +98,16 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 */
 	public Pinnwand findePinnwandAnhandID(int pinnwandID) throws Exception;
 	/**
-	 * Löschung des Pinnwands.
+	 * Lï¿½schung des Pinnwands.
 	 */
 	public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception;
 
 	/**
 	 * Anlegen eines Abonnements.
 	 */
-	public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception; 
+	public Abonnement aboAnlegen(User user, String id) throws Exception; 
 	/**
-	 * Löschen des Abonnements.
+	 * Lï¿½schen des Abonnements.
 	 */
 
 	public void aboLoeschen(Abonnement abonnement) throws Exception;
@@ -121,13 +121,13 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	/**
 	 * Anlegen eines Kommentars in der Datenbank.
 	 */
-	public Kommentar kommentarAnlegen(String text) throws Exception;
+	public Kommentar kommentarAnlegen(String text, String uid, int tid) throws Exception;
 	/**
 	 * Bearbeitung des Kommentars.
 	 */
 	public Kommentar kommentarEditieren(String text, int id) throws Exception;
 	/**
-	 * Löschen des Kommentars.
+	 * Lï¿½schen des Kommentars.
 	 */
 	public void kommentarLoeschen(String text, int id) throws Exception;
 	/**
@@ -144,13 +144,13 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 * Anlegen einer Textbeitrag in der Datenbank.
 	 */
 
-	public Textbeitrag textbeitragAnlegen(String text) throws Exception ;
+	public Textbeitrag textbeitragAnlegen(String text, String id) throws Exception ;
 	/**
 	 * Bearbeitung eines Textbeitrags.
 	 */
 	public Textbeitrag textbeitragEditieren(String text, int id) throws Exception;
 	/**
-	 * Löschen eines Textbeitrags.
+	 * Lï¿½schen eines Textbeitrags.
 	 */
 	public void textbeitragLoeschen(String text, int id) throws Exception ;
 	/**
@@ -159,15 +159,15 @@ public interface PinnwandVerwaltungService extends RemoteService {
 		
 	public Textbeitrag findeTextbeitragAnhandID (int textbeitragID) throws Exception;
 	 /**
-	  * Finden von Kommentaren zu Textbeiträgen.
+	  * Finden von Kommentaren zu Textbeitrï¿½gen.
 	  */
 	public Vector <Kommentar> findeKommentareZuTextbeitrag( Textbeitrag textbeitrag) throws Exception;
 	/**
-	  * Zählen von Likes zu einem Textbeitrag.
+	  * Zï¿½hlen von Likes zu einem Textbeitrag.
 	  */
 	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 	/**
-	 * Finden von allen Textbeiträgen.
+	 * Finden von allen Textbeitrï¿½gen.
 	 */
 	public Vector <Textbeitrag> findeAlleTextbeitraege() throws Exception;
 		
@@ -176,7 +176,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
      */
 	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 	  /**
-     * Zählen von Kommentaren zu einem Textbeitrag.
+     * Zï¿½hlen von Kommentaren zu einem Textbeitrag.
      */
 	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 	 
@@ -186,9 +186,9 @@ public interface PinnwandVerwaltungService extends RemoteService {
 * 	Anlegen einer Like in der Datenbank.
 */
 
-	public Like likeAnlegen() throws Exception;
+	public Like likeAnlegen(String uid, int tid) throws Exception;
 	/**
-     * Löschen einer Like.
+     * Lï¿½schen einer Like.
      */
 
 	public void likeLoeschen(Like like) throws Exception;

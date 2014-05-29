@@ -12,7 +12,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *  In Anlehnung an Hr. Prof. Dr. Thies
  * Die Klasse AbonnementMapper bildet die Abonnement-Objekte auf eine relationale Datenbank ab.
  *  
@@ -22,8 +22,8 @@ public class AbonnementMapper {
 	/**
 	   * Die Klasse AbonnementMapper wird nur einmal instantiiert. 
 	   * 
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r
+	   * sï¿½mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   * @see abonnementMapper()
@@ -31,7 +31,7 @@ public class AbonnementMapper {
 	
 	private static AbonnementMapper abonnementMapper = null;
 	  /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected AbonnementMapper() {
@@ -39,7 +39,7 @@ public class AbonnementMapper {
 	 /**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>AbonnementMapper.abonnementMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine einzige
 	   * Instanz von <code>AbonnementMapper</code> existiert.
 	   * <p>
 	   * 
@@ -63,7 +63,7 @@ public class AbonnementMapper {
 	 * @throws Exception
 	 */
 
-	public Abonnement anlegen(Abonnement abo) throws Exception {
+	public Abonnement anlegen(Abonnement abo, int uid, int pid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -71,32 +71,28 @@ public class AbonnementMapper {
 			Statement stm = con.createStatement();
 
 			/*
-			 * Zunächst schauen wir nach, welches der momentan höchste
-			 * Primärschlüsselwert ist.
+			 * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
+			 * PrimÃ¤rschlÃ¼sselwert ist.
 			 */
 			ResultSet rs = stm.executeQuery("SELECT MAX(AboID) AS maxid "
 					+ "FROM abonnement ");
 
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			// Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 				/*
-				 * abo erhält den bisher maximalen, nun um 1 inkrementierten
-				 * Primärschlüssel.
+				 * abo erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
+				 * PrimÃ¤rschlÃ¼ssel.
 				 */
 				abo.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-
-				int pid = 0;
-				int uid = 0;
-
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO abonnement (AboID, UserID, PinnwandID, ErstellungsZeitpunkt)"
 						// + "VALUES ("
 						// + abo.getId()
 						// + ","
 						// + abo.getUser() // TODO OBJEKT? eig-> String oder int
-						// (Methodenparameter auch ändern
+						// (Methodenparameter auch Ã¤ndern
 						// + "','"
 						// + abo.getPinnwand() //TODO OBJEKT? eig-> String oder
 						// int
@@ -122,9 +118,8 @@ public class AbonnementMapper {
 		}
 		return abo;
 	}
-	
 	/**
-	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * Methode um einen Datensatz aus der Datenbank zu lï¿½schen
 	 * 
 	 * @param abonnement
 	 * @return
@@ -151,7 +146,7 @@ public class AbonnementMapper {
 	}
 	
 	 /** 
-	  * Methode mit der man ein Abonnement über ihre ID finden kann.
+	  * Methode mit der man ein Abonnement ï¿½ber ihre ID finden kann.
 	   * @param aboID
 	   * @return Abonnement-Objekt
 	   * @throws Exception
@@ -169,11 +164,11 @@ public class AbonnementMapper {
 					.executeQuery("SELECT AboID, User, Pinnwand, ErstellungsZeitpunkt" // TODO
 																						// OBJEKT
 																						// wird
-																						// übergeben
+																						// ï¿½bergeben
 																						// kein
 																						// WERT
 							+ "WHERE AboID=" + aboID + " ORDER BY AboID");
-			// Für jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+			// Fï¿½r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
 			// erstellt.
 			if (rs.next()) {
 				Abonnement abonnement = new Abonnement();

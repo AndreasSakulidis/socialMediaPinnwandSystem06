@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse Beitrag ermöglicht den angemeldeten User einen Textbeitrag zu posten.
+ * Die Klasse Beitrag ermï¿½glicht den angemeldeten User einen Textbeitrag zu posten.
  */
 import java.util.Date;
 
@@ -11,6 +11,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -50,7 +51,7 @@ public class Beitrag extends Composite {
 		initWidget(this.vPanel);
 //		lbId.setText(String.valueOf(id));
 /**
- * Die Textbeiträge werden in einer Flextable gepostet.
+ * Die Textbeitrï¿½ge werden in einer Flextable gepostet.
  */
 		postFlexTable.setWidget(0, 0, post);
 		postFlexTable.setWidget(1, 1, loeschen);
@@ -78,9 +79,10 @@ public class Beitrag extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				KommentarErstellen kommentarErstellen = new KommentarErstellen();
+				int tid = Integer.parseInt(lbId.getText());
 				//kommentarErstellen.setComment(content);
 //				Textbeitrag tb = new Textbeitrag();
-				vPanel.add(kommentarErstellen.setComment(content));
+				vPanel.add(kommentarErstellen.setComment(content, tid));
 
 
 
@@ -88,7 +90,7 @@ public class Beitrag extends Composite {
 
 		});
 		/**
-		 * Mit einem Klick auf den Loeschen Button wird der Textbeitrag gelöscht.
+		 * Mit einem Klick auf den Loeschen Button wird der Textbeitrag gelï¿½scht.
 		 * 
 		 */
 		
@@ -118,7 +120,7 @@ public class Beitrag extends Composite {
 
 
 		/**
-		 * Mit einem Klick auf den Bearbeiten Button wird ein Dialogbox geöffnet, indem der User den Textbeitrag bearbeiten kann.
+		 * Mit einem Klick auf den Bearbeiten Button wird ein Dialogbox geï¿½ffnet, indem der User den Textbeitrag bearbeiten kann.
 		 * 
 		 */
 		bearbeiten.addClickHandler(new ClickHandler() {
@@ -176,7 +178,9 @@ public class Beitrag extends Composite {
 		liken.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				pinnwandVerwaltung.likeAnlegen(new AsyncCallback<Like>(){
+				String uid = Cookies.getCookie("SocialMedia6ID");
+				int tid = Integer.parseInt(lbId.getText());
+				pinnwandVerwaltung.likeAnlegen(uid, tid, new AsyncCallback<Like>(){
 					public void onFailure(Throwable caught) {
 						Window.alert("Fehler beim Liken!");
 					}
@@ -190,7 +194,8 @@ public class Beitrag extends Composite {
 		post.setText(content);
 
 		String text = post.getText();
-		pinnwandVerwaltung.textbeitragAnlegen(text,
+		String id = Cookies.getCookie("SocialMedia6ID");
+		pinnwandVerwaltung.textbeitragAnlegen(text, id,
 				new AsyncCallback<Textbeitrag>() {
 					@Override
 					public void onFailure(Throwable caught) {

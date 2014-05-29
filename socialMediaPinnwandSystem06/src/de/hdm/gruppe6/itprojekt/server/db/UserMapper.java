@@ -14,7 +14,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *  In Anlehnung an Hr. Prof. Dr. Thies
  * Die Klasse UserMapper bildet die Kommentar-Objekte auf eine relationale Datenbank ab.
  *  
@@ -23,15 +23,15 @@ public class UserMapper {
 	/**
 	   * Die Klasse UserMapper wird nur einmal instantiiert. 
 	   * 
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r
+	   * sï¿½mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   * @see userMapper()
 	   */
 	private static UserMapper userMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 
@@ -40,7 +40,7 @@ public class UserMapper {
 	/**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>UserMapper.userMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine einzige
 	   * Instanz von <code>UserMapper</code> existiert.
 	   * <p>
 	   * 
@@ -70,17 +70,17 @@ public class UserMapper {
 			stmt = con.createStatement();
 
 			/*
-			 * Zunächst schauen wir nach, welches der momentan höchste
-			 * Primärschlüsselwert ist.
+			 * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+			 * Primï¿½rschlï¿½sselwert ist.
 			 */
 			ResultSet rs = stmt.executeQuery("SELECT MAX(UserID) AS maxid "
 					+ "FROM user ");
 
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 				/*
-				 * a erhölt den bisher maximalen, nun um 1 inkrementierten
-				 * Primärschlüssel.
+				 * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+				 * Primï¿½rschlï¿½ssel.
 				 */
 				user.setId(rs.getInt("maxid") + 1);
 
@@ -117,14 +117,14 @@ public class UserMapper {
 		return user;
 	}
 	/**
-	 * Methode um den Nickname auf Verfügbarkeit zu prüfen.
+	 * Methode um den Nickname auf Verfï¿½gbarkeit zu prï¿½fen.
 	 * 
 	 * @param name
 	 * @return 
 	 * @throws Exception
 	 */
 
-	public boolean nicknamePrüfen(String name) throws Exception {
+	public boolean nicknamePruefen(String name) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -221,7 +221,7 @@ public class UserMapper {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 		} 
-//		Nur benützen, wenn man mit Google SQL Cloud verbidet!!!
+//		Nur benï¿½tzen, wenn man mit Google SQL Cloud verbidet!!!
 //		finally {
 //			DBVerbindung.closeAll(rs, stmt, con);
 //		}
@@ -258,7 +258,7 @@ public class UserMapper {
 	}
 	
 	/**
-	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * Methode um einen Datensatz aus der Datenbank zu lï¿½schen
 	 * 
 	 * @param user
 	 * @return
@@ -330,7 +330,7 @@ public class UserMapper {
 
 	}
 	 /** 
-	  * Methode mit der man einen User über ihr ID finden kann.
+	  * Methode mit der man einen User ï¿½ber ihr ID finden kann.
 	   * @param userID
 	   * @return User-Objekt
 	   * @throws Exception
@@ -374,7 +374,7 @@ public class UserMapper {
 	}
 
 	 /** 
-	  * Alle Datensätze aus der Tabelle User werden herausgelesen.
+	  * Alle Datensï¿½tze aus der Tabelle User werden herausgelesen.
 	   * @return 
 	   * @throws Exception
 	   */
@@ -479,7 +479,7 @@ public class UserMapper {
 		return result;
 	}
 	 /** 
-	  * Alle Abonnenten von einen Users werden gezählt.
+	  * Alle Abonnenten von einen Users werden gezï¿½hlt.
 	  * @param user
 	   * @return 
 	   * @throws Exception
@@ -508,7 +508,7 @@ public class UserMapper {
 
 	}
 	 /** 
-	  * Alle Kommentare von einem User werden gezählt.
+	  * Alle Kommentare von einem User werden gezï¿½hlt.
 	  * @param user
 	   * @return 
 	   * @throws Exception

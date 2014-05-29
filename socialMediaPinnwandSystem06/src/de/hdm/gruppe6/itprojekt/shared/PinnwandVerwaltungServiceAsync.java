@@ -12,15 +12,14 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 /**
- * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * @author Ezgi Demirbilek, ï¿½zlem Gï¿½l, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies
- * Diese Klasse ist das asynchrone Gegenstück des Interface {@link PinnwandVerwaltungService}. Sie wird automatisch
- * durch das Google Plugin erstellt. Für weitere Details siehe das synchrone Interface.
+ * Diese Klasse ist das asynchrone Gegenstï¿½ck des Interface {@link PinnwandVerwaltungService}. Sie wird automatisch
+ * durch das Google Plugin erstellt. Fï¿½r weitere Details siehe das synchrone Interface.
  */
 public interface PinnwandVerwaltungServiceAsync {
 
-	void aboAnlegen(User user, Pinnwand pinnwand,
-			AsyncCallback<Abonnement> callback);
+	void aboAnlegen(User user, String id, AsyncCallback<Abonnement> callback);
 	
 
 	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
@@ -56,13 +55,13 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void zaehleTextbeitraegeVonUser(User user, AsyncCallback<Integer> callback);
 	
-	void kommentarAnlegen(String text, AsyncCallback<Kommentar> callback);
+	void kommentarAnlegen(String text, String uid, int tid, AsyncCallback<Kommentar> callback);
 
 	void kommentarEditieren(String text, int id, AsyncCallback<Kommentar> callback);
 
 	void kommentarLoeschen(String text, int id, AsyncCallback<Void> callback);
 
-	void likeAnlegen(AsyncCallback<Like> callback);
+	void likeAnlegen(String uid, int tid, AsyncCallback<Like> callback);
 
 	void likeLoeschen(Like like, AsyncCallback<Void> callback);
 
@@ -72,7 +71,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Void> callback);
 
-	void textbeitragAnlegen(String text, AsyncCallback<Textbeitrag> callback);
+	void textbeitragAnlegen(String text, String id, AsyncCallback<Textbeitrag> callback);
 
 	void textbeitragEditieren(String text, int id,
 			AsyncCallback<Textbeitrag> callback);

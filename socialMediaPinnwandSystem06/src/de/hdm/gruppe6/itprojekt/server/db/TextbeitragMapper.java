@@ -13,7 +13,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *  In Anlehnung an Hr. Prof. Dr. Thies
  * Die Klasse TextbeitragMapper bildet die Textbeitrag-Objekte auf eine relationale Datenbank ab.
  *  
@@ -23,8 +23,8 @@ public class TextbeitragMapper {
 	/**
 	   * Die Klasse TextbeitragMapper wird nur einmal instantiiert. 
 	   * 
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r
+	   * sï¿½mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   * @see textbeitragMapper()
@@ -32,7 +32,7 @@ public class TextbeitragMapper {
 
 	private static TextbeitragMapper textbeitragMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 
@@ -42,7 +42,7 @@ public class TextbeitragMapper {
 	/**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>TextbeitragMapper.textbeitragMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine einzige
 	   * Instanz von <code>TextbeitragMapper</code> existiert.
 	   * <p>
 	   * 
@@ -67,7 +67,7 @@ public class TextbeitragMapper {
 	 * @throws Exception
 	 */
 
-	public Textbeitrag anlegen(Textbeitrag textbeitrag) throws Exception {
+	public Textbeitrag anlegen(Textbeitrag textbeitrag, int uid, int pid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -75,24 +75,22 @@ public class TextbeitragMapper {
 			stmt = con.createStatement();
 
 			/*
-			 * Zunächst schauen wir nach, welches der momentan höchste
-			 * Primärschlüsselwert ist.
+			 * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+			 * Primï¿½rschlï¿½sselwert ist.
 			 */
 			ResultSet rs = stmt
 					.executeQuery("SELECT MAX(TextbeitragID) AS maxid "
 							+ "FROM textbeitrag ");
 
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 				/*
-				 * a erhält den bisher maximalen, nun um 1 inkrementierten
-				 * Primärschlüssel.
+				 * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+				 * Primï¿½rschlï¿½ssel.
 				 */
 				textbeitrag.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-				int uid = 0;
-				int pid = 0;
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, Text, UserID, ErstellungsZeitpunkt, PinnwandID)"
 						+ "VALUES ('"
@@ -142,7 +140,7 @@ public class TextbeitragMapper {
 	 }
 
 		/**
-		 * Methode um einen Datensatz aus der Datenbank zu löschen
+		 * Methode um einen Datensatz aus der Datenbank zu lï¿½schen
 		 * 
 		 * @param textbeitrag
 		 * @return
@@ -169,7 +167,7 @@ public class TextbeitragMapper {
 		return;
 	}
 	 /** 
-	  * Methode mit der man ein Textbeitrag über ihre ID finden kann.
+	  * Methode mit der man ein Textbeitrag ï¿½ber ihre ID finden kann.
 	   * @param textbeitragID
 	   * @return Textbeitrag-Objekt
 	   * @throws Exception
@@ -205,7 +203,7 @@ public class TextbeitragMapper {
 	}
 
 	 /** 
-	  * Alle Datensätze aus der Tabelle Textbeitrag werden herausgelesen.
+	  * Alle Datensï¿½tze aus der Tabelle Textbeitrag werden herausgelesen.
 	   * @return 
 	   * @throws Exception
 	   */
@@ -280,7 +278,7 @@ public class TextbeitragMapper {
 		return result;
 	}
 	 /** 
-	  * Alle Likes zu einem Textbeitrag werden gezählt.
+	  * Alle Likes zu einem Textbeitrag werden gezï¿½hlt.
 	  * @param textbeitrag
 	   * @return 
 	   * @throws Exception
@@ -309,7 +307,7 @@ public class TextbeitragMapper {
 
 	}
 	/** 
-	  * Alle Kommentare zu einem Textbeitrag werden gezählt.
+	  * Alle Kommentare zu einem Textbeitrag werden gezï¿½hlt.
 	  * @param textbeitrag
 	   * @return 
 	   * @throws Exception

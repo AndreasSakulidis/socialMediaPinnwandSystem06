@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.*;
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *  In Anlehnung an Hr. Prof. Dr. Thies
  * Die Klasse KommentarMapper bildet die Kommentar-Objekte auf eine relationale Datenbank ab.
  *  
@@ -19,15 +19,15 @@ public class KommentarMapper {
 	/**
 	   * Die Klasse KommentarMapper wird nur einmal instantiiert. 
 	   * 
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r
+	   * sï¿½mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   * @see kommentarMapper()
 	   */
 	private static KommentarMapper kommentarMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 
@@ -36,7 +36,7 @@ public class KommentarMapper {
 	/**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>KommentarMapper.kommentarMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine einzige
 	   * Instanz von <code>KommentarMapper</code> existiert.
 	   * <p>
 	   * 
@@ -60,7 +60,7 @@ public class KommentarMapper {
 	 * @throws Exception
 	 */
 
-	public Kommentar anlegen(Kommentar kommentar) throws Exception {
+	public Kommentar anlegen(Kommentar kommentar, int uid, int tid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -68,22 +68,21 @@ public class KommentarMapper {
 			Statement stm = con.createStatement();
 
 			/*
-			 * Zunächst schauen wir nach, welches der momentan höchste
-			 * Primärschlüsselwert ist.
+			 * Zunï¿½chst schauen wir nach, welches der momentan hï¿½chste
+			 * Primï¿½rschlï¿½sselwert ist.
 			 */
 			ResultSet rs = stm.executeQuery("SELECT MAX(KommentarID) AS maxid "
 					+ "FROM kommentar ");
 
-			// Wenn wir etwas zurückerhalten, kann dies nur einzeilig sein
+			// Wenn wir etwas zurï¿½ckerhalten, kann dies nur einzeilig sein
 			if (rs.next()) {
 				/*
-				 * a erhölt den bisher maximalen, nun um 1 inkrementierten
-				 * Primärschlüssel.
+				 * a erhï¿½lt den bisher maximalen, nun um 1 inkrementierten
+				 * Primï¿½rschlï¿½ssel.
 				 */
 				kommentar.setId(rs.getInt("maxid") + 1);
 				stmt = con.createStatement();
-				int uid = 0;
-				int tid = 0;
+
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO kommentar (KommentarID, Text, UserID, ErstellungsZeitpunkt, TextbeitragID)"
 						+ "VALUES ('"
@@ -132,7 +131,7 @@ public class KommentarMapper {
 		return kommentar;
 	}
 	/**
-	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * Methode um einen Datensatz aus der Datenbank zu lï¿½schen
 	 * 
 	 * @param kommentar
 	 * @return
@@ -158,7 +157,7 @@ public class KommentarMapper {
 		return;
 	}
 	 /** 
-	  * Methode mit der man ein Kommentar über ihre ID finden kann.
+	  * Methode mit der man ein Kommentar ï¿½ber ihre ID finden kann.
 	   * @param kommentarID
 	   * @return Kommentar-Objekt
 	   * @throws Exception
@@ -198,7 +197,7 @@ public class KommentarMapper {
 	}
 
 	 /** 
-	  * Alle Datensätze aus der Tabelle Kommentar werden herausgelesen.
+	  * Alle Datensï¿½tze aus der Tabelle Kommentar werden herausgelesen.
 	   * @return 
 	   * @throws Exception
 	   */

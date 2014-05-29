@@ -10,7 +10,7 @@ import java.util.Vector;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *  In Anlehnung an Hr. Prof. Dr. Thies
  * Die Klasse PinnwandMapper bildet die Pinnwand-Objekte auf eine relationale Datenbank ab.
  *  
@@ -20,8 +20,8 @@ public class PinnwandMapper {
 	/**
 	   * Die Klasse KommentarMapper wird nur einmal instantiiert. 
 	   * 
-	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
-	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal fï¿½r
+	   * sï¿½mtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
 	   * einzige Instanz dieser Klasse.
 	   * 
 	   * @see pinnwandMapper()
@@ -29,7 +29,7 @@ public class PinnwandMapper {
 
 	private static PinnwandMapper pinnwandMapper = null;
 	 /**
-	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * Geschï¿½tzter Konstruktor - verhindert die Mï¿½glichkeit, mit <code>new</code>
 	   * neue Instanzen dieser Klasse zu erzeugen.
 	   */
 	protected PinnwandMapper() {
@@ -37,7 +37,7 @@ public class PinnwandMapper {
 	/**
 	   * Diese statische Methode kann aufgrufen werden durch
 	   * <code>PinnwandMapper.pinnwandMapper()</code>. Sie stellt die
-	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Singleton-Eigenschaft sicher, indem Sie dafï¿½r sorgt, dass nur eine einzige
 	   * Instanz von <code>PinnwandMapper</code> existiert.
 	   * <p>
 	   * 
@@ -123,7 +123,7 @@ public class PinnwandMapper {
 		return pinnwand;
 	}
 	/**
-	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * Methode um einen Datensatz aus der Datenbank zu lï¿½schen
 	 * 
 	 * @param pinnwand
 	 * @return
@@ -149,7 +149,7 @@ public class PinnwandMapper {
 		return;
 	}
 	 /** 
-	  * Methode mit der man eine Pinnwand über ihre ID finden kann.
+	  * Methode mit der man eine Pinnwand ï¿½ber ihre ID finden kann.
 	   * @param pinnwandID
 	   * @return Pinnwand-Objekt
 	   * @throws Exception
@@ -188,7 +188,7 @@ public class PinnwandMapper {
 		return null;
 	}
 	 /** 
-	  * Alle Datensätze aus der Tabelle Pinnwand werden herausgelesen.
+	  * Alle Datensï¿½tze aus der Tabelle Pinnwand werden herausgelesen.
 	   * @return 
 	   * @throws Exception
 	   */
@@ -223,6 +223,39 @@ public class PinnwandMapper {
 		}
 
 		return result;
+	}
+
+	public int findeAnhandUserID(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT PinnwandID "
+							+ "FROM user "
+							+ "WHERE UserID="
+							+ userID);
+
+			if (rs.next()) {
+//				Pinnwand pinnwand = new Pinnwand();
+//				pinnwand.setId(rs.getInt("PinnwandID"));
+//				pinnwand.setErstellungsZeitpunkt(rs
+//						.getTimestamp("ErstellungsZeitpunkt"));
+//				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
+				int pinnwand = rs.getInt("PinnwandID");
+				return pinnwand;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return 0;
 	}
 
 }

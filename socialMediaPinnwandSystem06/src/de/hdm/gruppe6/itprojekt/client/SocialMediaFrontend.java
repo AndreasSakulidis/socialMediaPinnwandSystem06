@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse SocialMediaFrontend enthält die Menüleiste und ruft die Methode zur Überprüfung der Anmeldung auf. //SO STEHEN LASSEN?
+ * Die Klasse SocialMediaFrontend enthï¿½lt die Menï¿½leiste und ruft die Methode zur ï¿½berprï¿½fung der Anmeldung auf. //SO STEHEN LASSEN?
  */
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -52,7 +52,7 @@ public class SocialMediaFrontend extends Composite {
 		trennlinie.addStyleName("linie");
 		
 		/**
-		 * Hier wird die Menüleiste mit den Commands erstellt .
+		 * Hier wird die Menï¿½leiste mit den Commands erstellt .
 		 */
 		Command cmd1 = new Command() {
 			public void execute() {
@@ -112,13 +112,9 @@ public class SocialMediaFrontend extends Composite {
 				User u = new User();
 				u.abmelden();
 				tbName.setVisible(true);
-				tbPasswort.setVisible(true);
-				loginButton.setVisible(true);
-				tbName.setText("");
-				tbPasswort.setText("");
-				mainPanel.add(tbName);
-				mainPanel.add(tbPasswort);
-				mainPanel.add(loginButton);
+				
+				Anmelden startseite = new Anmelden();
+				startseite.anmelden();
 				
 			}
 		};
@@ -174,10 +170,10 @@ public class SocialMediaFrontend extends Composite {
 					final FlexTable aboTable = new FlexTable();
 					initWidget(this.aboPanel);
 			        
-					// Erstelle Tabelle für Infos von einem bestimmten Beitrag in einem
+					// Erstelle Tabelle fï¿½r Infos von einem bestimmten Beitrag in einem
 					// bestimmten Zeitraum
 					aboTable.setText(0, 0, "Nickname");
-					aboTable.setText(0, 1, "Löschen");
+					aboTable.setText(0, 1, "Lï¿½schen");
 					
 					suchePanel.add(aboTable);
 					aboTable.addStyleName("flextable");
@@ -189,7 +185,7 @@ public class SocialMediaFrontend extends Composite {
 		
 		
 		/**
-		 * Hier kann der angemeldeter User andere User über ihren Nachnamen suchen. Dabei wird eine Trefferliste erstellt.
+		 * Hier kann der angemeldeter User andere User ï¿½ber ihren Nachnamen suchen. Dabei wird eine Trefferliste erstellt.
 		 */
 		
 		sendSucheButton.addClickHandler(new ClickHandler() {

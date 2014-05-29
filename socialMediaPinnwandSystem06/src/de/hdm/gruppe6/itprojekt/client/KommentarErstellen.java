@@ -1,9 +1,9 @@
 	
 package de.hdm.gruppe6.itprojekt.client;
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse KommentarErstellen ermöglicht dem angelmeldeten User einen bestehenden Textbeitrag zu kommentieren, diesen Kommentar zu bearbeiten und zu löschen.
+ * Die Klasse KommentarErstellen ermï¿½glicht dem angelmeldeten User einen bestehenden Textbeitrag zu kommentieren, diesen Kommentar zu bearbeiten und zu lï¿½schen.
  */
 
 import java.util.Date;
@@ -12,6 +12,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -40,7 +41,7 @@ public class KommentarErstellen extends Composite {
 	private Label commentUpdatedLabel = new Label();
 	private Label lbId = new Label();
 
-	public Widget setComment(final String content) {
+	public Widget setComment(final String content, final int tid) {
 /**
  * Die Klasse MeineDialogBox wird aufgerufen, indem der Textbeitrag kommentiert werden kann.
  */
@@ -85,8 +86,9 @@ public class KommentarErstellen extends Composite {
 				commentL.setText(comment.getContent());
 
 				String text = commentL.getText();
+				String uid = Cookies.getCookie("SocialMedia6ID");
 
-				pinnwandVerwaltung.kommentarAnlegen(text,
+				pinnwandVerwaltung.kommentarAnlegen(text, uid, tid, 
 						new AsyncCallback<Kommentar>() {
 
 							@Override
@@ -103,7 +105,7 @@ public class KommentarErstellen extends Composite {
 						});
 
 				/**
-				 * Um den Kommentar bearbeiten zu können wird die Klasse MeineDialogBox aufgerufen.
+				 * Um den Kommentar bearbeiten zu kï¿½nnen wird die Klasse MeineDialogBox aufgerufen.
 				 */
 				kbearbeiten.addClickHandler(new ClickHandler() {
 					@Override
@@ -163,7 +165,7 @@ public class KommentarErstellen extends Composite {
 				});
 				
 				/**
-				 * Der Kommentar wird gelöscht.
+				 * Der Kommentar wird gelï¿½scht.
 				 */
 
 				kloeschen.addClickHandler(new ClickHandler() {
