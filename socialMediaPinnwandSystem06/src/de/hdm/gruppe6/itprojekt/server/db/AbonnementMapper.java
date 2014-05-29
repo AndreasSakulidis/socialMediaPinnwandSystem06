@@ -24,7 +24,7 @@ public class AbonnementMapper {
 		return abonnementMapper;
 	}
 
-	public Abonnement anlegen(Abonnement abo) throws Exception {
+	public Abonnement anlegen(Abonnement abo, int uid, int pid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -47,10 +47,6 @@ public class AbonnementMapper {
 				abo.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-
-				int pid = 0;
-				int uid = 0;
-
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO abonnement (AboID, UserID, PinnwandID, ErstellungsZeitpunkt)"
 						// + "VALUES ("

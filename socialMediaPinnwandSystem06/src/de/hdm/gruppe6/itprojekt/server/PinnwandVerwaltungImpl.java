@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -185,11 +186,13 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 
 		 
 	// Methoden Abonnement
-		public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception {
+		public Abonnement aboAnlegen(User user, String id) throws Exception {
 
 				Abonnement abonnement = new Abonnement();
+				int userID = Integer.parseInt(id); 
+				int pid = pinnwandMapper.findeAnhandUserID(userID);
 			
-				return abonnementMapper.anlegen(abonnement);
+				return abonnementMapper.anlegen(abonnement, userID, pid);
 			}
 
 	
@@ -207,11 +210,13 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 
 		// Methoden Kommentar
 		 
-			public Kommentar kommentarAnlegen(String text) throws Exception {
+			public Kommentar kommentarAnlegen(String text, String uid, int tid) throws Exception {
 
 					Kommentar kommentar= new Kommentar();
 					kommentar.setText(text);
-					return kommentarMapper.anlegen(kommentar);
+					int userID = Integer.parseInt(uid);
+					
+					return kommentarMapper.anlegen(kommentar, userID, tid);
 				}
 
 			public Kommentar kommentarEditieren(String text, int id) throws Exception {
@@ -246,14 +251,18 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 				 
 			
 		// Methoden Textbeitrag
-			public Textbeitrag textbeitragAnlegen(String text) throws Exception {
+			//@Override
+			public Textbeitrag textbeitragAnlegen(String text, String id) throws Exception {
 
 						Textbeitrag textbeitrag= new Textbeitrag();
 						textbeitrag.setText(text);
 						
+						int userID = Integer.parseInt(id); 
+						int pid = pinnwandMapper.findeAnhandUserID(userID);
+						System.out.println("Das ist die PinnwandID " + pinnwandMapper.findeAnhandUserID(userID) + " Das ist die UserID" + userID);
 
 						
-						return textbeitragMapper.anlegen(textbeitrag);
+						return textbeitragMapper.anlegen(textbeitrag, userID, pid);
 					}
 
 			public Textbeitrag textbeitragEditieren(String text, int id) throws Exception {
@@ -315,10 +324,11 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		     
 		 // Methoden Like
 		     
-		     public Like likeAnlegen() throws Exception {
+		     public Like likeAnlegen(String uid, int tid) throws Exception {
 
 		 		Like like= new Like();
-		 		return likeMapper.anlegen(like);
+		 		int userID = Integer.parseInt(uid);
+		 		return likeMapper.anlegen(like, userID, tid);
 		 	}
 
 		     

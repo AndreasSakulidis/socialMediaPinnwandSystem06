@@ -14,8 +14,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public interface PinnwandVerwaltungServiceAsync {
 
-	void aboAnlegen(User user, Pinnwand pinnwand,
-			AsyncCallback<Abonnement> callback);
+	void aboAnlegen(User user, String id, AsyncCallback<Abonnement> callback);
 	
 
 	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
@@ -51,13 +50,13 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void zaehleTextbeitraegeVonUser(User user, AsyncCallback<Integer> callback);
 	
-	void kommentarAnlegen(String text, AsyncCallback<Kommentar> callback);
+	void kommentarAnlegen(String text, String uid, int tid, AsyncCallback<Kommentar> callback);
 
 	void kommentarEditieren(String text, int id, AsyncCallback<Kommentar> callback);
 
 	void kommentarLoeschen(String text, int id, AsyncCallback<Void> callback);
 
-	void likeAnlegen(AsyncCallback<Like> callback);
+	void likeAnlegen(String uid, int tid, AsyncCallback<Like> callback);
 
 	void likeLoeschen(Like like, AsyncCallback<Void> callback);
 
@@ -67,7 +66,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Void> callback);
 
-	void textbeitragAnlegen(String text, AsyncCallback<Textbeitrag> callback);
+	void textbeitragAnlegen(String text, String id, AsyncCallback<Textbeitrag> callback);
 
 	void textbeitragEditieren(String text, int id,
 			AsyncCallback<Textbeitrag> callback);

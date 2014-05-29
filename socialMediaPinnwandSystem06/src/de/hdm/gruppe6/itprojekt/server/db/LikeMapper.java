@@ -24,7 +24,7 @@ public class LikeMapper {
 		return likeMapper;
 	}
 
-	public Like anlegen(Like like) throws Exception {
+	public Like anlegen(Like like, int uid, int tid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 		try {
@@ -35,9 +35,6 @@ public class LikeMapper {
 
 			if (rs.next()) {
 				like.setId(rs.getInt("maxid") + 1);
-
-				int uid = 0;
-				int tid = 0;
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO liken (LikeID, UserID, ErstellungsZeitpunkt, TextbeitragID)"
 						+ "VALUES ('"
@@ -52,9 +49,10 @@ public class LikeMapper {
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return like;
 	}
 

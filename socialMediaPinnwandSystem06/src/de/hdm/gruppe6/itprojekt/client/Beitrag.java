@@ -11,6 +11,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -69,9 +70,10 @@ public class Beitrag extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				KommentarErstellen kommentarErstellen = new KommentarErstellen();
+				int tid = Integer.parseInt(lbId.getText());
 				//kommentarErstellen.setComment(content);
 //				Textbeitrag tb = new Textbeitrag();
-				vPanel.add(kommentarErstellen.setComment(content));
+				vPanel.add(kommentarErstellen.setComment(content, tid));
 
 
 
@@ -156,7 +158,9 @@ public class Beitrag extends Composite {
 		liken.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				pinnwandVerwaltung.likeAnlegen(new AsyncCallback<Like>(){
+				String uid = Cookies.getCookie("SocialMedia6ID");
+				int tid = Integer.parseInt(lbId.getText());
+				pinnwandVerwaltung.likeAnlegen(uid, tid,  new AsyncCallback<Like>(){
 					public void onFailure(Throwable caught) {
 						Window.alert("Fehler beim Liken!");
 					}
@@ -170,7 +174,8 @@ public class Beitrag extends Composite {
 		post.setText(content);
 
 		String text = post.getText();
-		pinnwandVerwaltung.textbeitragAnlegen(text,
+		String id = Cookies.getCookie("SocialMedia6ID");
+		pinnwandVerwaltung.textbeitragAnlegen(text, id,
 				new AsyncCallback<Textbeitrag>() {
 					@Override
 					public void onFailure(Throwable caught) {

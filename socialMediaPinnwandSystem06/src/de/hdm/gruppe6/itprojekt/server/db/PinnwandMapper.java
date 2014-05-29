@@ -162,5 +162,38 @@ public class PinnwandMapper {
 
 		return result;
 	}
+	
+	public int findeAnhandUserID(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT PinnwandID "
+							+ "FROM user "
+							+ "WHERE UserID="
+							+ userID);
+
+			if (rs.next()) {
+//				Pinnwand pinnwand = new Pinnwand();
+//				pinnwand.setId(rs.getInt("PinnwandID"));
+//				pinnwand.setErstellungsZeitpunkt(rs
+//						.getTimestamp("ErstellungsZeitpunkt"));
+//				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
+				int pinnwand = rs.getInt("PinnwandID");
+				return pinnwand;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return 0;
+	}
 
 }

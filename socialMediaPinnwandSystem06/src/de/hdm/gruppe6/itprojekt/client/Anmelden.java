@@ -93,16 +93,17 @@ public class Anmelden{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				String a = "";
 
 				System.out.println("Email: " + tbEmail.getText() + " Vorname "
 						+ tbRname.getText() + " Nachname "
 						+ tbNachname.getText() + " Nickname "
 						+ tbNick.getText() + " Passwort " + tbRPasswort);
 				if (!tbEmail.getText().matches(EMAIL_PATTERN)
-						|| tbRname.getText().equals(null)
-						|| tbNachname.getText().equals(null)
-						|| tbNick.getText().equals(null)
-						|| tbRPasswort.equals(null)) {
+						|| tbRname.getText().equals(a)
+						|| tbNachname.getText().equals(a)
+						|| tbNick.getText().equals(a)
+						|| tbRPasswort.equals(a)) {
 					Window.alert("Gib eine gültige E-Mail Adresse ein!");
 				} else {
 
@@ -154,6 +155,8 @@ public class Anmelden{
 
 									Cookies.setCookie("SocialMedia6",
 											result.getNickname());
+									Cookies.setCookie("SocialMedia6ID",
+											String.valueOf(result.getId()));
 
 									RootPanel.get("Details").clear();
 

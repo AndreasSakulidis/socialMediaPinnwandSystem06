@@ -107,14 +107,18 @@ public class SocialMediaFrontend extends Composite {
 				RootPanel.get().clear();
 				User u = new User();
 				u.abmelden();
-				tbName.setVisible(true);
-				tbPasswort.setVisible(true);
-				loginButton.setVisible(true);
-				tbName.setText("");
-				tbPasswort.setText("");
-				mainPanel.add(tbName);
-				mainPanel.add(tbPasswort);
-				mainPanel.add(loginButton);
+				
+				Anmelden startseite = new Anmelden();
+				startseite.anmelden();
+				
+//				tbName.setVisible(true);
+//				tbPasswort.setVisible(true);
+//				loginButton.setVisible(true);
+//				tbName.setText("");
+//				tbPasswort.setText("");
+//				mainPanel.add(tbName);
+//				mainPanel.add(tbPasswort);
+//				mainPanel.add(loginButton);
 				
 			}
 		};

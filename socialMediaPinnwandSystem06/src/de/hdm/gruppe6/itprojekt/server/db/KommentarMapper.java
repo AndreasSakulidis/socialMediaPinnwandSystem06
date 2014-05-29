@@ -24,7 +24,7 @@ public class KommentarMapper {
 		return kommentarMapper;
 	}
 
-	public Kommentar anlegen(Kommentar kommentar) throws Exception {
+	public Kommentar anlegen(Kommentar kommentar, int uid, int tid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -46,8 +46,6 @@ public class KommentarMapper {
 				 */
 				kommentar.setId(rs.getInt("maxid") + 1);
 				stmt = con.createStatement();
-				int uid = 0;
-				int tid = 0;
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO kommentar (KommentarID, Text, UserID, ErstellungsZeitpunkt, TextbeitragID)"
 						+ "VALUES ('"

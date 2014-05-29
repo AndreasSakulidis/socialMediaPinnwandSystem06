@@ -58,7 +58,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception;
 
 	
-	public Abonnement aboAnlegen(User user, Pinnwand pinnwand) throws Exception; 
+	public Abonnement aboAnlegen(User user, String id) throws Exception; 
 
 	public void aboLoeschen(Abonnement abonnement) throws Exception;
 	
@@ -67,7 +67,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
  
 
  
-	public Kommentar kommentarAnlegen(String text) throws Exception;
+	public Kommentar kommentarAnlegen(String text, String uid, int tid) throws Exception;
 
 	public Kommentar kommentarEditieren(String text, int id) throws Exception;
 
@@ -78,7 +78,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public Vector <Kommentar> findeAlleKommentare() throws Exception;
 
 
-	public Textbeitrag textbeitragAnlegen(String text) throws Exception ;
+	public Textbeitrag textbeitragAnlegen(String text, String id) throws Exception;
 
 	public Textbeitrag textbeitragEditieren(String text, int id) throws Exception;
 
@@ -98,7 +98,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 
 					
 		     
-	public Like likeAnlegen() throws Exception;
+	public Like likeAnlegen(String uid, int tid) throws Exception;
 
 	public void likeLoeschen(Like like) throws Exception;
 		 	

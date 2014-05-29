@@ -12,6 +12,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -38,7 +39,7 @@ public class KommentarErstellen extends Composite {
 	private Label commentUpdatedLabel = new Label();
 	private Label lbId = new Label();
 
-	public Widget setComment(final String content) {
+	public Widget setComment(final String content, final int tid) {
 
 		final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
 		comment.setText("Kommentieren");
@@ -74,8 +75,9 @@ public class KommentarErstellen extends Composite {
 				commentL.setText(comment.getContent());
 
 				String text = commentL.getText();
-
-				pinnwandVerwaltung.kommentarAnlegen(text,
+				String uid = Cookies.getCookie("SocialMedia6ID");
+				
+				pinnwandVerwaltung.kommentarAnlegen(text, uid, tid,  
 						new AsyncCallback<Kommentar>() {
 
 							@Override

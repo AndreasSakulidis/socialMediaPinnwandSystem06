@@ -26,7 +26,7 @@ public class TextbeitragMapper {
 		return textbeitragMapper;
 	}
 
-	public Textbeitrag anlegen(Textbeitrag textbeitrag) throws Exception {
+	public Textbeitrag anlegen(Textbeitrag textbeitrag, int uid, int pid) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 
@@ -50,8 +50,6 @@ public class TextbeitragMapper {
 				textbeitrag.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-				int uid = 0;
-				int pid = 0;
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
 				stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, Text, UserID, ErstellungsZeitpunkt, PinnwandID)"
 						+ "VALUES ('"
