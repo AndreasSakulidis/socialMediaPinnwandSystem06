@@ -8,6 +8,9 @@ package de.hdm.gruppe6.itprojekt.client;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -24,7 +27,7 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
-public class Anmelden{
+public class Anmelden {
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Label lbname = new Label("Name   :  ");
@@ -50,31 +53,31 @@ public class Anmelden{
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Button regButton = new Button("Registrieren");
 	private Label regi = new Label("Registrierung: ");
-	
+
 	private VerticalPanel addPanel = new VerticalPanel();
 
-	private HorizontalPanel horziPanel= new HorizontalPanel();
-	
-	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
-	
+	private HorizontalPanel horziPanel = new HorizontalPanel();
+
+	private PinnwandVerwaltungServiceAsync socialmedia = GWT
+			.create(PinnwandVerwaltungService.class);
+
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public Widget anmelden() {
-		
-		
+
 		loginPanel.add(lbname);
 		loginPanel.add(tbName);
 		loginPanel.add(lbPasswort);
 		loginPanel.add(tbPasswort);
 		loginPanel.add(loginButton);
-		
+
 		RootPanel.get("Details").add(loginPanel);
-//		for(int i = 0; i<10; i++){
-//			addPanel.add(lTrennWand);
-//		}
-//		vPanel.add(addPanel);
-		
+		// for(int i = 0; i<10; i++){
+		// addPanel.add(lTrennWand);
+		// }
+		// vPanel.add(addPanel);
+
 		addPanel.add(regi);
 		addPanel.add(lbRname);
 		addPanel.add(tbRname);
@@ -88,7 +91,6 @@ public class Anmelden{
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
 
-		
 		regButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -130,16 +132,15 @@ public class Anmelden{
 				}
 			}
 		});
-		
-//		addPanel.add(addPanel);
-		
+
+		// addPanel.add(addPanel);
+
 		RootPanel.get("Details").add(addPanel);
-//		RootPanel.get().add(vPanel);
+		// RootPanel.get().add(vPanel);
 
-
-//		hPanel.add(anmelden);
+		// hPanel.add(anmelden);
 		loginButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				socialmedia.userAnmelden(tbName.getText(),
@@ -178,7 +179,7 @@ public class Anmelden{
 									regButton.setVisible(false);
 									regi.setVisible(false);
 
-//									TODO wie bei EntryPoint Klasse
+									// TODO wie bei EntryPoint Klasse
 									SocialMediaFrontend smf = new SocialMediaFrontend();
 									smf.angemeldet();
 									// --------------------------------------------------------------------------------------------------------
@@ -198,18 +199,118 @@ public class Anmelden{
 			}
 		});
 
-			
-		
-		
-		
+		tbEmail.addKeyPressHandler(new KeyPressHandler() {
+			public void onKeyPress(KeyPressEvent event) {
+				System.out.println("Email: " + tbEmail.getText() + " Vorname "
+						+ tbRname.getText() + " Nachname "
+						+ tbNachname.getText() + " Nickname "
+						+ tbNick.getText() + " Passwort " + tbRPasswort);
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+					if (!tbEmail.getText().matches(EMAIL_PATTERN)
+							|| tbRname.getText().equals(null)
+							|| tbNachname.getText().equals(null)
+							|| tbNick.getText().equals(null)
+							|| tbRPasswort.equals(null)) {
+						Window.alert("Gib eine g¸ltige E-Mail Adresse ein!");
+					} else {
+
+						socialmedia.userAnlegen(tbRname.getText(),
+								tbNachname.getText(), tbNick.getText(),
+								tbEmail.getText(), tbRPasswort.getText(),
+								new AsyncCallback<User>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert("Anlegen Fehlgeschlagen: "
+												+ caught.getMessage());
+
+									}
+
+									@Override
+									public void onSuccess(User result) {
+										if (result == null) {
+											Window.alert("Nickname exisitert bereits!");
+										} else {
+											Window.alert("Anlegen erfolgreich!");
+										}
+									}
+								});
+					}
+
+				}
+			}
+		});
+
+		tbPasswort.addKeyPressHandler(new KeyPressHandler() {
+			public void onKeyPress(KeyPressEvent event) {
+				
+				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+
+				socialmedia.userAnmelden(tbName.getText(),
+						tbPasswort.getText(), new AsyncCallback<User>() {
+
+							public void onSuccess(User result) {
+
+								// ------------------------------------------------------------------
+								
+									if (result.getId() != 0) {
+
+										Cookies.setCookie("SocialMedia6",
+												result.getNickname());
+
+										RootPanel.get("Details").clear();
+
+										Window.alert("Erfolgreich angemeldet... Nickname: "
+												+ result.getNickname()
+												+ " und Passwort"
+												+ result.getPasswort());
+										tbName.setVisible(false);
+										tbPasswort.setVisible(false);
+										loginButton.setVisible(false);
+
+										lbRname.setVisible(false);
+										tbRname.setVisible(false);
+										lbRs.setVisible(false);
+										tbNachname.setVisible(false);
+										lbNick.setVisible(false);
+										tbNick.setVisible(false);
+										lbRPasswort.setVisible(false);
+										tbRPasswort.setVisible(false);
+										lbEmail.setVisible(false);
+										tbEmail.setVisible(false);
+										regButton.setVisible(false);
+										regi.setVisible(false);
+
+										// TODO wie bei EntryPoint Klasse
+										SocialMediaFrontend smf = new SocialMediaFrontend();
+										smf.angemeldet();
+										// --------------------------------------------------------------------------------------------------------
+										// TODO ... Alles was da drunter ist,
+										// ist
+										// nicht richtig hier!
+									}
+								}
+							
+
+							@Override
+							public void onFailure(Throwable caught) {
+								Window.alert("Ein fehler ist aufgetreten: "
+										+ caught.getMessage());
+
+							}
+						});
+				}//NEUU
+			}
+		});
+
 		regi.addStyleName("regi‹ber");
 		anmelden.addStyleName("Anmelde‹ber");
 		hPanel.addStyleName("Anmelden");
 		vPanel.addStyleName("Regi");
-		
+
 		horziPanel.add(hPanel);
 		horziPanel.add(vPanel);
 
 		return horziPanel;
-		}
+	}
 }
