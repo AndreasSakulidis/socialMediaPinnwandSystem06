@@ -9,13 +9,44 @@ import java.sql.Timestamp;
 import de.hdm.gruppe6.itprojekt.shared.bo.Like;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
-
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *  In Anlehnung an Hr. Prof. Dr. Thies
+ * Die Klasse LikeMapper bildet die Like-Objekte auf eine relationale Datenbank ab.
+ *  
+ */
 public class LikeMapper {
+	/**
+	   * Die Klasse KommentarMapper wird nur einmal instantiiert. 
+	   * 
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   * @see likeMapper()
+	   */
 
 	private static LikeMapper likeMapper = null;
-
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
 	protected LikeMapper() {
 	}
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch
+	   * <code>LikeMapper.likeMapper()</code>. Sie stellt die
+	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von <code>LikeMapper</code> existiert.
+	   * <p>
+	   * 
+	   * <b>Fazit:</b> LikeMapper sollte nicht mittels <code>new</code>
+	   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
+	   * 
+	   * @return DAS <code>LikeMapper</code>-Objekt.
+	   * @see likeMapper
+	   */
+
 
 	public static LikeMapper likeMapper() {
 		if (likeMapper == null) {
@@ -24,6 +55,12 @@ public class LikeMapper {
 		return likeMapper;
 	}
 
+	/**
+	 * Methode um ein Like in die Datenbank anzulegen.
+	 * @param like
+	 * @return
+	 * @throws Exception
+	 */
 	public Like anlegen(Like like) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -57,7 +94,13 @@ public class LikeMapper {
 		}
 		return like;
 	}
-
+	/**
+	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * 
+	 * @param like
+	 * @return
+	 * @throws Exception
+	 */
 	public void loeschen(Like like) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -76,7 +119,12 @@ public class LikeMapper {
 		}
 		return;
 	}
-
+	/** 
+	  * Methode mit der man einen Like über ihre ID finden kann.
+	   * @param likeID
+	   * @return Like-Objekt
+	   * @throws Exception
+	   */
 	public Like findeAnhandID(int likeID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;

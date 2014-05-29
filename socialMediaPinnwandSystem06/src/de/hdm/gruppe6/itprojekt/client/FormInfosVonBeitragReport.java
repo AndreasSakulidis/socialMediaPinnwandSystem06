@@ -24,6 +24,9 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class FormInfosVonBeitragReport extends Composite {
 
+	/**
+	 * Hier werden die Widgets und die Panels festgelegt. 
+	 */
 		private VerticalPanel vPanel = new VerticalPanel();
 		private FlexTable infoFlexTable = new FlexTable();
 		private Label title = new Label("Report:Informationen von einem Beitrag"); 
@@ -31,6 +34,10 @@ public class FormInfosVonBeitragReport extends Composite {
 		
 		public FormInfosVonBeitragReport(String content) {
 			  RootPanel.get("Details").add(vPanel);
+			  
+			  /**
+			   * Hier werden die Buttons und die Labels festgelegt und dem vPanel zugeordnet.
+			   */
 			final Button sendSucheButton = new Button("Suchen");
 			final Label beitragSuchen = new Label ("Text eingeben");
 			final Label aZ = new Label ("Anfangszeitpunkt eingeben");
@@ -45,12 +52,14 @@ public class FormInfosVonBeitragReport extends Composite {
 		    vPanel.add(beitragSuchenField);
 		    vPanel.add(aZ);
 		    vPanel.add(anfangszeitpunktField);
+		    
+			 /**
+			  * Hier wird ein datePicker erzeugt und dem Anfangszeitpunkfeld zugeordnet. 
+			  */
 		    DatePicker datePicker = new DatePicker();
 		    final Label text = new Label();
 		    
-		    
-		    // Set the value in the text box when the user selects a date
-		  
+		
 		    datePicker.addValueChangeHandler(new ValueChangeHandler() {
 		      public void onValueChange(ValueChangeEvent event) {
 		        Date date = (Date) event.getValue();
@@ -59,21 +68,20 @@ public class FormInfosVonBeitragReport extends Composite {
 		      }
 		    });
 		    
-		    // Set the default value
 		    datePicker.setValue(new Date(), true);
-
-		  
-		   
-	   // Add the widgets to the page
 		    vPanel.add(text);
 		    vPanel.add(datePicker);
 		    vPanel.add(eZ);
 		    vPanel.add(endzeitpunktField);
+		    
+		    
+			 /**
+			  * Hier wird ein anderer datePicker erzeugt und dem Endzeitpunktfeld zugeordnet. 
+			  */
 		    DatePicker date2Picker = new DatePicker();
 		    final Label text2 = new Label();
 		        
-		    // Set the value in the text box when the user selects a date
-		  
+		   
 		    date2Picker.addValueChangeHandler(new ValueChangeHandler() {
 		      public void onValueChange(ValueChangeEvent event) {
 		        Date date = (Date) event.getValue();
@@ -82,21 +90,18 @@ public class FormInfosVonBeitragReport extends Composite {
 		      }
 		    });
 		    
-		    // Set the default value
 		    datePicker.setValue(new Date(), true);
-
-		  
-		   
-	   // Add the widgets to the page
 		    vPanel.add(text2);
 		    vPanel.add(date2Picker);
-		    
-			vPanel.add(sendSucheButton);
+		    vPanel.add(sendSucheButton);
 	      
 
-	        
 	        initWidget(this.vPanel);
 	        vPanel.add(sendSucheButton);
+	        
+	        /**
+	         * Mit einem Klick auf den Suchen Button wird eine Flextable mit den Informationen zu einem Beitrag erzeugt.
+	         */
 			sendSucheButton.addClickHandler(new ClickHandler(){
 
 				@Override
@@ -123,6 +128,9 @@ public class FormInfosVonBeitragReport extends Composite {
 			});
 			
 			
+			/**
+			 * Mit einem Klick auf zurueck Button kann man eine neue Suche beginnen.
+			 */
 	
 	zuruck.addClickHandler(new ClickHandler(){
 

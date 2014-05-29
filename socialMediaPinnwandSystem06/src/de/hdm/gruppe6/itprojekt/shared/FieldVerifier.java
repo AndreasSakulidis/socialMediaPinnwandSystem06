@@ -1,6 +1,8 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
 /**
+ *  @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * 	Anlehnung an Professor Thies
  * <p>
  * FieldVerifier validates that the name the user enters is valid.
  * </p>

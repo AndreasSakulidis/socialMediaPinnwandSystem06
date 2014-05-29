@@ -6,12 +6,15 @@ import java.util.Vector;
 public class HTMLReportWriter extends ReportWriter{
 	
 	/**
+	 *  @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
+
 	 * Ein <code>ReportWriter</code>, der Reports mittels HTML formatiert. Das im
 	 * Zielformat vorliegende Ergebnis wird in der Variable <code>reportText</code>
 	 * abgelegt und kann nach Aufruf der entsprechenden Prozessierungsmethode mit
 	 * <code>getReportText()</code> ausgelesen werden.
 	 * 
-	 * @author angelehnt an Prof.Thies
+	 * 
 	 */
 	public HTMLReportWriter(){ /** Kontruktor der HTMLReportWriter Klasse*/
 

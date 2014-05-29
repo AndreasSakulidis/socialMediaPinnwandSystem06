@@ -1,5 +1,11 @@
 package de.hdm.gruppe6.itprojekt.shared.bo;
+/**
+ * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
 
+ * Realisierung einer exemplarischen Textbeitragbeschreibung. 
+ 
+ */
 public class Textbeitrag extends BusinessObject {
 
 	/**
@@ -10,20 +16,31 @@ public class Textbeitrag extends BusinessObject {
 	private String text;
 	private int likeId;
 
-	// Konstruktor
+	/**
+	 * Konstruktor
+	 * @param text
+	 */
 	public Textbeitrag(String text) {
 		this.text = text;
 	}
-
+/**
+ * Konstruktor
+ */
 	public Textbeitrag() {
 		super();
 	}
 
-	// Getter und Setter
+	/** Auslesen des Textes
+	 * 
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
-
+/** Setzen des Textes
+ * 
+ * @param text
+ */
 	public void setText(String text) {
 
 		if (text == null) {
@@ -34,11 +51,17 @@ public class Textbeitrag extends BusinessObject {
 		}
 		this.text = text;
 	}
-
+/**
+ * Auslesen der LikeID
+ * @return
+ */
 	public int getLikeId() {
 		return likeId;
 	}
-
+/**
+ * Setzen der LikeID
+ * @param likeId
+ */
 	public void setLikeId(int likeId) {
 		this.likeId = likeId;
 	}

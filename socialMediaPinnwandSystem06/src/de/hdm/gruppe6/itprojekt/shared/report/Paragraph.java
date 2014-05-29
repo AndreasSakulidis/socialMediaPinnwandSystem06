@@ -2,7 +2,8 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 
 import java.io.Serializable;
 
-/**
+/**  @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
  * Reports benötigen die MÖglichkeit, Text strukturiert abspeichern zu können.
  * Dieser Text kann später durch <code>ReportWriter</code> in verschiedene
  * Zielformate konvertiert werden. Die Verwendung der Klasse <code>String</code>
@@ -17,7 +18,6 @@ import java.io.Serializable;
  * Klasse durch das Netzwerk übertragbar sind.
  * 
  * @see Report
- * @author Anlehnung an Prof. Thies
  */
 public abstract class Paragraph implements Serializable {
 

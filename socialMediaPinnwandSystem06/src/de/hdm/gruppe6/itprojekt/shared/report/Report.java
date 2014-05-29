@@ -3,7 +3,8 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
+/**@author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
  * <p>
  * Basisklasse aller Reports. Reports sind als <code>Serializable</code>
  * deklariert, damit sie von dem Server an den Client gesendet werden können.
@@ -16,7 +17,6 @@ import java.util.Date;
  * </p>
  * 
  * @see Report
- * @author Anlehnung an Prof. Thies
  */
 public abstract class Report implements Serializable {
 

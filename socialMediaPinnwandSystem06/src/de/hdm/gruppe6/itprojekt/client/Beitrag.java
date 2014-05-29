@@ -29,10 +29,11 @@ public class Beitrag extends Composite {
 	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
 			.create(PinnwandVerwaltungService.class);
 
+	/**
+	 * Hier werden die Widgets und die Panels festgelegt. 
+	 */
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable postFlexTable = new FlexTable();
-
-
 	private Label post = new Label();
 	private Button loeschen = new Button("X");
 	private Button bearbeiten = new Button("Bearbeiten");
@@ -41,14 +42,16 @@ public class Beitrag extends Composite {
 	private Label label = new Label();
 	private Label lastUpdatedLabel = new Label();
 	private Label lbId = new Label();
-	private VerticalPanel mainPanel = new VerticalPanel();
+	//private VerticalPanel mainPanel = new VerticalPanel();
 	
 	public Beitrag(final String content) {
 
 		label.setText(content);
 		initWidget(this.vPanel);
 //		lbId.setText(String.valueOf(id));
-
+/**
+ * Die Textbeiträge werden in einer Flextable gepostet.
+ */
 		postFlexTable.setWidget(0, 0, post);
 		postFlexTable.setWidget(1, 1, loeschen);
 		postFlexTable.setWidget(1, 2, bearbeiten);
@@ -58,11 +61,17 @@ public class Beitrag extends Composite {
 		postFlexTable.setWidget(1, 5, lbId);
 
 		postFlexTable.setWidget(2, 0, lastUpdatedLabel);
-
+		
+/**
+ * Die Flextable wird dem vPanel zugeordnet.
+ */
 		vPanel.add(postFlexTable);
 		vPanel.addStyleName("Textbeitrag");
 		
-
+/**
+ * Mit einem Klick auf den Kommentieren Button wird die Klasse KommentarErstellen aufgerufen und ein Kommentar wird
+ * angelegt.
+ */
 
 		kommentieren.addClickHandler(new ClickHandler() {
 
@@ -78,7 +87,11 @@ public class Beitrag extends Composite {
 			}
 
 		});
-
+		/**
+		 * Mit einem Klick auf den Loeschen Button wird der Textbeitrag gelöscht.
+		 * 
+		 */
+		
 		loeschen.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -104,7 +117,10 @@ public class Beitrag extends Composite {
 		});
 
 
-
+		/**
+		 * Mit einem Klick auf den Bearbeiten Button wird ein Dialogbox geöffnet, indem der User den Textbeitrag bearbeiten kann.
+		 * 
+		 */
 		bearbeiten.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -152,6 +168,10 @@ public class Beitrag extends Composite {
 			}
 
 		});
+		/**
+		 * Mit einem Klick auf den Liken Button wird ein Like erstellt.
+		 * 
+		 */
 		
 		liken.addClickHandler(new ClickHandler() {
 			@Override
@@ -184,7 +204,9 @@ public class Beitrag extends Composite {
 
 					}
 				});
-
+ /**
+  * Die letzte Aktualisierung des Textbeitrags wird angezeigt.
+  */
 				lastUpdatedLabel.setText("Es wurde gepostet um : "
 		        + DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
 

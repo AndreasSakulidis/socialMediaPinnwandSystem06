@@ -27,6 +27,9 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class SocialMediaFrontend extends Composite {
+	/**
+	 * Hier werden die Panels und die Widgets festgelegt.
+	 */
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label userSuchen = new Label("User suchen:");
@@ -35,12 +38,10 @@ public class SocialMediaFrontend extends Composite {
 	private Button abo = new Button ("Abos anzeigen");
 	private Label beispiel = new Label("Bsp.: Schmidt");
 	private Label trennlinie = new Label("______________");
-	
-	// Registrierung
 	private TextBox tbName = new TextBox();
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
 	private Button loginButton = new Button("Anmelden");
-	
+
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -49,7 +50,10 @@ public class SocialMediaFrontend extends Composite {
 	public Widget angemeldet() {
 	
 		trennlinie.addStyleName("linie");
-		// Menübar erstellen
+		
+		/**
+		 * Hier wird die Menüleiste mit den Commands erstellt .
+		 */
 		Command cmd1 = new Command() {
 			public void execute() {
 				mainPanel.clear();
@@ -133,15 +137,13 @@ public class SocialMediaFrontend extends Composite {
 		reportMenu.addStyleName("reportmenu");
 		fooMenu.addItem("Textbeitrag posten", cmd5);
 		fooMenu.addItem("Pinnwand anzeigen", cmd6);
-		//
-		// Make a new menu bar, adding a few cascading menus to it.
+	
 		MenuBar menu = new MenuBar();
 		menu.addItem("Pinnwand", fooMenu);
 		menu.addItem("Reports", reportMenu);
 		menu.addItem("Einstellungen", barMenu);
 		menu.addItem("LogOut", logout);
 
-		// Add it to the root panel.
 		RootPanel.get("Header").add(menu);
 
 		// public void suchen(){
@@ -149,13 +151,7 @@ public class SocialMediaFrontend extends Composite {
 		final TextBox nameField = new TextBox();
 
 
-		// We can add style names to widgets
 		sendSucheButton.addStyleName("sendSucheButton");
-
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		
-
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
 		suchePanel.add(beispiel);
@@ -166,6 +162,9 @@ public class SocialMediaFrontend extends Composite {
 		aboPanel.add(trennlinie);
 		aboPanel.addStyleName("abo");
 		
+		/**
+		 * Mit einem Klick auf den Button Aboliste werden die von dem angemeldeten User abonnierten User in einer Flextable angezeigt.
+		 */
 		abo.addClickHandler(new ClickHandler(){
 			VerticalPanel aboPanel= new VerticalPanel();
 
@@ -189,7 +188,9 @@ public class SocialMediaFrontend extends Composite {
 	});
 		
 		
-		
+		/**
+		 * Hier kann der angemeldeter User andere User über ihren Nachnamen suchen. Dabei wird eine Trefferliste erstellt.
+		 */
 		
 		sendSucheButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -217,8 +218,6 @@ public class SocialMediaFrontend extends Composite {
 			}
 		});
 		
-		
-		// Add it to the root Panel
 		RootPanel.get("Details").add(mainPanel);
 
 		nameField.addKeyPressHandler(new KeyPressHandler() {

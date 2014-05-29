@@ -12,12 +12,46 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *  In Anlehnung an Hr. Prof. Dr. Thies
+ * Die Klasse TextbeitragMapper bildet die Textbeitrag-Objekte auf eine relationale Datenbank ab.
+ *  
+ */
+
 public class TextbeitragMapper {
+	/**
+	   * Die Klasse TextbeitragMapper wird nur einmal instantiiert. 
+	   * 
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   * @see textbeitragMapper()
+	   */
 
 	private static TextbeitragMapper textbeitragMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
+
 
 	protected TextbeitragMapper() {
 	}
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch
+	   * <code>TextbeitragMapper.textbeitragMapper()</code>. Sie stellt die
+	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von <code>TextbeitragMapper</code> existiert.
+	   * <p>
+	   * 
+	   * <b>Fazit:</b> TextbeitragMapper sollte nicht mittels <code>new</code>
+	   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
+	   * 
+	   * @return DAS <code>TextbeitragMapper</code>-Objekt.
+	   * @see textbeitragMapper
+	   */
 
 	public static TextbeitragMapper textbeitragMapper() {
 		if (textbeitragMapper == null) {
@@ -25,6 +59,13 @@ public class TextbeitragMapper {
 		}
 		return textbeitragMapper;
 	}
+	
+	/**
+	 * Methode um einen Textbeitrag in die Datenbank anzulegen.
+	 * @param textbeitrag
+	 * @return
+	 * @throws Exception
+	 */
 
 	public Textbeitrag anlegen(Textbeitrag textbeitrag) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -73,7 +114,13 @@ public class TextbeitragMapper {
 		// }
 		return textbeitrag;
 	}
-
+	/**
+	 * Methode um einen Datensatz in der Datenbank zu editieren
+	 * 
+	 * @param textbeitrag
+	 * @return 
+	 * @throws Exception
+	 */
 	 public Textbeitrag editieren(Textbeitrag textbeitrag) throws Exception {
 	 Connection con = DBVerbindung.connection();
 	 Statement stmt = null;
@@ -94,6 +141,13 @@ public class TextbeitragMapper {
 	 return textbeitrag;
 	 }
 
+		/**
+		 * Methode um einen Datensatz aus der Datenbank zu löschen
+		 * 
+		 * @param textbeitrag
+		 * @return
+		 * @throws Exception
+		 */
 	public void loeschen(Textbeitrag textbeitrag) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -114,7 +168,12 @@ public class TextbeitragMapper {
 		// }
 		return;
 	}
-
+	 /** 
+	  * Methode mit der man ein Textbeitrag über ihre ID finden kann.
+	   * @param textbeitragID
+	   * @return Textbeitrag-Objekt
+	   * @throws Exception
+	   */
 	public Textbeitrag findeAnhandID(int textbeitragID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
@@ -145,6 +204,11 @@ public class TextbeitragMapper {
 		return null;
 	}
 
+	 /** 
+	  * Alle Datensätze aus der Tabelle Textbeitrag werden herausgelesen.
+	   * @return 
+	   * @throws Exception
+	   */
 	public Vector<Textbeitrag> findeAlle() throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -175,7 +239,12 @@ public class TextbeitragMapper {
 
 		return result;
 	}
-
+	 /** 
+	  * Alle Kommentare zu einem Textbeitrag werden gefunden.
+	  * @param textbeitrag
+	   * @return 
+	   * @throws Exception
+	   */
 	public Vector<Kommentar> findeKommentareZuTextbeitrag(
 			Textbeitrag textbeitrag) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -210,7 +279,12 @@ public class TextbeitragMapper {
 		}
 		return result;
 	}
-
+	 /** 
+	  * Alle Likes zu einem Textbeitrag werden gezählt.
+	  * @param textbeitrag
+	   * @return 
+	   * @throws Exception
+	   */
 	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag)
 			throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -234,7 +308,12 @@ public class TextbeitragMapper {
 		}
 
 	}
-
+	/** 
+	  * Alle Kommentare zu einem Textbeitrag werden gezählt.
+	  * @param textbeitrag
+	   * @return 
+	   * @throws Exception
+	   */
 	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag)
 			throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -257,6 +336,12 @@ public class TextbeitragMapper {
 		}
 		return rs.getInt("AnzahlKommentare");
 	}
+	/** 
+	  * Alle User zu einem Textbeitrag werden gefunden.
+	  * @param textbeitrag
+	   * @return 
+	   * @throws Exception
+	   */
 
 	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
 			throws Exception {

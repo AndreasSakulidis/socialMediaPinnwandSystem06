@@ -13,20 +13,55 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *  In Anlehnung an Hr. Prof. Dr. Thies
+ * Die Klasse UserMapper bildet die Kommentar-Objekte auf eine relationale Datenbank ab.
+ *  
+ */
 public class UserMapper {
-
+	/**
+	   * Die Klasse UserMapper wird nur einmal instantiiert. 
+	   * 
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   * @see userMapper()
+	   */
 	private static UserMapper userMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
 
 	protected UserMapper() {
 	}
-
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch
+	   * <code>UserMapper.userMapper()</code>. Sie stellt die
+	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von <code>UserMapper</code> existiert.
+	   * <p>
+	   * 
+	   * <b>Fazit:</b> UserMapper sollte nicht mittels <code>new</code>
+	   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
+	   * 
+	   * @return DAS <code>UserMapper</code>-Objekt.
+	   * @see userMapper
+	   */
 	public static UserMapper userMapper() {
 		if (userMapper == null) {
 			userMapper = new UserMapper();
 		}
 		return userMapper;
 	}
-
+	/**
+	 * Methode um einen User in die Datenbank anzulegen.
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	public User anlegen(User user, Pinnwand pinnwand) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -81,6 +116,13 @@ public class UserMapper {
 		// }
 		return user;
 	}
+	/**
+	 * Methode um den Nickname auf Verfügbarkeit zu prüfen.
+	 * 
+	 * @param name
+	 * @return 
+	 * @throws Exception
+	 */
 
 	public boolean nicknamePrüfen(String name) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -132,7 +174,13 @@ public class UserMapper {
 	// // DBVerbindung.closeAll(rs, stmt, con);
 	// // }
 	// //
-
+	/**
+	 * Methode um den User anzumelden
+	 * 
+	 * @param name,passwort
+	 * @return 
+	 * @throws Exception
+	 */
 	public User anmelden(String name, String passwort) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -180,7 +228,13 @@ public class UserMapper {
 
 		return null;
 	}
-
+	/**
+	 * Methode um einen Datensatz in der Datenbank zu editieren
+	 * 
+	 * @param user
+	 * @return 
+	 * @throws Exception
+	 */
 	public User editieren(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -202,6 +256,14 @@ public class UserMapper {
 		}
 		return user;
 	}
+	
+	/**
+	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * 
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 
 	public void loeschen(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -267,6 +329,12 @@ public class UserMapper {
 		return result;
 
 	}
+	 /** 
+	  * Methode mit der man einen User über ihr ID finden kann.
+	   * @param userID
+	   * @return User-Objekt
+	   * @throws Exception
+	   */
 
 	public User findeAnhandID(int userID) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -305,6 +373,11 @@ public class UserMapper {
 		return null;
 	}
 
+	 /** 
+	  * Alle Datensätze aus der Tabelle User werden herausgelesen.
+	   * @return 
+	   * @throws Exception
+	   */
 	public Vector<User> findeAlle() throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -405,6 +478,12 @@ public class UserMapper {
 
 		return result;
 	}
+	 /** 
+	  * Alle Abonnenten von einen Users werden gezählt.
+	  * @param user
+	   * @return 
+	   * @throws Exception
+	   */
 
 	public int zaehleAbosVonUser(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -428,6 +507,12 @@ public class UserMapper {
 		return rs.getInt("AnzahlAbos");
 
 	}
+	 /** 
+	  * Alle Kommentare von einem User werden gezählt.
+	  * @param user
+	   * @return 
+	   * @throws Exception
+	   */
 
 	public int zaehleKommentareVonUser(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -450,7 +535,12 @@ public class UserMapper {
 		}
 		return rs.getInt("AnzahlKommentare");
 	}
-
+	 /** 
+	  * Abonnements anhand User finden.
+	  * @param user
+	   * @return 
+	   * @throws Exception
+	   */
 	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception {
 
 		Connection con = DBVerbindung.connection();

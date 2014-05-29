@@ -8,14 +8,44 @@ import java.sql.Timestamp;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.*;
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *  In Anlehnung an Hr. Prof. Dr. Thies
+ * Die Klasse KommentarMapper bildet die Kommentar-Objekte auf eine relationale Datenbank ab.
+ *  
+ */
 
 public class KommentarMapper {
-
+	/**
+	   * Die Klasse KommentarMapper wird nur einmal instantiiert. 
+	   * 
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   * @see kommentarMapper()
+	   */
 	private static KommentarMapper kommentarMapper = null;
+	 /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
 
 	protected KommentarMapper() {
 	}
-
+	/**
+	   * Diese statische Methode kann aufgrufen werden durch
+	   * <code>KommentarMapper.kommentarMapper()</code>. Sie stellt die
+	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von <code>KommentarMapper</code> existiert.
+	   * <p>
+	   * 
+	   * <b>Fazit:</b> KommentarMapper sollte nicht mittels <code>new</code>
+	   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
+	   * 
+	   * @return DAS <code>KommentarMapper</code>-Objekt.
+	   * @see kommentarMapper
+	   */
 	public static KommentarMapper kommentarMapper() {
 		if (kommentarMapper == null) {
 			kommentarMapper = new KommentarMapper();
@@ -23,6 +53,12 @@ public class KommentarMapper {
 
 		return kommentarMapper;
 	}
+	/**
+	 * Methode um ein Kommentar in die Datenbank anzulegen.
+	 * @param kommentar
+	 * @return
+	 * @throws Exception
+	 */
 
 	public Kommentar anlegen(Kommentar kommentar) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -66,7 +102,13 @@ public class KommentarMapper {
 		}
 		return kommentar;
 	}
-
+	/**
+	 * Methode um einen Datensatz in der Datenbank zu editieren
+	 * 
+	 * @param kommentar
+	 * @return 
+	 * @throws Exception
+	 */
 	public Kommentar editieren(Kommentar kommentar) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -89,7 +131,13 @@ public class KommentarMapper {
 
 		return kommentar;
 	}
-
+	/**
+	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * 
+	 * @param kommentar
+	 * @return
+	 * @throws Exception
+	 */
 	public void loeschen(Kommentar kommentar) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
@@ -109,7 +157,12 @@ public class KommentarMapper {
 //		}
 		return;
 	}
-
+	 /** 
+	  * Methode mit der man ein Kommentar über ihre ID finden kann.
+	   * @param kommentarID
+	   * @return Kommentar-Objekt
+	   * @throws Exception
+	   */
 	public Kommentar findeAnhandID(int kommentarID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
@@ -144,6 +197,11 @@ public class KommentarMapper {
 		return null;
 	}
 
+	 /** 
+	  * Alle Datensätze aus der Tabelle Kommentar werden herausgelesen.
+	   * @return 
+	   * @throws Exception
+	   */
 	public Vector<Kommentar> findeAlle() throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;

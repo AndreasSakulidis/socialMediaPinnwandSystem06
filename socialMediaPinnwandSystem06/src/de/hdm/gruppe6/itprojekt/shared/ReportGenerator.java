@@ -14,6 +14,10 @@ import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 
 
 /**
+ * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
+ *
+ *
  * <p>
  * Synchrone Schnittstelle für eine RPC-fähige Klasse zur Erstellung von
  * Reports. Diese Schnittstelle benutzt die gleiche Realisierungsgrundlage wir
@@ -39,7 +43,6 @@ import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
  * unbeeinflusst, so dass bestehende Programmlogik nicht verändert werden muss.
  * </p>
  * 
- * @author Anlehnung an Professor Thies
  */
 
 public interface ReportGenerator extends RemoteService {

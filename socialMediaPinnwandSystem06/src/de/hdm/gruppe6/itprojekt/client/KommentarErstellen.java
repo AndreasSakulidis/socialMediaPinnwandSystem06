@@ -29,7 +29,9 @@ public class KommentarErstellen extends Composite {
 
 	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
 			.create(PinnwandVerwaltungService.class);
-
+	/**
+	 * Hier werden die Widgets und die Panels festgelegt. 
+	 */
 	private VerticalPanel kommentarPanel = new VerticalPanel();
 	private FlexTable kommentarTable = new FlexTable();
 	private Label commentL = new Label();
@@ -39,10 +41,15 @@ public class KommentarErstellen extends Composite {
 	private Label lbId = new Label();
 
 	public Widget setComment(final String content) {
-
+/**
+ * Die Klasse MeineDialogBox wird aufgerufen, indem der Textbeitrag kommentiert werden kann.
+ */
 		final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
 		comment.setText("Kommentieren");
 
+		/**
+		 * Die Aktion wird abgebrochen und es wird kein Kommentar gepostet.
+		 */
 		comment.abbrechen.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -51,6 +58,10 @@ public class KommentarErstellen extends Composite {
 			}
 
 		});
+		
+		/**
+		 * Mit einem Klick auf ok wird ein Kommentar gepostet und in einer FlexTable angelegt.
+		 */
 
 		comment.ok.addClickHandler(new ClickHandler() {
 
@@ -91,12 +102,19 @@ public class KommentarErstellen extends Composite {
 							}
 						});
 
+				/**
+				 * Um den Kommentar bearbeiten zu können wird die Klasse MeineDialogBox aufgerufen.
+				 */
 				kbearbeiten.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
 						final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
 						comment.setText("Bearbeiten");
 						comment.setContent(commentL.getText());
+						
+						/**
+						 * Die Bearbeitung des Kommentars wird abgebrochen.
+						 */
 
 						comment.abbrechen.addClickHandler(new ClickHandler() {
 							@Override
@@ -106,6 +124,10 @@ public class KommentarErstellen extends Composite {
 							}
 
 						});
+						
+						/**
+						 * Der Kommentar wird erfolgreich bearbeitet.
+						 */
 
 						comment.ok.addClickHandler(new ClickHandler() {
 
@@ -139,6 +161,10 @@ public class KommentarErstellen extends Composite {
 					}
 
 				});
+				
+				/**
+				 * Der Kommentar wird gelöscht.
+				 */
 
 				kloeschen.addClickHandler(new ClickHandler() {
 
@@ -170,6 +196,9 @@ public class KommentarErstellen extends Composite {
 
 		comment.show();
 
+		/**
+		 * Der Zeitpunkt der letzten Aktualisierung des Kommentars wird angegeben.
+		 */
 		commentUpdatedLabel.setText("Es wurde kommentiert am: "
 				+ DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
 

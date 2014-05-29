@@ -3,14 +3,20 @@ package de.hdm.gruppe6.itprojekt.shared.bo;
 public class Kommentar extends BusinessObject {
 
 	/**
-	 * @author Özlem Gül, Michael Schelkle, Bharti Kumar
+	 * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+	 * In Anlehnung an Hr. Prof. Dr. Thies
+
+	 * Realisierung einer exemplarischen Kommentarbeschreibung. 
+	 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private String text;
 	private Textbeitrag textbeitrag;
 
-	// Kontruktor
+	/**Kontstruktor
+	 * @param text
+	 */
 	public Kommentar(String text) {
 		this.setText(text);
 	}
@@ -19,11 +25,18 @@ public class Kommentar extends BusinessObject {
 		super();
 	}
 
-	// Getter und Setter
+	/**
+	 * Kommentar Auslesen
+	 * 
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Setzen des Kommentars
+	 * @param text
+	 */
 	public void setText(String text) {
 		/* Eine Textbeitrag ohne (echten) Inhalt ist nicht vorgesehen */
 		if (text == null) {

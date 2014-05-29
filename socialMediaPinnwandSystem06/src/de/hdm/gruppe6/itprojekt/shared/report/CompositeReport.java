@@ -3,11 +3,12 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 import java.io.Serializable;
 import java.util.Vector;
 
-/**
+/**  @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
+
  * Ein zusammengesetzter Report. Dieser Report kann aus einer Menge von 
  * Teil-Reports (vgl. Attribut <code>subReports</code>) bestehen.
  * 
- * @autor Anlehnung an Prof Thies
  */
 
 public abstract class CompositeReport extends Report implements Serializable {

@@ -3,14 +3,15 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 import java.io.Serializable;
 import java.util.Vector;
 
-/**
+/**@author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
  * Zeile einer Tabelle eines <code>SimpleReport</code>-Objekts. <code>Row</code>
  * -Objekte implementieren das <code>Serializable</code>-Interface und kÃ¶nnen
  * daher als Kopie z.B. vom Server an den Client Ã¼bertragen werden.
  * 
  * @see SimpleReport
  * @see Column
- * @author Thies
+ *
  */
 public class Row implements Serializable {
 

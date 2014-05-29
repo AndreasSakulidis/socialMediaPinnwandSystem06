@@ -3,12 +3,13 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 import java.io.Serializable;
 import java.util.Vector;
 
-/**
+/** * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
+
  * Diese Klasse stellt eine Menge einzelner AbsÃ¤tze (
  * <code>SimpleParagraph</code>-Objekte) dar. Diese werden als Unterabschnitte
  * in einem <code>Vector</code> abgelegt verwaltet.
  * 
- * @author Thies
  */
 public class CompositeParagraph extends Paragraph implements Serializable {
 

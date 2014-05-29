@@ -2,7 +2,8 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 
 import java.util.Vector;
 
-/**
+/** @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
  * <p>
  * Ein einfacher Report, der neben den Informationen der Superklasse <code>
  * Report</code> eine Tabelle mit "Positionsdaten" aufweist. Die Tabelle greift
@@ -16,7 +17,7 @@ import java.util.Vector;
  * 
  * @see Row
  * @see Column
- * @author Thies
+ *
  */
 public abstract class SimpleReport extends Report {
 

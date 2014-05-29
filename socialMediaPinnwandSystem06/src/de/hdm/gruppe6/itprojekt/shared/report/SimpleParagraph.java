@@ -2,13 +2,14 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 
 import java.io.Serializable;
 
-/**
+/**@author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
  * Diese Klasse stellt einzelne AbsÃ¤tze dar. Der Absatzinhalt wird als String
  * gespeichert. Der Anwender sollte in diesem Strinig keinerlei
  * Formatierungssymbole einfÃ¼gen, da diese in der Regel zielformatspezifisch
  * sind.
  * 
- * @author Thies
+ * 
  */
 public class SimpleParagraph extends Paragraph implements Serializable {
 

@@ -22,12 +22,15 @@ import de.hdm.gruppe6.itprojekt.shared.report.Row;
 import de.hdm.gruppe6.itprojekt.shared.report.SimpleParagraph;
 
 /**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * Anlehnung an Professor Thies
+ * 
  * Implementierung des <code>ReportGenerator</code>-Interface. Die technische
  * Realisierung bzgl. <code>RemoteServiceServlet</code> bzw. GWT RPC erfolgt
  * analog zu {@lBankAdministrationImplImpl}. FÃ¼r Details zu GWT RPC siehe dort.
  * 
  * @see ReportGenerator
- * @author Anlehnung an Professor Thies
+ * 
  */
 @SuppressWarnings("serial")
 public class ReportGeneratorImpl extends RemoteServiceServlet

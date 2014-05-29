@@ -1,14 +1,17 @@
 package de.hdm.gruppe6.itprojekt.shared.report;
 
 import java.io.Serializable;
-
 /**
+ * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
+
+*
  * Spalte eines <code>Row</code>-Objekts. <code>Column</code>-Objekte
  * implementieren das <code>Serializable</code>-Interface und kÃ¶nnen daher als
  * Kopie z.B. vom Server an den Client Ã¼bertragen werden.
  * 
  * @see Row
- * @author Thies
+ 
  */
 public class Column implements Serializable {
 

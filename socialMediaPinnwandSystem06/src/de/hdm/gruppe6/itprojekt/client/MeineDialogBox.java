@@ -2,7 +2,7 @@ package de.hdm.gruppe6.itprojekt.client;
 /**
  * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse MeineDialogBox ruft eine DialogBox auf, in der man Textbeiträge und Kommentare editieren und hinzufügen kann.
+ * Die Klasse MeineDialogBox ruft eine DialogBox auf, in der man Textbeiträge editieren oder Kommentare editieren und hinzufügen kann.
  */
 
 import com.google.gwt.core.shared.GWT;
@@ -17,6 +17,9 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 public class MeineDialogBox extends DialogBox {
 	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
 			.create(PinnwandVerwaltungService.class);
+	/**
+	 *Hier werden die Panels und die Widgets festgelegt.
+	 */
 
 	private HorizontalPanel commentPanel = new HorizontalPanel();
 	public TextArea ta;
@@ -26,8 +29,10 @@ public class MeineDialogBox extends DialogBox {
 	public MeineDialogBox(String title) {
 		this.setText(title);
 
+		/**
+		 * Die Widgets werden dem CommentPanel hinzugefügt.
+		 */
 		ta = new TextArea();
-
 		ok = new Button("Add");
 		abbrechen = new Button("Abbrechen");
 		commentPanel.add(ta);

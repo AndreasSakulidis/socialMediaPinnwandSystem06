@@ -10,19 +10,58 @@ import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
+
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *  In Anlehnung an Hr. Prof. Dr. Thies
+ * Die Klasse AbonnementMapper bildet die Abonnement-Objekte auf eine relationale Datenbank ab.
+ *  
+ */
+
 public class AbonnementMapper {
-
+	/**
+	   * Die Klasse AbonnementMapper wird nur einmal instantiiert. 
+	   * 
+	   * Diese Variable ist durch den Bezeichner <code>static</code> nur einmal für
+	   * sämtliche eventuellen Instanzen dieser Klasse vorhanden. Sie speichert die
+	   * einzige Instanz dieser Klasse.
+	   * 
+	   * @see abonnementMapper()
+	   */
+	
 	private static AbonnementMapper abonnementMapper = null;
-
+	  /**
+	   * Geschützter Konstruktor - verhindert die Möglichkeit, mit <code>new</code>
+	   * neue Instanzen dieser Klasse zu erzeugen.
+	   */
 	protected AbonnementMapper() {
 	}
-
+	 /**
+	   * Diese statische Methode kann aufgrufen werden durch
+	   * <code>AbonnementMapper.abonnementMapper()</code>. Sie stellt die
+	   * Singleton-Eigenschaft sicher, indem Sie dafür sorgt, dass nur eine einzige
+	   * Instanz von <code>AbonnementMapper</code> existiert.
+	   * <p>
+	   * 
+	   * <b>Fazit:</b> AbonnementMapper sollte nicht mittels <code>new</code>
+	   * instantiiert werden, sondern stets durch Aufruf dieser statischen Methode.
+	   * 
+	   * @return DAS <code>AbonnementMapper</code>-Objekt.
+	   * @see abonnementMapper
+	   */
 	public static AbonnementMapper abonnementMapper() {
 		if (abonnementMapper == null) {
 			abonnementMapper = new AbonnementMapper();
 		}
 		return abonnementMapper;
 	}
+	
+	/**
+	 * Methode um ein Abonnement in die Datenbank anzulegen.
+	 * @param abo
+	 * @return
+	 * @throws Exception
+	 */
 
 	public Abonnement anlegen(Abonnement abo) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -83,6 +122,14 @@ public class AbonnementMapper {
 		}
 		return abo;
 	}
+	
+	/**
+	 * Methode um einen Datensatz aus der Datenbank zu löschen
+	 * 
+	 * @param abonnement
+	 * @return
+	 * @throws Exception
+	 */
 
 	public void loeschen(Abonnement abo) throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -102,6 +149,13 @@ public class AbonnementMapper {
 		}
 		return;
 	}
+	
+	 /** 
+	  * Methode mit der man ein Abonnement über ihre ID finden kann.
+	   * @param aboID
+	   * @return Abonnement-Objekt
+	   * @throws Exception
+	   */
 
 	public Abonnement findeAnhandID(int aboID) throws Exception {
 		Connection con = DBVerbindung.connection();

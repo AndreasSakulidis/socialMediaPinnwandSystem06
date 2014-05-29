@@ -25,6 +25,9 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class Anmelden{
+	/**
+	 * Hier werden die Panels und die Widgets für die Anmeldung festgelegt.
+	 */
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Label lbname = new Label("Name   :  ");
@@ -35,8 +38,9 @@ public class Anmelden{
 	private Label anmelden = new Label("Anmeldung");
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 
-	// Registrierung
-
+	/**
+	 * Hier werden die Panels und die Widgets für die Registrierung festgelegt.
+	 */
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Label lbRname = new Label("Name");
 	private TextBox tbRname = new TextBox();
@@ -52,7 +56,6 @@ public class Anmelden{
 	private Label regi = new Label("Registrierung: ");
 	
 	private VerticalPanel addPanel = new VerticalPanel();
-
 	private HorizontalPanel horziPanel= new HorizontalPanel();
 	
 	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
@@ -62,7 +65,9 @@ public class Anmelden{
 
 	public Widget anmelden() {
 		
-		
+		/**
+		 * Die Widgets für die Anmeldung werden dem loginPanel hinzugefügt.
+		 */
 		loginPanel.add(lbname);
 		loginPanel.add(tbName);
 		loginPanel.add(lbPasswort);
@@ -75,6 +80,9 @@ public class Anmelden{
 //		}
 //		vPanel.add(addPanel);
 		
+		/**
+		 * Die Widgets für die Registrierung werden dem addPanel hinzugefügt.
+		 */
 		addPanel.add(regi);
 		addPanel.add(lbRname);
 		addPanel.add(tbRname);
@@ -88,7 +96,9 @@ public class Anmelden{
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
 
-		
+		/**
+		 *  Mit einem Klick auf den Registrierung Button kann sich der User registrieren.
+		 */
 		regButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -138,6 +148,9 @@ public class Anmelden{
 
 
 //		hPanel.add(anmelden);
+		/**
+		 * Mit einem Klick auf den Anmelden Button kann sich der bereits registrierter User einloggen.
+		 */
 		loginButton.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -201,7 +214,9 @@ public class Anmelden{
 			
 		
 		
-		
+		/**
+		 *  Dem Widgets werden Stylenames zugeordnet. 
+		 */
 		regi.addStyleName("regiÜber");
 		anmelden.addStyleName("AnmeldeÜber");
 		hPanel.addStyleName("Anmelden");

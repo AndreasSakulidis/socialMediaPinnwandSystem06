@@ -2,7 +2,8 @@ package de.hdm.gruppe6.itprojekt.shared.report;
 
 public abstract class ReportWriter {
 	
-	/**
+	/** @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * In Anlehnung an Hr. Prof. Dr. Thies
 	 * <p>
 	 * Diese Klasse wird benötigt, um auf dem Client die ihm vom Server zur
 	 * Verfügung gestellten <code>Report</code>-Objekte in ein menschenlesbares
@@ -14,8 +15,6 @@ public abstract class ReportWriter {
 	 * dieser Klasse werden die Signaturen der Methoden deklariert, die für die
 	 * Prozessierung der Quellinformation zuständig sind.
 	 * </p>
-	 * 
-	 * @author angelehnt an Prof. Thies
 	 */
 	
 	public ReportWriter(){

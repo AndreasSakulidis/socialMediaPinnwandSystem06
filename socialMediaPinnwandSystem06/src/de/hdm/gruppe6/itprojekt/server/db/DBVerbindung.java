@@ -88,19 +88,24 @@ import java.sql.Statement;
 
 import com.google.appengine.api.rdbms.AppEngineDriver;
 
-/**
- * *EnthÃ¤lt alle Elemente und nÃ¶tigen Methoden fÃ¼r das DurchfÃ¼hrungs Formular
+/**  @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ *	In Anlehnung an Hr. Prof. Dr. Thies
+ * Enthält alle Elemente und nötigen Methoden für das Durchführungs Formular
  * 
- * @author Özlem Gül, Michael Schelkle, Bharti Kumar
- *In Anlehnung an Hr. Prof. Dr. Thies
+ * 
  */
 public class DBVerbindung {
 
+	/**
+	 * Die Klasse DBVerbindung wird nur einmal instantiiert.
+	 */
 	
 	private static Connection con = null;
 	
 
-	
+	/**
+	 * Die URL um die Datenbank anzusprechen.
+	 */
 //	cloud sql
 	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=root";
