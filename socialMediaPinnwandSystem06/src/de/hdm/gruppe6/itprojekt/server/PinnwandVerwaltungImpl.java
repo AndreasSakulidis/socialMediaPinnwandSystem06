@@ -340,6 +340,12 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 	public Like findeLikeAnhandID (int likeID) throws Exception {
 		 		    return this.likeMapper.findeAnhandID(likeID);
 		 		  }
+			@Override
+			public Vector<Textbeitrag> findeAlleUserBeitraege(int userID)
+					throws Exception {
+				
+				return textbeitragMapper.findeAlleUserBeitraege(userID);
+			}
 		 	
 		 
 }

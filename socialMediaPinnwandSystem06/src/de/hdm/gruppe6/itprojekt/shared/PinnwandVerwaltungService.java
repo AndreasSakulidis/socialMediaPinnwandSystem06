@@ -96,6 +96,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 
 	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception;
 	 
+	public Vector <Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception; 
 					
 		     
 	public Like likeAnlegen(String uid, int tid) throws Exception;

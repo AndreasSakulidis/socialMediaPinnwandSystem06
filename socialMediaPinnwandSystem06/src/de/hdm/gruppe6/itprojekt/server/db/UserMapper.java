@@ -371,6 +371,28 @@ public class UserMapper {
 		return rs.getInt("AnzahlTextbeitraege");
 
 	}
+	
+	public int zaehleTextbeitraegeVonUserAnhandUserID(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			rs = stmt
+					.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM textbeitrag WHERE UserID = "
+							+ userID);
+			
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return rs.getInt("AnzahlTextbeitraege");
+	}
+
 
 	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user)
 			throws Exception {

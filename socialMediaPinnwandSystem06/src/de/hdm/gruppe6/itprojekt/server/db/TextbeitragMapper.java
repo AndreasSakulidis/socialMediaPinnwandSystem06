@@ -51,16 +51,17 @@ public class TextbeitragMapper {
 
 				stmt = con.createStatement();
 				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
-				stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, Text, UserID, ErstellungsZeitpunkt, PinnwandID)"
+				stmt.executeUpdate("INSERT INTO textbeitrag (TextbeitragID, ErstellungsZeitpunkt, Text, UserID, PinnwandID) "
 						+ "VALUES ('"
 						+ textbeitrag.getId()
+						+ "','"
+						+ tmstamp
 						+ "','"
 						+ textbeitrag.getText()
 						+ "','"
 						+ uid
-						+ "','"
-						+ tmstamp
-						+ "','" + pid + "') ");
+						+ "','" 
+						+ pid + "') ");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -285,4 +286,38 @@ public class TextbeitragMapper {
 		}
 	}
 
+	public Vector<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
+					+ "WHERE UserID ="
+					+ userID);
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				result.addElement(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return result;
+	}
+	
 }

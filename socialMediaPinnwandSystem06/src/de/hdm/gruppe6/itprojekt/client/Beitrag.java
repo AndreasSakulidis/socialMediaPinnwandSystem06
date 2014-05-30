@@ -18,7 +18,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
@@ -31,24 +33,37 @@ public class Beitrag extends Composite {
 			.create(PinnwandVerwaltungService.class);
 
 	private VerticalPanel vPanel = new VerticalPanel();
-	private FlexTable postFlexTable = new FlexTable();
 
+	private FlexTable postFlexTable = new FlexTable();
 
 	private Label post = new Label();
 	private Button loeschen = new Button("X");
 	private Button bearbeiten = new Button("Bearbeiten");
 	private Button kommentieren = new Button("Kommentieren");
 	private Button liken = new Button("Like");
-	private Label label = new Label();
+	private Label label = new Label("TEST");
 	private Label lastUpdatedLabel = new Label();
 	private Label lbId = new Label();
-	private VerticalPanel mainPanel = new VerticalPanel();
-	
-	public Beitrag(final String content) {
+//	private VerticalPanel mainPanel = new VerticalPanel();
+//	public VerticalPanel addPanel = new VerticalPanel();
 
-		label.setText(content);
+	public Beitrag(final Textbeitrag content) {
+
+		String a = content.toString();
+		label.setText(a);
+		
+		vPanel.add(label);
+	
+		// lbId.setText(String.valueOf(id));
+		System.out.println("in Konstruktor Beitrag");
+	}
+
+	public Widget aufrufen() {
+		
 		initWidget(this.vPanel);
-//		lbId.setText(String.valueOf(id));
+		// label.setText(content);
+		// initWidget(this.vPanel);
+		// lbId.setText(String.valueOf(id));
 
 		postFlexTable.setWidget(0, 0, post);
 		postFlexTable.setWidget(1, 1, loeschen);
@@ -62,8 +77,8 @@ public class Beitrag extends Composite {
 
 		vPanel.add(postFlexTable);
 		vPanel.addStyleName("Textbeitrag");
-		
 
+		vPanel.add(label);
 
 		kommentieren.addClickHandler(new ClickHandler() {
 
@@ -71,11 +86,9 @@ public class Beitrag extends Composite {
 			public void onClick(ClickEvent event) {
 				KommentarErstellen kommentarErstellen = new KommentarErstellen();
 				int tid = Integer.parseInt(lbId.getText());
-				//kommentarErstellen.setComment(content);
-//				Textbeitrag tb = new Textbeitrag();
-				vPanel.add(kommentarErstellen.setComment(content, tid));
-
-
+				// kommentarErstellen.setComment(content);
+				// Textbeitrag tb = new Textbeitrag();
+				// vPanel.add(kommentarErstellen.setComment(content, tid));
 
 			}
 
@@ -89,23 +102,21 @@ public class Beitrag extends Composite {
 				int id = Integer.parseInt(lbId.getText());
 				String text = post.getText();
 				pinnwandVerwaltung.textbeitragLoeschen(text, id,
-				new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert("Fehler beim loeschen!");
-					}
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								Window.alert("Fehler beim loeschen!");
+							}
 
-					@Override
-					public void onSuccess(Void result) {
-						Window.alert("Textbeitrag wurde geloescht!");
-						postFlexTable.removeFromParent();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+								Window.alert("Textbeitrag wurde geloescht!");
+								postFlexTable.removeFromParent();
+							}
+						});
 			}
 
 		});
-
-
 
 		bearbeiten.addClickHandler(new ClickHandler() {
 			@Override
@@ -122,14 +133,13 @@ public class Beitrag extends Composite {
 					}
 
 				});
-				
-				comment.ok.addClickHandler(new ClickHandler() {
 
+				comment.ok.addClickHandler(new ClickHandler() {
 
 					@Override
 					public void onClick(ClickEvent event) {
 						comment.hide();
-						post.setText(comment.getContent());	
+						post.setText(comment.getContent());
 
 						int id = Integer.parseInt(lbId.getText());
 						final String text = post.getText();
@@ -154,23 +164,33 @@ public class Beitrag extends Composite {
 			}
 
 		});
-		
+
 		liken.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				String uid = Cookies.getCookie("SocialMedia6ID");
 				int tid = Integer.parseInt(lbId.getText());
-				pinnwandVerwaltung.likeAnlegen(uid, tid,  new AsyncCallback<Like>(){
-					public void onFailure(Throwable caught) {
-						Window.alert("Fehler beim Liken!");
-					}
-					public void onSuccess(Like like) {
-						Window.alert("Erfolgreich geliked!");
-					}
-				});
+				pinnwandVerwaltung.likeAnlegen(uid, tid,
+						new AsyncCallback<Like>() {
+							public void onFailure(Throwable caught) {
+								Window.alert("Fehler beim Liken!");
+							}
+
+							public void onSuccess(Like like) {
+								Window.alert("Erfolgreich geliked!");
+							}
+						});
 			}
 		});
+
+		lastUpdatedLabel.setText("Es wurde gepostet um : "
+				+ DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
 		
+		return vPanel;
+
+	}
+
+	public void setPost(String content) {
 		post.setText(content);
 
 		String text = post.getText();
@@ -184,15 +204,17 @@ public class Beitrag extends Composite {
 
 					@Override
 					public void onSuccess(Textbeitrag textbeitrag) {
+						// TODO nach dem Anlegen aktualisieren
 						lbId.setText(String.valueOf(textbeitrag.getId()));
-						Window.alert("Textbeitrag wurde gepostet!");
+						// Window.alert("Textbeitrag wurde gepostet!");
+						Window.Location.reload();
 
 					}
 				});
-
-				lastUpdatedLabel.setText("Es wurde gepostet um : "
-		        + DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
-
+	
+	
 	}
+	
+	
 
 }

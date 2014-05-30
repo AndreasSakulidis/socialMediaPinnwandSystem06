@@ -177,7 +177,8 @@ public class UserTrefferliste{
 
 						@Override
 						public void onClick(ClickEvent event) {
-							//abonnieren
+							
+						
 						}
 
 					});

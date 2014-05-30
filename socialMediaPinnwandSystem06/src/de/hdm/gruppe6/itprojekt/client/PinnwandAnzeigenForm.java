@@ -6,6 +6,11 @@ import com.google.gwt.user.client.ui.Widget;
 public class PinnwandAnzeigenForm extends Composite{
 //TODO
 	public Widget zeigePinnwand(){
+	
+		
+		
+		
+		
 		return null;
 		
 	}

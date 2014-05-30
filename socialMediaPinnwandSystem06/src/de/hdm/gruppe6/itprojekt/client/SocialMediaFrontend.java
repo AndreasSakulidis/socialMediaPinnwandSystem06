@@ -6,6 +6,9 @@ package de.hdm.gruppe6.itprojekt.client;
  * Die Klasse SocialMediaFrontend enthält die Menüleiste und ruft die Methode zur Überprüfung der Anmeldung auf. //SO STEHEN LASSEN?
  */
 
+import java.util.Vector;
+
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -13,6 +16,7 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -24,6 +28,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class SocialMediaFrontend extends Composite {
@@ -35,6 +42,9 @@ public class SocialMediaFrontend extends Composite {
 	private Button abo = new Button ("Abos anzeigen");
 	private Label beispiel = new Label("Bsp.: Schmidt");
 	private Label trennlinie = new Label("______________");
+	
+	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
+
 	
 	// Registrierung
 	private TextBox tbName = new TextBox();
@@ -86,15 +96,20 @@ public class SocialMediaFrontend extends Composite {
 			public void execute() {
 				mainPanel.clear();
 				PinnwandForm pF = new PinnwandForm();
-				mainPanel.add(pF.zeigePost());
+//				mainPanel.add(pF.zeigePost());
 			}
 		};
 
 		Command cmd6 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+				PinnwandForm pAF = new PinnwandForm();
+				
+				
+			//	Beitrag b = new Beitrag("");
+				
+//				mainPanel.add(pAF.zeigePost()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+			//	mainPanel.add(b);
 			}
 		};
 		
@@ -110,16 +125,7 @@ public class SocialMediaFrontend extends Composite {
 				
 				Anmelden startseite = new Anmelden();
 				startseite.anmelden();
-				
-//				tbName.setVisible(true);
-//				tbPasswort.setVisible(true);
-//				loginButton.setVisible(true);
-//				tbName.setText("");
-//				tbPasswort.setText("");
-//				mainPanel.add(tbName);
-//				mainPanel.add(tbPasswort);
-//				mainPanel.add(loginButton);
-				
+
 			}
 		};
 		
@@ -221,6 +227,36 @@ public class SocialMediaFrontend extends Composite {
 			}
 		});
 		
+		String uid = Cookies.getCookie("SocialMedia6ID");
+		int userID = Integer.parseInt(uid);
+		socialmedia.findeAlleUserBeitraege(userID, new AsyncCallback<Vector<Textbeitrag>>() {
+			@Override
+			public void onSuccess(Vector<Textbeitrag> result) {
+
+//				VerticalPanel addPanel = new VerticalPanel();		
+
+				for (Textbeitrag tb : result){
+					
+	
+					
+					Beitrag beitrag = new Beitrag(tb);
+//					mainPanel.clear();
+					mainPanel.add(beitrag.aufrufen());
+					
+					
+					System.out.println("Es lauft");
+				}
+
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("hat nicht geklappt mit den Post ausgaben: "+caught.getMessage());
+			}
+		});
+
+		
 		
 		// Add it to the root Panel
 		RootPanel.get("Details").add(mainPanel);
@@ -262,6 +298,8 @@ public class SocialMediaFrontend extends Composite {
 		
 		return mainPanel;
 	}
+	
+	
 	
 	
 
