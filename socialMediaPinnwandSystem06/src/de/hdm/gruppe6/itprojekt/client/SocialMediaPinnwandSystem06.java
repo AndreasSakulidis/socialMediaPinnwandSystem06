@@ -39,12 +39,12 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 		if(!cookie.equals(null)){
 //			TODO Id von User rausziehen und es dem Pinnwand zuweisen und aufrufen. 
 		an.angemeldet();
-		mainPanel.clear();
+//		mainPanel.clear();
 		PinnwandForm pAF = new PinnwandForm();
-		//Beitrag b = new Beitrag("");
+		Beitrag b = new Beitrag("");
 		
-//		mainPanel.add(pAF.zeigePost()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
-	//	mainPanel.add(b);
+		mainPanel.add(pAF.zeigePost()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+		mainPanel.add(b);
 		RootPanel.get("Details").add(mainPanel);
 		}
 

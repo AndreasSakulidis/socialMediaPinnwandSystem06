@@ -34,30 +34,30 @@ public class PinnwandForm extends Widget {
 
 	}
 	
-//	public Widget zeigePost() {
-//		ta.setCharacterWidth(60);
-//		ta.setVisibleLines(5);
-//		// Anordnung von textarea und button
-//		addPanel.add(ta);
-//		addPanel.add(textbeitragPosten);
-//		addPanel.addStyleName("addPanel");
-//
-//		// RootPanel.get("Details").clear();
-//		RootPanel.get("Details").add(addPanel);
-//		textbeitragPosten.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				String a = ta.getText();
-//
-//				Beitrag b = new Beitrag(a);
-//				b.setPost(a);
-////				addPanel.add(b);
-//				ta.setText("");
-//			}
-//		});
-//		
-//		
-//		
-//		return addPanel; }
+	public Widget zeigePost() {
+		ta.setCharacterWidth(60);
+		ta.setVisibleLines(5);
+		// Anordnung von textarea und button
+		addPanel.add(ta);
+		addPanel.add(textbeitragPosten);
+		addPanel.addStyleName("addPanel");
+
+		// RootPanel.get("Details").clear();
+		RootPanel.get("Details").add(addPanel);
+		textbeitragPosten.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				String a = ta.getText();
+
+				Beitrag b = new Beitrag(a);
+				b.setPost(a);
+				addPanel.add(b);
+				ta.setText("");
+			}
+		});
+		
+		
+		
+		return addPanel; }
 
 }

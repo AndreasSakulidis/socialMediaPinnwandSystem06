@@ -106,10 +106,10 @@ public class SocialMediaFrontend extends Composite {
 				PinnwandForm pAF = new PinnwandForm();
 				
 				
-			//	Beitrag b = new Beitrag("");
+				Beitrag b = new Beitrag("");
 				
-//				mainPanel.add(pAF.zeigePost()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
-			//	mainPanel.add(b);
+			mainPanel.add(pAF.zeigePost()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+				mainPanel.add(b);
 			}
 		};
 		
@@ -227,39 +227,7 @@ public class SocialMediaFrontend extends Composite {
 			}
 		});
 		
-		String uid = Cookies.getCookie("SocialMedia6ID");
-		int userID = Integer.parseInt(uid);
-		socialmedia.findeAlleUserBeitraege(userID, new AsyncCallback<Vector<Textbeitrag>>() {
-			@Override
-			public void onSuccess(Vector<Textbeitrag> result) {
-
-//				VerticalPanel addPanel = new VerticalPanel();		
-
-				for (Textbeitrag tb : result){
-					
-	
-					
-					Beitrag beitrag = new Beitrag(tb);
-//					mainPanel.clear();
-					mainPanel.add(beitrag.aufrufen());
-					
-					
-					System.out.println("Es lauft");
-				}
-
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				System.out.println("hat nicht geklappt mit den Post ausgaben: "+caught.getMessage());
-			}
-		});
-
 		
-		
-		// Add it to the root Panel
-		RootPanel.get("Details").add(mainPanel);
 
 		nameField.addKeyPressHandler(new KeyPressHandler() {
 			public void onKeyPress(KeyPressEvent event) {
