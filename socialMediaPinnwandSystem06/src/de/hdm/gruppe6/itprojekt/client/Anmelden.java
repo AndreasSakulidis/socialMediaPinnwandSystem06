@@ -33,12 +33,13 @@ public class Anmelden{
 	 */
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
-	private Label lbname = new Label("Name   :  ");
+	
+	private Label hinweis = new Label("*Nickname kann nur einmal festgelegt werden");
+	private Label lbname = new Label("Nickname   :  ");
 	private TextBox tbName = new TextBox();
 	private Label lbPasswort = new Label("Passwort   :  ");
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
 	private Button loginButton = new Button("Anmelden");
-	private Label anmelden = new Label("Anmeldung");
 	private HorizontalPanel loginPanel = new HorizontalPanel();
 
 	/**
@@ -68,15 +69,23 @@ public class Anmelden{
 
 	public Widget anmelden() {
 		
+		hinweis.addStyleName("hinweis");
+		
 		/**
 		 * Die Widgets f�r die Anmeldung werden dem loginPanel hinzugef�gt.
 		 */
 		loginPanel.add(lbname);
 		loginPanel.add(tbName);
+
 		loginPanel.add(lbPasswort);
 		loginPanel.add(tbPasswort);
 		loginPanel.add(loginButton);
+
 		
+//		 public void setFocus(boolean focus) {
+//			 tbName.setFocus(focus);
+//		 }
+		loginPanel.addStyleName("loginPanel");
 		RootPanel.get("Details").add(loginPanel);
 //		for(int i = 0; i<10; i++){
 //			addPanel.add(lTrennWand);
@@ -93,11 +102,14 @@ public class Anmelden{
 		addPanel.add(tbNachname);
 		addPanel.add(lbNick);
 		addPanel.add(tbNick);
+		addPanel.add(hinweis);
 		addPanel.add(lbRPasswort);
 		addPanel.add(tbRPasswort);
 		addPanel.add(lbEmail);
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
+		
+		addPanel.addStyleName("addPanelAnmelden");
 
 		/**
 		 *  Mit einem Klick auf den Registrierung Button kann sich der User registrieren.
@@ -138,6 +150,8 @@ public class Anmelden{
 										Window.alert("Nickname exisitert bereits!");
 									} else {
 										Window.alert("Anlegen erfolgreich!");
+										addPanel.clear();
+										tbName.setFocus(true);
 									}
 								}
 							});
@@ -146,7 +160,7 @@ public class Anmelden{
 		});
 		
 //		addPanel.add(addPanel);
-		
+		tbName.setFocus(true);
 		RootPanel.get("Details").add(addPanel);
 //		RootPanel.get().add(vPanel);
 
@@ -177,9 +191,9 @@ public class Anmelden{
 									RootPanel.get("Details").clear();
 
 									Window.alert("Erfolgreich angemeldet... Nickname: "
-											+ result.getNickname()
-											+ " und Passwort"
-											+ result.getPasswort());
+											+ result.getNickname());
+//											+ " und Passwort"
+//											+ result.getPasswort());
 									tbName.setVisible(false);
 									tbPasswort.setVisible(false);
 									loginButton.setVisible(false);
@@ -337,11 +351,11 @@ public class Anmelden{
 		 *  Dem Widgets werden Stylenames zugeordnet. 
 		 */
 		
-		regi.addStyleName("regi�ber");
-		anmelden.addStyleName("Anmelde�ber");
-		hPanel.addStyleName("Anmelden");
-		vPanel.addStyleName("Regi");
-		
+		regi.addStyleName("regi");
+//		anmelden.addStyleName("Anmelde�ber");
+//		hPanel.addStyleName("Anmelden");
+//		vPanel.addStyleName("Regi");
+//		
 		horziPanel.add(hPanel);
 		horziPanel.add(vPanel);
 

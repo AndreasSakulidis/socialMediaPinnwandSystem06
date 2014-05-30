@@ -32,11 +32,10 @@ public class SocialMediaFrontend extends Composite {
 	 */
 
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private Label userSuchen = new Label("User suchen:");
+	private Label userSuchen = new Label("User nach Nickname suchen:");
 	private VerticalPanel suchePanel = new VerticalPanel();
 	final VerticalPanel aboPanel = new VerticalPanel();
 	private Button abo = new Button ("Abos anzeigen");
-	private Label beispiel = new Label("Bsp.: Schmidt");
 	private Label trennlinie = new Label("______________");
 	private TextBox tbName = new TextBox();
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
@@ -108,6 +107,7 @@ public class SocialMediaFrontend extends Composite {
 				mainPanel.clear();
 				suchePanel.clear();
 				RootPanel.get("Header").clear();
+				RootPanel.get("Details").clear();
 				RootPanel.get().clear();
 				User u = new User();
 				u.abmelden();
@@ -119,11 +119,17 @@ public class SocialMediaFrontend extends Composite {
 			}
 		};
 		
-
-
+		Command bearb = new Command(){
+			public void execute() {
+				mainPanel.clear();
+				UserBearbeiten uB = new UserBearbeiten();
+				mainPanel.add(uB.bearbeiteProfil());
+			
+		}
+		};
+		
 		MenuBar fooMenu = new MenuBar(true);
-
-		MenuBar barMenu = new MenuBar(true);
+		
 
 		MenuBar reportMenu = new MenuBar(true);
 		reportMenu.addItem("Infoausgabe von User", cmd1);
@@ -133,11 +139,12 @@ public class SocialMediaFrontend extends Composite {
 		reportMenu.addStyleName("reportmenu");
 		fooMenu.addItem("Textbeitrag posten", cmd5);
 		fooMenu.addItem("Pinnwand anzeigen", cmd6);
+		
 	
 		MenuBar menu = new MenuBar();
 		menu.addItem("Pinnwand", fooMenu);
 		menu.addItem("Reports", reportMenu);
-		menu.addItem("Einstellungen", barMenu);
+		menu.addItem("Mein Profil", bearb);
 		menu.addItem("LogOut", logout);
 
 		RootPanel.get("Header").add(menu);
@@ -150,7 +157,6 @@ public class SocialMediaFrontend extends Composite {
 		sendSucheButton.addStyleName("sendSucheButton");
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
-		suchePanel.add(beispiel);
 		suchePanel.add(sendSucheButton);
 		suchePanel.add(aboPanel);
 		aboPanel.add(trennlinie);
@@ -173,7 +179,7 @@ public class SocialMediaFrontend extends Composite {
 					// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in einem
 					// bestimmten Zeitraum
 					aboTable.setText(0, 0, "Nickname");
-					aboTable.setText(0, 1, "L�schen");
+					aboTable.setText(0, 1, "Löschen");
 					
 					suchePanel.add(aboTable);
 					aboTable.addStyleName("flextable");

@@ -354,10 +354,14 @@ public class TextbeitragMapper {
 					.executeQuery("SELECT user.Vorname, user.Nachname, textbeitrag.Text FROM user INNER JOIN textbeitrag ON user.UserID = textbeitrag.UserID WHERE textbeitrag.TextbeitragID = "
 							+ textbeitrag.getId());
 
+//			Textbeitrag t = new Textbeitrag();
+//			t.setNameUser(rs.getString("User.Vorname")+" "+rs.getString("Nachname"));
 			User user = new User();
 			user.setId(rs.getInt("TextbeitragID"));
 			user.setVorname(rs.getString("User.Vorname"));
 			user.setNachname(rs.getString("User.Nachname"));
+			
+			
 
 			return user;
 
@@ -365,9 +369,10 @@ public class TextbeitragMapper {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-		}
+		} 
+//			finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
 	}
 
 }

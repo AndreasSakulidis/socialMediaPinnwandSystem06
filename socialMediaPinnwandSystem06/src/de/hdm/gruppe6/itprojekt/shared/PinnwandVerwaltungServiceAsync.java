@@ -84,9 +84,11 @@ public interface PinnwandVerwaltungServiceAsync {
 	
 	void userAnmelden(String name, String passwort, AsyncCallback<User> callback);
 
-	void userEditieren(User user, AsyncCallback<User> callback);
+	void userEditieren(int id, String vorname,
+			String nachname, String nickname, String email, String passwort, AsyncCallback<User> callback);
 
-	void userLoeschen(User user, AsyncCallback<Void> callback);
+	void userLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort, AsyncCallback<Void> callback);
 
 	void zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag,
 			AsyncCallback<Integer> callback);
@@ -105,6 +107,10 @@ public interface PinnwandVerwaltungServiceAsync {
 			AsyncCallback<Integer> callback);
 
 	void findeUserAnhandNachname(String nachname,
+			AsyncCallback<Vector<User>> callback);
+
+
+	void findeUserAnhandNickname(String nickname,
 			AsyncCallback<Vector<User>> callback);
 	
 	

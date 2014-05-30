@@ -46,6 +46,7 @@ public class KommentarErstellen extends Composite {
  * Die Klasse MeineDialogBox wird aufgerufen, indem der Textbeitrag kommentiert werden kann.
  */
 		final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
+		comment.center();
 		comment.setText("Kommentieren");
 
 		/**
@@ -111,6 +112,7 @@ public class KommentarErstellen extends Composite {
 					@Override
 					public void onClick(ClickEvent event) {
 						final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
+						comment.center();
 						comment.setText("Bearbeiten");
 						comment.setContent(commentL.getText());
 						

@@ -18,7 +18,7 @@ div#TopLevelFrame {
  
 div#Details {
 	margin-left: 20em;
-	min-height: 400px;
+	min-height: 500px;
 	max-height: 500px;
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
@@ -27,13 +27,15 @@ div#Details {
 }
 
 div#Navigator {
+	clear: both;
 	float: left;
 	width: 18em;
-	min-height: 300px;
+	min-height: 500px;
 	padding: 1em 1em;
 	border-top: 1px dashed silver;
 	text-align: left;
 	background-color: ghostwhite;
+	border: 1px dashed silver;
 }
 
 .sendSucheButton {
@@ -42,8 +44,12 @@ div#Navigator {
 }
 
 div#Header {
+	clear: both;
+	font-family: Georgia;
+	font-weight: bold;
+	font-color: #008b8b;
 	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
-	/* border: 1px dashed silver; */
+	border: 1px dashed silver;
 	background-color: ghostwhite;
 }
 
@@ -149,4 +155,52 @@ div#Trailer {
 }
 .abo {
 background-color: ghostwhite;
+}
+
+.Userspalte {
+	background-color: ghostwhite;
+	font-style: italic;
+}
+
+.loginPanel {
+	padding-top: 20px;
+	padding-bottom: 50px;
+	padding-left: 40px;
+}
+
+.addPanelAnmelden {
+		padding-left: 50px;
+	
+}
+
+
+.regi {
+	font-weight: bold;
+	padding-bottom: 20px;
+}
+
+.deleteUserPanel {
+	padding-top: 50px;
+}
+
+.einstellungenPanel {
+	padding-left: 80px;
+}
+
+.hinweis {
+	font-size: 60%;
+}
+
+.userliste {
+	background-color: lightsteelblue;
+	font-style: italic;
+}
+
+.hinweisnick {
+	font-size: 60%;
+	font-color: red;
+}
+
+.nick {
+	font-color: red;
 }

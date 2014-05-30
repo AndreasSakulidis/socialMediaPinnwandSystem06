@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse FormInfosVonALlenUsernReport enthält die Auswahlmaske.
+ * Die Klasse FormInfosVonALlenUsernReport enthï¿½lt die Auswahlmaske.
  */
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -59,6 +59,7 @@ public class FormInfosVonAllenUsernReport extends Composite {
 				vPanel.add(postFlexTable);
 				postFlexTable.addStyleName("flextable");
     
+				
 	   
 	
 				

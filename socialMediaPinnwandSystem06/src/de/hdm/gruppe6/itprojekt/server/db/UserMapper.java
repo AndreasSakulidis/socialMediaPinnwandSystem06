@@ -238,22 +238,22 @@ public class UserMapper {
 	public User editieren(User user) throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
-		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE user " + "SET Nachname =\""
-					+ user.getNachname() + "\", Vorname =\""
-					+ user.getVorname() + "\", Nickname =\""
-					+ user.getNickname() + "\", Email =\"" + user.getEmail()
-					+ "\" , ErstellungsZeitpunkt =\""
-					+ user.getErstellungsZeitpunkt() + "\" WHERE UserID="
-					+ user.getId());
+		Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+		 String sql = "UPDATE user SET ErstellungsZeitpunkt ='"+ tmstamp+"', Vorname = '" + user.getVorname() + "', Nachname = '" + user.getNachname() + "', Nickname = '" + user.getNickname() + "', Email = '" + user.getEmail() + "', Passwort ='" + user.getPasswort() + "' WHERE UserID="+ user.getId();
+		 try {
+		 stmt = con.createStatement();
+		 stmt.executeUpdate(sql);
+		
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+		 
+//		 finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		 
 		return user;
 	}
 	
@@ -278,9 +278,10 @@ public class UserMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return;
 	}
 
@@ -329,6 +330,54 @@ public class UserMapper {
 		return result;
 
 	}
+	
+	
+	public Vector<User> findeAnhandNickname(String nickname) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		Vector<User> result = new Vector<User>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT * FROM `user` WHERE `Nickname` = '"
+					+ nickname + "'");
+
+			// if(rs.next()){
+			// User u = new User();
+			// u.setId(rs.getInt("UserID"));
+			// u.setVorname(rs.getString("Vorname"));
+			// u.setNachname(rs.getString("Nachname"));
+			// u.setNickname(rs.getString("Nickname"));
+			// u.setEmail(rs.getString("Email"));
+			// u.setErstellungsZeitpunkt(rs.getDate("ErstellungsZeitpunkt"));
+
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("UserID"));
+				user.setVorname(rs.getString("Vorname"));
+				user.setNachname(rs.getString("Nachname"));
+				user.setNickname(rs.getString("Nickname"));
+				user.setEmail(rs.getString("Email"));
+				user.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				result.addElement(user);
+
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
+
+		return result;
+
+	}
+	
 	 /** 
 	  * Methode mit der man einen User �ber ihr ID finden kann.
 	   * @param userID
@@ -345,11 +394,10 @@ public class UserMapper {
 			stmt = con.createStatement();
 
 			rs = stmt
-					.executeQuery("SELECT UserID, Vorname, Nachname, Nickname, Email, ErstellungsZeitpunkt"
-							+ "FROM user"
+					.executeQuery("SELECT UserID, Vorname, Nachname, Nickname, Email, Passwort, ErstellungsZeitpunkt "
+							+ "FROM user "
 							+ "WHERE UserID="
-							+ userID
-							+ " ORDER BY Nachname");
+							+ userID);
 
 			if (rs.next()) {
 				User u = new User();
@@ -358,6 +406,7 @@ public class UserMapper {
 				u.setNachname(rs.getString("Nachname"));
 				u.setNickname(rs.getString("Nickname"));
 				u.setEmail(rs.getString("Email"));
+				u.setPasswort(rs.getString("Passwort"));
 				u.setErstellungsZeitpunkt(rs
 						.getTimestamp("ErstellungsZeitpunkt"));
 
@@ -366,9 +415,10 @@ public class UserMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
 
 		return null;
 	}

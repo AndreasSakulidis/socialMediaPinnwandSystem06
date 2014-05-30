@@ -36,7 +36,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	/**
 	 * Bearbeitung des Users.
 	 */
-	public User userEditieren(User user)throws Exception;
+	public User userEditieren(int id, String vorname,
+			String nachname, String nickname, String email, String passwort)throws Exception;
 	/**
 	 * Finden aller User.
 	 */
@@ -52,11 +53,16 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	  * Finden des Users anhand seiner Nachname.
 	  */
 	public Vector<User> findeUserAnhandNachname(String nachname) throws Exception;
+	
+	
+	public Vector<User> findeUserAnhandNickname(String nickname) throws Exception;
+	
 	/**
 	 * L�schen des Users aus der Datenbank.
 	 */
 
-	public void userLoeschen(User user) throws Exception;
+	public void userLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception;
 	 /**
 	  * Z�hlen der Textbeitr�ge von einem User.
 	  */

@@ -1,11 +1,12 @@
 package de.hdm.gruppe6.itprojekt.client;
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
  * Die Klasse UserTrefferliste erstellt die Flextable von der UserSuche.
  */
 
 import java.util.Vector;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,9 +18,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import de.hdm.gruppe6.itprojekt.shared.bo.*;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 
 public class UserTrefferliste{
@@ -36,7 +37,7 @@ public class UserTrefferliste{
 		//HTML class hinzufÃ¼gen, damit die Tabelle das Design annimmt.
 //		DOM.setElementAttribute(flexTableUser.getElement(), "class", "table table-striped table table-bordered");
 		
-		//Spaltenbezeichnungen hinzufügen
+		//Spaltenbezeichnungen hinzufï¿½gen
 		flexTableUser.setText(0, 0, "ID");
 		flexTableUser.setText(0, 1, "Name");
 		flexTableUser.setText(0, 2, "Vorname");
@@ -44,7 +45,8 @@ public class UserTrefferliste{
 		flexTableUser.setText(0, 4, "E-Mail");
 		flexTableUser.setText(0, 5, "Abonnieren");
 
-		// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
+		flexTableUser.getRowFormatter().addStyleName(0, "userliste");
+		// Hier sollen die Usereintrï¿½ge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
 		// Bei Fehlern soll eine Fehlermeldung erscheinen
 
 		pinnwandVerwaltung.findeAlleUser(new AsyncCallback<Vector<User>>() {
@@ -73,7 +75,7 @@ public class UserTrefferliste{
 							nickname = u.getNickname();
 							email = u.getEmail();
 							
-							// Das Label soll mit Inhalt gefüllt werden
+							// Das Label soll mit Inhalt gefï¿½llt werden
 							Label labNach = new Label(nachname);
 							Label labVor = new Label(vorname);
 							Label labNick = new Label(nickname);
@@ -91,7 +93,7 @@ public class UserTrefferliste{
 
 								@Override
 								public void onClick(ClickEvent event) {
-								//Abonnieren hinzufügen
+								//Abonnieren hinzufï¿½gen
 //									pinnwandVerwaltung.aboAnlegen(new AsyncCallback<Vector<Abonnement>>(){
 //										
 //									}
@@ -112,15 +114,15 @@ public class UserTrefferliste{
 				);
 							
 		mainPanelUser.add(flexTableUser);
-		// das Flextable wird dem mainPanelUser hinzugefügt.
+		// das Flextable wird dem mainPanelUser hinzugefï¿½gt.
 		return mainPanelUser;
 	}
 	
-	public Widget zeigeUserNameTabelle(String name) {
+	public Widget zeigeUserNameTabelle(String nickname) {
 		// Erstellen einer flexiblen Tabelle
 		final FlexTable flexTableUser = new FlexTable();
 		
-		//Spaltenbezeichnungen hinzufügen
+		//Spaltenbezeichnungen hinzufï¿½gen
 		flexTableUser.setText(0, 0, "ID");
 		flexTableUser.setText(0, 1, "Name");
 		flexTableUser.setText(0, 2, "Vorname");
@@ -128,11 +130,11 @@ public class UserTrefferliste{
 		flexTableUser.setText(0, 4, "E-Mail");
 		flexTableUser.setText(0, 5, "Abonnieren");
 
-		// Hier sollen die Usereinträge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
+		// Hier sollen die Usereintrï¿½ge aus der Datenbank ausgelesen und in die Tabelle eingetragen werden,
 		// Bei Fehlern soll eine Fehlermeldung erscheinen
 //		pinnwandVerwaltung.findeUserAnhandNachname(, new AsyncCallbackVector<User>);
 		
-		pinnwandVerwaltung.findeUserAnhandNachname(name, new AsyncCallback<Vector<User>>() {
+		pinnwandVerwaltung.findeUserAnhandNickname(nickname, new AsyncCallback<Vector<User>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -159,7 +161,7 @@ public class UserTrefferliste{
 					nickname = u.getNickname();
 					email = u.getEmail();
 					
-					// Das Label soll mit Inhalt gefüllt werden
+					// Das Label soll mit Inhalt gefï¿½llt werden
 					Label labNach = new Label(nachname);
 					Label labVor = new Label(vorname);
 					Label labNick = new Label(nickname);
@@ -193,7 +195,7 @@ public class UserTrefferliste{
 		});
 
 		mainPanelUser.add(flexTableUser);
-		// das Flextable wird dem mainPanelUser hinzugefügt.
+		// das Flextable wird dem mainPanelUser hinzugefï¿½gt.
 		return mainPanelUser;
 	}
 

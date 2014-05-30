@@ -35,6 +35,8 @@ public class Beitrag extends Composite {
 	 */
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable postFlexTable = new FlexTable();
+	private FlexTable userFlexTable = new FlexTable();
+	private Label user = new Label(Cookies.getCookie("SocialMedia6"));
 	private Label post = new Label();
 	private Button loeschen = new Button("X");
 	private Button bearbeiten = new Button("Bearbeiten");
@@ -50,6 +52,8 @@ public class Beitrag extends Composite {
 		label.setText(content);
 		initWidget(this.vPanel);
 //		lbId.setText(String.valueOf(id));
+		userFlexTable.setWidget(0, 0, user);
+		userFlexTable.addStyleName("Userspalte");
 /**
  * Die Textbeitr�ge werden in einer Flextable gepostet.
  */
@@ -66,6 +70,7 @@ public class Beitrag extends Composite {
 /**
  * Die Flextable wird dem vPanel zugeordnet.
  */
+		vPanel.add(userFlexTable);
 		vPanel.add(postFlexTable);
 		vPanel.addStyleName("Textbeitrag");
 		
@@ -127,6 +132,7 @@ public class Beitrag extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
+				comment.center();
 				comment.setText("Bearbeiten");
 				comment.setContent(post.getText());
 
@@ -205,10 +211,12 @@ public class Beitrag extends Composite {
 					@Override
 					public void onSuccess(Textbeitrag textbeitrag) {
 						lbId.setText(String.valueOf(textbeitrag.getId()));
+//						user.setText()
 						Window.alert("Textbeitrag wurde gepostet!");
 
 					}
 				});
+
  /**
   * Die letzte Aktualisierung des Textbeitrags wird angezeigt.
   */

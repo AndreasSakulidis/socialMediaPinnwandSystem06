@@ -1,6 +1,6 @@
 package de.hdm.gruppe6.itprojekt.shared.bo;
 /**
- * @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
+ * @author Ezgi Demirbilek, ï¿½zlem Gï¿½l, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies
 
  * Realisierung einer exemplarischen Textbeitragbeschreibung. 
@@ -15,7 +15,14 @@ public class Textbeitrag extends BusinessObject {
 
 	private String text;
 	private int likeId;
+	private String nameUser;
 
+	public String getNameUser() {
+		return nameUser;
+	}
+	public void setNameUser(String nameUser) {
+		this.nameUser = nameUser;
+	}
 	/**
 	 * Konstruktor
 	 * @param text

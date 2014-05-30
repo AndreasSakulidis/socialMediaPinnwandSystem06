@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse FormInfosVonUserReport enthält die Auswahlmaske.
+ * Die Klasse FormInfosVonUserReport enthï¿½lt die Auswahlmaske.
  */
 import java.util.Date;
 
@@ -37,7 +37,7 @@ public class FormInfosVonUserReport extends  Composite {
 	public FormInfosVonUserReport(String content) {
 		RootPanel.get("Details").add(vPanel);
 		RootPanel.get("Details").add(dPanel);
-		
+
 		 /**
 		   * Hier werden die Buttons und die Labels festgelegt und dem vPanel zugeordnet.
 		   */
@@ -56,6 +56,8 @@ public class FormInfosVonUserReport extends  Composite {
 	    vPanel.add(userSuchenField);
 	    vPanel.add(aZ);
 	    vPanel.add(anfangszeitpunktField);
+		
+
 
 	    
 	    /**
@@ -107,7 +109,7 @@ public class FormInfosVonUserReport extends  Composite {
         				
         			vPanel.clear();
         			vPanel.add(title);
-					 // Erstelle Tabelle für Infos von einem bestimmten Beitrag in einem bestimmten Zeitraum
+					 // Erstelle Tabelle fï¿½r Infos von einem bestimmten Beitrag in einem bestimmten Zeitraum
 					infoFlexTable.setText(0, 0, "User Nickname");
 					infoFlexTable.setText(0, 1, "Anzahl Beitraege");
 					infoFlexTable.setText(0, 2, "Anzahl Abonnements");
@@ -125,7 +127,7 @@ public class FormInfosVonUserReport extends  Composite {
 			
 		});
 		
-
+        
 		
 		/**
 		 * Mit einem Klick auf zurueck Button kann man eine neue Suche beginnen.

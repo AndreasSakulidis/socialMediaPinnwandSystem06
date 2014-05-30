@@ -128,7 +128,16 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 /**
  * Bearbeitung des Users.
  */
-	public User userEditieren(User user) throws Exception { 
+	public User userEditieren(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception { 
+
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
 
 		return userMapper.editieren(user);
 }
@@ -136,9 +145,18 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 /**
  * L�schen des Users aus der Datenbank.
  */
-	public void userLoeschen(User user) throws Exception {
+	public void userLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception { 
 
-		return;
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
+
+		userMapper.loeschen(user);
 	}
 	
 	/**
@@ -156,6 +174,12 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		    return this.userMapper.findeAnhandNachname(nachname);
 		  }
 
+	 
+	 public Vector<User> findeUserAnhandNickname(String nickname) throws Exception {
+
+		    return this.userMapper.findeAnhandNickname(nickname);
+		  }
+	 
 	/**
 	 * Finden aller User.
 	 */

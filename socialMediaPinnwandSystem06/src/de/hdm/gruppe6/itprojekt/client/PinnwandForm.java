@@ -1,9 +1,9 @@
 package de.hdm.gruppe6.itprojekt.client;
 
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse PinnwandForm hat die Funktion einen Textbeiträge zu erstellen.
+ * Die Klasse PinnwandForm hat die Funktion einen Textbeitrï¿½ge zu erstellen.
  */
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,16 +31,18 @@ public class PinnwandForm extends Widget {
 	public Widget zeigePost() {
 		ta.setCharacterWidth(60);
 		ta.setVisibleLines(5);
+		
 		/**
-		 * Die Widgets werden dem addPanel hinzugefügt.
+		 * Die Widgets werden dem addPanel hinzugefï¿½gt.
 		 */
 		addPanel.add(ta);
 		addPanel.add(textbeitragPosten);
 		addPanel.addStyleName("addPanel");
 
 		// RootPanel.get("Details").clear();
+
 		RootPanel.get("Details").add(addPanel);
-		
+		ta.setFocus(true);
 		/**
 		 * Mit einem Klick auf den Button Add Post wird ein Textbeitrag erzeugt.
 		 */
@@ -53,9 +55,12 @@ public class PinnwandForm extends Widget {
 				addPanel.add(b);
 				ta.setText("");
 			}
+
 		});
 
+
 		return addPanel;
+		
 	}
 
 }

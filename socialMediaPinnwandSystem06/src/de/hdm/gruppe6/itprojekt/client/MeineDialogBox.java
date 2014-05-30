@@ -1,8 +1,8 @@
 package de.hdm.gruppe6.itprojekt.client;
 /**
- * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+ * @author Bharti Kumar, ï¿½zlem Gï¿½l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
- * Die Klasse MeineDialogBox ruft eine DialogBox auf, in der man Textbeiträge editieren oder Kommentare editieren und hinzufügen kann.
+ * Die Klasse MeineDialogBox ruft eine DialogBox auf, in der man Textbeitrï¿½ge editieren oder Kommentare editieren und hinzufï¿½gen kann.
  */
 
 import com.google.gwt.core.shared.GWT;
@@ -30,9 +30,10 @@ public class MeineDialogBox extends DialogBox {
 		this.setText(title);
 
 		/**
-		 * Die Widgets werden dem CommentPanel hinzugefügt.
+		 * Die Widgets werden dem CommentPanel hinzugefï¿½gt.
 		 */
 		ta = new TextArea();
+
 		ok = new Button("Add");
 		abbrechen = new Button("Abbrechen");
 		commentPanel.add(ta);
@@ -40,6 +41,7 @@ public class MeineDialogBox extends DialogBox {
 		commentPanel.add(abbrechen);
 
 		this.setWidget(commentPanel);
+		ta.setFocus(true);
 	}
 
 	public String getContent() {
