@@ -35,7 +35,7 @@ public class SocialMediaFrontend extends Composite {
 	private Label userSuchen = new Label("User nach Nickname suchen:");
 	private VerticalPanel suchePanel = new VerticalPanel();
 	final VerticalPanel aboPanel = new VerticalPanel();
-	private Button abo = new Button ("Abos anzeigen");
+	private Button abo = new Button("Abos anzeigen");
 	private Label trennlinie = new Label("______________");
 	private TextBox tbName = new TextBox();
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
@@ -44,12 +44,12 @@ public class SocialMediaFrontend extends Composite {
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-	//public SocialMediaFrontend() {
-	
+	// public SocialMediaFrontend() {
+
 	public Widget angemeldet() {
-	
+
 		trennlinie.addStyleName("linie");
-		
+
 		/**
 		 * Hier wird die Men�leiste mit den Commands erstellt .
 		 */
@@ -64,7 +64,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd2 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport("");
+				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport(
+						"");
 				mainPanel.add(zwei);
 			}
 		};
@@ -72,7 +73,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd3 = new Command() {
 			public void execute() {
 				mainPanel.clear();
-				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport("");
+				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport(
+						"");
 				mainPanel.add(drei);
 			}
 		};
@@ -85,22 +87,25 @@ public class SocialMediaFrontend extends Composite {
 				mainPanel.add(vier);
 			}
 		};
-		Command cmd5 = new Command() {
+
+		Command pinnwand = new Command() {
 			public void execute() {
 				mainPanel.clear();
 				PinnwandForm pF = new PinnwandForm();
 				mainPanel.add(pF.zeigePost());
+//				mainPanel.add(pF.zeigeBeitr�ge());
 			}
 		};
+		//
+		// Command cmd6 = new Command() {
+		// public void execute() {
+		// mainPanel.clear();
+		// PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
+		// mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in
+		// der Konsole ausgegeben
+		// }
+		// };
 
-		Command cmd6 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
-			}
-		};
-		
 		Command logout = new Command() {
 			public void execute() {
 				Cookies.removeCookie("SocialMedia6");
@@ -112,24 +117,21 @@ public class SocialMediaFrontend extends Composite {
 				User u = new User();
 				u.abmelden();
 				tbName.setVisible(true);
-				
+
 				Anmelden startseite = new Anmelden();
 				startseite.anmelden();
-				
+
 			}
 		};
-		
-		Command bearb = new Command(){
+
+		Command bearb = new Command() {
 			public void execute() {
 				mainPanel.clear();
 				UserBearbeiten uB = new UserBearbeiten();
 				mainPanel.add(uB.bearbeiteProfil());
-			
-		}
+
+			}
 		};
-		
-		MenuBar fooMenu = new MenuBar(true);
-		
 
 		MenuBar reportMenu = new MenuBar(true);
 		reportMenu.addItem("Infoausgabe von User", cmd1);
@@ -137,12 +139,9 @@ public class SocialMediaFrontend extends Composite {
 		reportMenu.addItem("Infosausgabe von allen Usern", cmd3);
 		reportMenu.addItem("Infosausgabe von allen Beitreagen", cmd4);
 		reportMenu.addStyleName("reportmenu");
-		fooMenu.addItem("Textbeitrag posten", cmd5);
-		fooMenu.addItem("Pinnwand anzeigen", cmd6);
-		
-	
+
 		MenuBar menu = new MenuBar();
-		menu.addItem("Pinnwand", fooMenu);
+		menu.addItem("Pinnwand", pinnwand);
 		menu.addItem("Reports", reportMenu);
 		menu.addItem("Mein Profil", bearb);
 		menu.addItem("LogOut", logout);
@@ -153,7 +152,6 @@ public class SocialMediaFrontend extends Composite {
 		final Button sendSucheButton = new Button("Suchen");
 		final TextBox nameField = new TextBox();
 
-
 		sendSucheButton.addStyleName("sendSucheButton");
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
@@ -163,37 +161,40 @@ public class SocialMediaFrontend extends Composite {
 		aboPanel.add(abo);
 		aboPanel.add(trennlinie);
 		aboPanel.addStyleName("abo");
-		
+
 		/**
-		 * Mit einem Klick auf den Button Aboliste werden die von dem angemeldeten User abonnierten User in einer Flextable angezeigt.
+		 * Mit einem Klick auf den Button Aboliste werden die von dem
+		 * angemeldeten User abonnierten User in einer Flextable angezeigt.
 		 */
-		abo.addClickHandler(new ClickHandler(){
-			VerticalPanel aboPanel= new VerticalPanel();
+		abo.addClickHandler(new ClickHandler() {
+			VerticalPanel aboPanel = new VerticalPanel();
 
-			public void onClick(ClickEvent event){
-				
-					
-					final FlexTable aboTable = new FlexTable();
-					initWidget(this.aboPanel);
-			        
-					// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in einem
-					// bestimmten Zeitraum
-					aboTable.setText(0, 0, "Nickname");
-					aboTable.setText(0, 1, "Löschen");
-					
-					suchePanel.add(aboTable);
-					aboTable.addStyleName("flextable");
-		   
-		}
+			public void onClick(ClickEvent event) {
 
+				final FlexTable aboTable = new FlexTable();
+				initWidget(this.aboPanel);
 
-	});
+				// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in
+				// einem
+				// bestimmten Zeitraum
+				aboTable.setText(0, 0, "Nickname");
+				aboTable.setText(0, 1, "Löschen");
+
+				suchePanel.add(aboTable);
+				aboTable.addStyleName("flextable");
+
+			}
+
+		});
 		
 		
+		
+
 		/**
-		 * Hier kann der angemeldeter User andere User �ber ihren Nachnamen suchen. Dabei wird eine Trefferliste erstellt.
+		 * Hier kann der angemeldeter User andere User �ber ihren Nachnamen
+		 * suchen. Dabei wird eine Trefferliste erstellt.
 		 */
-		
+
 		sendSucheButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				System.out.println("On Click in der User Trefferliste ");
@@ -207,7 +208,6 @@ public class SocialMediaFrontend extends Composite {
 					mainPanel.clear();
 					mainPanel.add(ut.zeigeTabelle());
 
-
 				} else {
 					mainPanel.clear();
 					System.out.println("Else Block, Namefeld ist: "
@@ -219,7 +219,7 @@ public class SocialMediaFrontend extends Composite {
 
 			}
 		});
-		
+
 		RootPanel.get("Details").add(mainPanel);
 
 		nameField.addKeyPressHandler(new KeyPressHandler() {
@@ -236,7 +236,7 @@ public class SocialMediaFrontend extends Composite {
 
 				} else if (event.getCharCode() == KeyCodes.KEY_ENTER) {
 
-//					boolean test = nameField.equals("");
+					// boolean test = nameField.equals("");
 					System.out.println("Else Block, Keypress ist: "
 							+ nameField.getText());
 					UserTrefferliste ut = new UserTrefferliste();
@@ -248,18 +248,15 @@ public class SocialMediaFrontend extends Composite {
 			}
 
 		});
-		
-		
+
 		// Add it to the root panel.
 		RootPanel.get("Navigator").add(suchePanel);
 
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
 		nameField.selectAll();
-		
+
 		return mainPanel;
 	}
-	
-	
 
 }

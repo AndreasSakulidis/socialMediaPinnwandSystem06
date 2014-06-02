@@ -152,6 +152,16 @@ public class Anmelden{
 										Window.alert("Anlegen erfolgreich!");
 										addPanel.clear();
 										tbName.setFocus(true);
+//										tbName.setVisible(false);
+//										tbPasswort.setVisible(false);
+//										loginButton.setVisible(false);
+										
+										RootPanel.get("Details").clear();
+
+										
+										SocialMediaFrontend smf = new SocialMediaFrontend();
+										smf.angemeldet();
+										
 									}
 								}
 							});

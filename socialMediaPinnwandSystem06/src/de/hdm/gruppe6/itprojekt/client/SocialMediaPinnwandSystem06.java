@@ -31,6 +31,8 @@ public class SocialMediaPinnwandSystem06 implements EntryPoint {
 		}
 		catch(Exception e){
 			a.anmelden();
+			
+			
 
 		}
 

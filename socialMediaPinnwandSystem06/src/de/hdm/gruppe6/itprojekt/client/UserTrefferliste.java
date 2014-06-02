@@ -10,6 +10,7 @@ import java.util.Vector;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -20,6 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 
@@ -93,15 +95,27 @@ public class UserTrefferliste{
 
 								@Override
 								public void onClick(ClickEvent event) {
-								//Abonnieren hinzuf�gen
-//									pinnwandVerwaltung.aboAnlegen(new AsyncCallback<Vector<Abonnement>>(){
-//										
-//									}
-//									
-								}
-								
-
-							});
+									String id = Cookies.getCookie("SocialMedia6ID");
+									int pid = u.getId();
+									pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
+										@Override
+										public void onSuccess(Abonnement result) {
+											Window.alert("Abo wurde angelegt");	
+										
+										}
+										@Override
+										public void onFailure(Throwable caught) {
+											System.out
+													.println("hat nicht geklappt mit den Post ausgaben: "
+															+ caught.getMessage());
+										}
+									});
+							
+							
+							}
+						
+						});
+					
 
 							//Zeile hochzählen
 							rowCounter++;

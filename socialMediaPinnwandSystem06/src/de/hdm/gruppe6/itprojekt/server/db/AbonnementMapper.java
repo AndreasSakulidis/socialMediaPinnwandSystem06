@@ -86,8 +86,8 @@ public class AbonnementMapper {
 				abo.setId(rs.getInt("maxid") + 1);
 
 				stmt = con.createStatement();
-				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
-				stmt.executeUpdate("INSERT INTO abonnement (AboID, UserID, PinnwandID, ErstellungsZeitpunkt)"
+//				Timestamp tmstamp = new Timestamp(System.currentTimeMillis());
+				stmt.executeUpdate("INSERT INTO abonnement (AboID, UserID, PinnwandID )"
 						// + "VALUES ("
 						// + abo.getId()
 						// + ","
@@ -104,18 +104,18 @@ public class AbonnementMapper {
 						+ "','"
 						+ uid
 						+ "','"
-						+ pid
-						+ "','" 
-						+ tmstamp + "') ");
+						+ pid 
+						+"')");
 			}
 		}
 
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return abo;
 	}
 	/**

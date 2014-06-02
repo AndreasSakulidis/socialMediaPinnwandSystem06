@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
-import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
@@ -374,5 +374,39 @@ public class TextbeitragMapper {
 //			DBVerbindung.closeAll(rs, stmt, con);
 //		}
 	}
+	
+	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
 
+		ArrayList<Textbeitrag> result = new ArrayList<Textbeitrag>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
+					+ "WHERE UserID ="
+					+ userID);
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				result.add(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return result;
+	}
+	
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 
+
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -278,11 +280,11 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	/**
 	 * Anlegen eines Abonnements.
 	 */
-		public Abonnement aboAnlegen(User user, String id) throws Exception {
+		public Abonnement aboAnlegen(String uid, int pid) throws Exception {
 
 				Abonnement abonnement = new Abonnement();
-				int userID = Integer.parseInt(id); 
-				int pid = pinnwandMapper.findeAnhandUserID(userID);
+				int userID = Integer.parseInt(uid); 
+//				pid = pinnwandMapper.findeAnhandUserID(userID);
 			
 				return abonnementMapper.anlegen(abonnement, userID, pid);
 			}
@@ -481,6 +483,14 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 	public Like findeLikeAnhandID (int likeID) throws Exception {
 		 		    return this.likeMapper.findeAnhandID(likeID);
 		 		  }
+		
+		 	
+			public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
+					throws Exception {
+				
+				return this.textbeitragMapper.findeAlleUserBeitraege(userID);
+			}
+	
 		 	
 		 
 }

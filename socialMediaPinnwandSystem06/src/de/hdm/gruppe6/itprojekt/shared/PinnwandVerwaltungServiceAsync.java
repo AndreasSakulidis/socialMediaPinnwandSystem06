@@ -19,7 +19,7 @@ import de.hdm.gruppe6.itprojekt.shared.bo.User;
  */
 public interface PinnwandVerwaltungServiceAsync {
 
-	void aboAnlegen(User user, String id, AsyncCallback<Abonnement> callback);
+	void aboAnlegen(String uid, int pid, AsyncCallback<Abonnement> callback);
 	
 
 	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
@@ -112,6 +112,10 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandNickname(String nickname,
 			AsyncCallback<Vector<User>> callback);
+
+
+	void findeAlleUserBeitraege(int userID,
+			AsyncCallback<ArrayList<Textbeitrag>> callback);
 	
 	
 

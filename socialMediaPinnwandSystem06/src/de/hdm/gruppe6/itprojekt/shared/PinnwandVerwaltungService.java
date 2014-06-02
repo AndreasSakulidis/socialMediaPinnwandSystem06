@@ -108,10 +108,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 */
 	public void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer) throws Exception;
 
-	/**
-	 * Anlegen eines Abonnements.
-	 */
-	public Abonnement aboAnlegen(User user, String id) throws Exception; 
+	public Abonnement aboAnlegen(String uid, int pid) throws Exception; 
 	/**
 	 * L�schen des Abonnements.
 	 */
@@ -203,6 +200,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
  	 */
 		 	
 	public Like findeLikeAnhandID (int likeID) throws Exception; 	 
+	
+	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception;
 		 	
 		 	
 }
