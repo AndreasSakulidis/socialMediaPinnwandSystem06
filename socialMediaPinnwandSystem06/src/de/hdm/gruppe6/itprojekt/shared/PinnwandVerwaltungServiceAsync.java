@@ -22,11 +22,11 @@ public interface PinnwandVerwaltungServiceAsync {
 	void aboAnlegen(String uid, int pid, AsyncCallback<Abonnement> callback);
 	
 
-	void aboLoeschen(Abonnement abonnement, AsyncCallback<Void> callback);
+	void aboLoeschen(int id, AsyncCallback<Void> callback);
 
 	void findeAboAnhandID(int abonnementID, AsyncCallback<Abonnement> callback);
 
-	void findeAbosAnhandUser(User user, AsyncCallback<ArrayList<User>> callback);
+	void findeAbosAnhandUser(int uid, AsyncCallback<ArrayList<User>> callback);
 
 	void findeAlleKommentare(AsyncCallback<Vector<Kommentar>> callback);
 

@@ -2,6 +2,8 @@ package de.hdm.gruppe6.itprojekt.shared.bo;
 
 import java.util.Vector;
 
+import com.google.gwt.user.client.Cookies;
+
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 
 
@@ -151,6 +153,8 @@ public class User extends BusinessObject {
 		passwort = null;
 		nickname = null;
 		abo = null;
+
+		Cookies.removeCookie("SocialMedia6");
 	}
 		
 }

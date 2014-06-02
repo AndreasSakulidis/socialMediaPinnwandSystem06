@@ -6,6 +6,9 @@ package de.hdm.gruppe6.itprojekt.client;
  * Die Klasse SocialMediaFrontend enth�lt die Men�leiste und ruft die Methode zur �berpr�fung der Anmeldung auf. //SO STEHEN LASSEN?
  */
 
+import java.util.ArrayList;
+
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -13,6 +16,8 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -24,9 +29,16 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
+import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class SocialMediaFrontend extends Composite {
+	
+	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
+			.create(PinnwandVerwaltungService.class);
+	
 	/**
 	 * Hier werden die Panels und die Widgets festgelegt.
 	 */
@@ -56,6 +68,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd1 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
 				mainPanel.add(eins);
 			}
@@ -64,6 +78,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd2 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport(
 						"");
 				mainPanel.add(zwei);
@@ -73,6 +89,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd3 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport(
 						"");
 				mainPanel.add(drei);
@@ -82,6 +100,8 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd4 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonAllenBeitraegenReport vier = new FormInfosVonAllenBeitraegenReport(
 						"");
 				mainPanel.add(vier);
@@ -91,6 +111,8 @@ public class SocialMediaFrontend extends Composite {
 		Command pinnwand = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				PinnwandForm pF = new PinnwandForm();
 				mainPanel.add(pF.zeigePost());
 //				mainPanel.add(pF.zeigeBeitr�ge());
@@ -108,7 +130,7 @@ public class SocialMediaFrontend extends Composite {
 
 		Command logout = new Command() {
 			public void execute() {
-				Cookies.removeCookie("SocialMedia6");
+
 				mainPanel.clear();
 				suchePanel.clear();
 				RootPanel.get("Header").clear();
@@ -117,6 +139,7 @@ public class SocialMediaFrontend extends Composite {
 				User u = new User();
 				u.abmelden();
 				tbName.setVisible(true);
+				Cookies.removeCookie("SocialMedia6");
 
 				Anmelden startseite = new Anmelden();
 				startseite.anmelden();
@@ -127,6 +150,8 @@ public class SocialMediaFrontend extends Composite {
 		Command bearb = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				UserBearbeiten uB = new UserBearbeiten();
 				mainPanel.add(uB.bearbeiteProfil());
 
@@ -151,7 +176,7 @@ public class SocialMediaFrontend extends Composite {
 		// public void suchen(){
 		final Button sendSucheButton = new Button("Suchen");
 		final TextBox nameField = new TextBox();
-
+		VerticalPanel aboPanel = new VerticalPanel();
 		sendSucheButton.addStyleName("sendSucheButton");
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
@@ -161,31 +186,185 @@ public class SocialMediaFrontend extends Composite {
 		aboPanel.add(abo);
 		aboPanel.add(trennlinie);
 		aboPanel.addStyleName("abo");
+		
+		
+		
+		final FlexTable aboTable = new FlexTable();
+		initWidget(this.aboPanel);
+		
+		Label aboLabel = new Label("Abonnierte User: ");
+		suchePanel.add(aboLabel);
+
+		// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in
+		// einem
+		// bestimmten Zeitraum
+		aboTable.setText(0, 0, "Nickname");
+		aboTable.setText(0, 1, "Löschen");
+		
+		final String id = Cookies.getCookie("SocialMedia6ID");
+		int uid = Integer.parseInt(id);
+		
+		pinnwandVerwaltung.findeAbosAnhandUser(uid, new AsyncCallback<ArrayList<User>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
+				
+			}
+
+			@Override
+			public void onSuccess(ArrayList<User> result) {
+				int rowCounter = 1;
+				System.out.println("TESTTESTTESTTEST");
+//				System.out.println("result test: "+result.toString());
+                // Hier werden die Objekte durchlaufen. 
+				//User ist final, da es in Inner Class ClickHandler verwendet  werden soll			
+				
+				for (final User u : result) {
+
+					Button a = new Button("-");
+
+					String nickname;
+					
+
+					nickname = u.getNickname();
+
+					
+					// Das Label soll mit Inhalt gef�llt werden
+
+					Label labNick = new Label(nickname);
+
+					// Hier werden die Labels in der Tabelle positioniert
+
+					aboTable.setWidget(rowCounter, 0, labNick);
+					aboTable.setWidget(rowCounter, 1, a);
+
+					a.addClickHandler(new ClickHandler() {
+
+						@Override
+						public void onClick(ClickEvent event) {
+							
+							String id = Cookies.getCookie("SocialMedia6ID");
+
+							int uid = Integer.parseInt(id);
+							pinnwandVerwaltung.aboLoeschen(uid, new AsyncCallback<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+									Window.alert("Abo wurde angelegt");
+									Window.Location.reload();
+								
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									System.out
+											.println("hat nicht geklappt mit den Post ausgaben: "
+													+ caught.getMessage());
+								}
+							});
+					
+					
+							
+						}
+
+					});
+
+					//Zeile hochzählen
+					rowCounter++;
+				}
+
+				
+				
+				
+			}
+		});
+
+		suchePanel.add(aboTable);
+		aboTable.addStyleName("flextable");
 
 		/**
 		 * Mit einem Klick auf den Button Aboliste werden die von dem
 		 * angemeldeten User abonnierten User in einer Flextable angezeigt.
 		 */
-		abo.addClickHandler(new ClickHandler() {
-			VerticalPanel aboPanel = new VerticalPanel();
-
-			public void onClick(ClickEvent event) {
-
-				final FlexTable aboTable = new FlexTable();
-				initWidget(this.aboPanel);
-
-				// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in
-				// einem
-				// bestimmten Zeitraum
-				aboTable.setText(0, 0, "Nickname");
-				aboTable.setText(0, 1, "Löschen");
-
-				suchePanel.add(aboTable);
-				aboTable.addStyleName("flextable");
-
-			}
-
-		});
+//		abo.addClickHandler(new ClickHandler() {
+//			VerticalPanel aboPanel = new VerticalPanel();
+//
+//			public void onClick(ClickEvent event) {
+//
+//				final FlexTable aboTable = new FlexTable();
+//				initWidget(this.aboPanel);
+//				
+//				Label aboLabel = new Label("Abonnierte User: ");
+//				suchePanel.add(aboLabel);
+//
+//				// Erstelle Tabelle f�r Infos von einem bestimmten Beitrag in
+//				// einem
+//				// bestimmten Zeitraum
+//				aboTable.setText(0, 0, "Nickname");
+//				aboTable.setText(0, 1, "Löschen");
+//				
+//				final String id = Cookies.getCookie("SocialMedia6ID");
+//				int uid = Integer.parseInt(id);
+//				
+//				pinnwandVerwaltung.findeAbosAnhandUser(uid, new AsyncCallback<ArrayList<User>>() {
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						Window.alert("Ein Fehler ist aufgetreten! - " + caught.getMessage());
+//						
+//					}
+//
+//					@Override
+//					public void onSuccess(ArrayList<User> result) {
+//						int rowCounter = 1;
+//						System.out.println("TESTTESTTESTTEST");
+////						System.out.println("result test: "+result.toString());
+//		                // Hier werden die Objekte durchlaufen. 
+//						//User ist final, da es in Inner Class ClickHandler verwendet  werden soll			
+//						
+//						for (final User u : result) {
+//
+//							Button a = new Button("-");
+//
+//							String nickname;
+//							
+//
+//							nickname = u.getNickname();
+//
+//							
+//							// Das Label soll mit Inhalt gef�llt werden
+//
+//							Label labNick = new Label(nickname);
+//
+//							// Hier werden die Labels in der Tabelle positioniert
+//
+//							aboTable.setWidget(rowCounter, 0, labNick);
+//							aboTable.setWidget(rowCounter, 1, a);
+//
+//							a.addClickHandler(new ClickHandler() {
+//
+//								@Override
+//								public void onClick(ClickEvent event) {
+//									//abonnieren
+//								}
+//
+//							});
+//
+//							//Zeile hochzählen
+//							rowCounter++;
+//						}
+//
+//						
+//						
+//						
+//					}
+//				});
+//
+//				suchePanel.add(aboTable);
+//				aboTable.addStyleName("flextable");
+//
+//			}
+//
+//		});
 		
 		
 		

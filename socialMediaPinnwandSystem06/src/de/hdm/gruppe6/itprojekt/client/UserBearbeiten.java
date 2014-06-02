@@ -145,7 +145,10 @@ public class UserBearbeiten {
 							@Override
 							public void onSuccess(User result) {
 								Window.alert("Deine Profildaten wurden erfolgreich editiert!");
-
+								mainPanel.clear();
+								RootPanel.get("Navigator").clear();
+								RootPanel.get("Header").clear();
+								RootPanel.get().clear();
 							}
 						});
 			}

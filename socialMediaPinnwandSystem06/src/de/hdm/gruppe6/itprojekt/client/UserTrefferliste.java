@@ -100,7 +100,8 @@ public class UserTrefferliste{
 									pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
 										@Override
 										public void onSuccess(Abonnement result) {
-											Window.alert("Abo wurde angelegt");	
+											Window.alert("Abo wurde angelegt");
+											Window.Location.reload();
 										
 										}
 										@Override

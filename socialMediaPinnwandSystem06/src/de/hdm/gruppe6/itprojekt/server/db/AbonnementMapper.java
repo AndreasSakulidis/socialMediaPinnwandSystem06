@@ -139,9 +139,10 @@ public class AbonnementMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbankfehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return;
 	}
 	
@@ -190,4 +191,37 @@ public class AbonnementMapper {
 		return null;
 	}
 
+	public int findeAboIDAnhandNickname(String nickname) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt
+					.executeQuery("SELECT AboID " + "WHERE AboID=" + aboID );
+			// F�r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+			// erstellt.
+			if (rs.next()) {
+				Abonnement abonnement = new Abonnement();
+				abonnement.setId(rs.getInt("AboID"));
+				abonnement.setUser(((Abonnement) rs).getUser());
+				abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
+				abonnement.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				return abonnement;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
+	
 }

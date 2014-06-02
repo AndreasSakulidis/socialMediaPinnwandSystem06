@@ -230,10 +230,14 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 	 /**
 	  * Finden von Abonnenten des Users.
 	  */
-	 public ArrayList<User> findeAbosAnhandUser(User user) 
-			 throws Exception {
+	 public ArrayList<User> findeAbosAnhandUser(int uid) throws Exception {
 		 
-		 return this.userMapper.findeAbosAnhandUser(user);
+		 
+		 
+		 
+		 
+		 
+		 return this.userMapper.findeAbosAnhandUser(uid);
 	 }
 	 
 	/**
@@ -293,9 +297,13 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		/**
 		 * L�schen des Abonnements.
 		 */
-		public void aboLoeschen(Abonnement abonnement) throws Exception {
+		public void aboLoeschen(int id) throws Exception {
+			
+			Abonnement abo = new Abonnement();
+			abo.setId(id);
+			abonnementMapper.loeschen(abo);
 
-				return;
+				
 			}
 			
 		/**

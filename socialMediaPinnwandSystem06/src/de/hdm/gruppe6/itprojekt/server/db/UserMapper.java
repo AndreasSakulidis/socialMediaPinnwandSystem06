@@ -272,8 +272,7 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM user " + "WHERE UserID="
-					+ user.getId());
+			stmt.executeUpdate("DELETE user, textbeitrag, kommentar, liken, pinnwand FROM user, textbeitrag, kommentar, liken, pinnwand " + "WHERE user.UserID=" + user.getId() + " AND textbeitrag.UserID=" + user.getId() + " AND kommentar.UserID=" + user.getId() + " AND liken.UserID=" + user.getId() + " AND pinnwand.PinnwandID=" + user.getId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -591,7 +590,7 @@ public class UserMapper {
 	   * @return 
 	   * @throws Exception
 	   */
-	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception {
+	public ArrayList<User> findeAbosAnhandUser(int uid) throws Exception {
 
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
@@ -603,14 +602,14 @@ public class UserMapper {
 			stmt = con.createStatement();
 
 			rs = stmt
-					.executeQuery("SELECT user.UserID, pinnwand.Eigentuemer "
-							+ "FROM user INNER JOIN (pinnwand INNER JOIN abonnement "
-							+ " ON pinnwand.PinnwandID = abonnement.PinnwandID) ON user.UserID = abonnement.UserID"
-							+ "WHERE UserID=" + user.getId());
+					.executeQuery("SELECT pinnwand.Eigentuemer "
+							+ "FROM user INNER JOIN (pinnwand INNER JOIN abonnement " 
+							+ " ON pinnwand.PinnwandID = abonnement.PinnwandID) ON user.UserID = abonnement.UserID " 
+							+ "WHERE user.UserID= " + uid);
 
 			while (rs.next()) {
 				User u = new User();
-				u = userMapper.findeAnhandID(u.getId());
+				u.setNickname(rs.getString("pinnwand.Eigentuemer"));
 
 				result.add(u);
 			}
@@ -618,9 +617,10 @@ public class UserMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
 
 		return result;
 	}

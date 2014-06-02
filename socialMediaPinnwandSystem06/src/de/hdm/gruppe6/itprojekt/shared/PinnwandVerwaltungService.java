@@ -81,10 +81,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	  */
 	
 	public int zaehleKommentareVonUser(User user) throws Exception;
-	/**
-	  * Finden von Abonnenten des Users.
-	  */
-	public ArrayList<User> findeAbosAnhandUser(User user) throws Exception;
+	
+	public ArrayList<User> findeAbosAnhandUser(int uid) throws Exception;
 
 	/**
 	 * Anlegen einer Pinnwand in der Datenbank.
@@ -113,7 +111,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 * L�schen des Abonnements.
 	 */
 
-	public void aboLoeschen(Abonnement abonnement) throws Exception;
+	public void aboLoeschen(int id) throws Exception;
 	/**
 	 * Finden eines Abonnements anhand seiner ID.
 	 */
