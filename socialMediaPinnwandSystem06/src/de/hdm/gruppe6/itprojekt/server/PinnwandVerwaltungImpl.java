@@ -6,6 +6,8 @@ import java.util.Vector;
 
 
 
+
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -464,6 +466,10 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		    	 		return this.textbeitragMapper.zaehleKommentareVonTextbeitrag(textbeitrag);
 		     }
 					
+		     public int findeAboIDAnhandPinnwandUserID(int uid, int pid) throws Exception{
+	
+		    	 return this.abonnementMapper.findeAboIDAnhandPinnwandUserID(uid, pid);
+		     }
 		     
 	/**
 	 * 	Anlegen einer Like in der Datenbank.
@@ -497,6 +503,11 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 					throws Exception {
 				
 				return this.textbeitragMapper.findeAlleUserBeitraege(userID);
+			}
+			@Override
+			public int findePinnwandIDAnhandNickname(String nickname)
+					throws Exception {
+				return this.pinnwandMapper.findePinnwandIDAnhandNickname(nickname);
 			}
 	
 		 	

@@ -146,6 +146,26 @@ public class AbonnementMapper {
 		return;
 	}
 	
+	public void loeschenAnhandID(int aboid) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM abonnement " + "WHERE AboID="
+					+ aboid);
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbankfehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
 	 /** 
 	  * Methode mit der man ein Abonnement �ber ihre ID finden kann.
 	   * @param aboID
@@ -190,38 +210,71 @@ public class AbonnementMapper {
 
 		return null;
 	}
+	
+	public int findeAboIDAnhandPinnwandUserID(int uid, int pid) throws Exception {
+	Connection con = DBVerbindung.connection();
+	ResultSet rs = null;
+	Statement stmt = null;
+	
+	try {
+		stmt = con.createStatement();
 
-	public int findeAboIDAnhandNickname(String nickname) throws Exception {
-		Connection con = DBVerbindung.connection();
-		ResultSet rs = null;
-		Statement stmt = null;
+		rs = stmt
+				.executeQuery("SELECT AboID "
+						+ "FROM abonnement "
+						+ "WHERE UserID=" 
+						+ uid
+						+ " AND PinnwandID="
+						+ pid);
+		
+		// F�r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+		// erstellt.
+		if (rs.next()) {
+			int abo = rs.getInt("AboID");
+			return abo;
+		}
+	} catch (SQLException e2) {
+		e2.printStackTrace();
+		throw new Exception("Datenbank fehler!" + e2.toString());
+	} 
+//	finally {
+//		DBVerbindung.closeAll(rs, stmt, con);
+//	}
 
-		try {
-			stmt = con.createStatement();
+	return 0;
+}
 
-			rs = stmt
-					.executeQuery("SELECT AboID " + "WHERE AboID=" + aboID );
-			// F�r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
-			// erstellt.
-			if (rs.next()) {
-				Abonnement abonnement = new Abonnement();
-				abonnement.setId(rs.getInt("AboID"));
-				abonnement.setUser(((Abonnement) rs).getUser());
-				abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
-				abonnement.setErstellungsZeitpunkt(rs
-						.getTimestamp("ErstellungsZeitpunkt"));
-
-				return abonnement;
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
-		} 
-//		finally {
-//			DBVerbindung.closeAll(rs, stmt, con);
-//		}
-
-		return null;
-	}
+//	public int findeAboIDAnhandNickname(String nickname) throws Exception {
+//		Connection con = DBVerbindung.connection();
+//		ResultSet rs = null;
+//		Statement stmt = null;
+//
+//		try {
+//			stmt = con.createStatement();
+//
+//			rs = stmt
+//					.executeQuery("SELECT AboID " + "WHERE AboID=" + aboID );
+//			// F�r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
+//			// erstellt.
+//			if (rs.next()) {
+//				Abonnement abonnement = new Abonnement();
+//				abonnement.setId(rs.getInt("AboID"));
+//				abonnement.setUser(((Abonnement) rs).getUser());
+//				abonnement.setPinnwand(((Abonnement) rs).getPinnwand());
+//				abonnement.setErstellungsZeitpunkt(rs
+//						.getTimestamp("ErstellungsZeitpunkt"));
+//
+//				return abonnement;
+//			}
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+//		} 
+////		finally {
+////			DBVerbindung.closeAll(rs, stmt, con);
+////		}
+//
+//		return null;
+//	}
 	
 }

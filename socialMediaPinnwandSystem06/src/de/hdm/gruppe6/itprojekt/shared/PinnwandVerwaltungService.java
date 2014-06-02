@@ -116,6 +116,10 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 * Finden eines Abonnements anhand seiner ID.
 	 */
 	public Abonnement findeAboAnhandID (int abonnementID) throws Exception;
+	
+	public int findeAboIDAnhandPinnwandUserID(int uid, int pid) throws Exception;
+	
+	public int findePinnwandIDAnhandNickname(String nickname) throws Exception;
  
  
 

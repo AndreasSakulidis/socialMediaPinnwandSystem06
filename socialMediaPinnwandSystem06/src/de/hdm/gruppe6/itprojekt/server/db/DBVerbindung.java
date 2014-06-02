@@ -86,8 +86,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.google.appengine.api.rdbms.AppEngineDriver;
-
 /**  @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *	In Anlehnung an Hr. Prof. Dr. Thies
  * Enthält alle Elemente und nötigen Methoden für das Durchführungs Formular

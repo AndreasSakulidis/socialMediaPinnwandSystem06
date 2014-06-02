@@ -32,6 +32,8 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 import de.hdm.gruppe6.itprojekt.shared.bo.Abonnement;
+import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class SocialMediaFrontend extends Composite {
@@ -244,25 +246,56 @@ public class SocialMediaFrontend extends Composite {
 						@Override
 						public void onClick(ClickEvent event) {
 							
-							String id = Cookies.getCookie("SocialMedia6ID");
-
-							int uid = Integer.parseInt(id);
-							pinnwandVerwaltung.aboLoeschen(uid, new AsyncCallback<Void>() {
-								@Override
-								public void onSuccess(Void result) {
-									Window.alert("Abo wurde angelegt");
-									Window.Location.reload();
-								
-								}
+							
+							String nick = u.getNickname();
+							pinnwandVerwaltung.findePinnwandIDAnhandNickname(nick, new AsyncCallback<Integer>() {
 								@Override
 								public void onFailure(Throwable caught) {
 									System.out
 											.println("hat nicht geklappt mit den Post ausgaben: "
 													+ caught.getMessage());
 								}
+								
+								@Override
+								public void onSuccess(Integer result) {
+									String id = Cookies.getCookie("SocialMedia6ID");
+									int uid = Integer.parseInt(id);
+									pinnwandVerwaltung.findeAboIDAnhandPinnwandUserID(uid, result, new AsyncCallback<Integer>() {
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert("Fehler beim Posten!");
+										}
+
+										@Override
+										public void onSuccess(Integer result) {
+											pinnwandVerwaltung.aboLoeschen(result, new AsyncCallback<Void>() {
+
+												@Override
+												public void onFailure(Throwable caught) {
+													Window.alert("Fehler beim Löschen des Abos!");
+												}
+
+												@Override
+												public void onSuccess(Void result) {
+
+													Window.alert("Das Abo wurde gelöscht!");
+													Window.Location.reload();
+												}
+											});
+
+										}
+									});
+									
+									
+//									Window.alert("Abo wurde angelegt");
+//									Window.Location.reload();
+									
+									
+								
+								}
+								
 							});
-					
-					
+							
 							
 						}
 
