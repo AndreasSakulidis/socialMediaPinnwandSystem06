@@ -266,7 +266,7 @@ public class Anmelden{
 									@Override
 									public void onSuccess(User result) {
 										if (result == null) {
-											Window.alert("Nickname exisitert bereits!");
+											Window.alert("Nickname exisert bereits!");
 										} else {
 											Window.alert("Anlegen erfolgreich!");
 										}

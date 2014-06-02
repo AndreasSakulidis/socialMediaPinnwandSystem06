@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -481,6 +482,13 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements Pinn
 		 	public Like findeLikeAnhandID (int likeID) throws Exception {
 		 		    return this.likeMapper.findeAnhandID(likeID);
 		 		  }
+		
+		 	
+			public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
+					throws Exception {
+				
+				return this.textbeitragMapper.findeAlleUserBeitraege(userID);
+			}
 		 	
 		 
 }

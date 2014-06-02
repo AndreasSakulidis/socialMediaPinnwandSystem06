@@ -112,6 +112,10 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandNickname(String nickname,
 			AsyncCallback<Vector<User>> callback);
+
+
+	void findeAlleUserBeitraege(int userID,
+			AsyncCallback<ArrayList<Textbeitrag>> callback);
 	
 	
 

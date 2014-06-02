@@ -203,6 +203,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
  	 */
 		 	
 	public Like findeLikeAnhandID (int likeID) throws Exception; 	 
+	
+	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception;
 		 	
 		 	
 }

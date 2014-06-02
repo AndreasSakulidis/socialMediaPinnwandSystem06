@@ -53,25 +53,31 @@ public class SocialMediaFrontend extends Composite {
 		/**
 		 * Hier wird die Men�leiste mit den Commands erstellt .
 		 */
-		Command cmd1 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
-				mainPanel.add(eins);
-			}
-		};
+//		Command cmd1 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
+//				mainPanel.add(eins);
+//			}
+//		};
 
-		Command cmd2 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport("");
-				mainPanel.add(zwei);
-			}
-		};
+//		Command cmd2 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport("");
+//				mainPanel.add(zwei);
+//			}
+//		};
 
 		Command cmd3 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport("");
 				mainPanel.add(drei);
 			}
@@ -80,26 +86,32 @@ public class SocialMediaFrontend extends Composite {
 		Command cmd4 = new Command() {
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				FormInfosVonAllenBeitraegenReport vier = new FormInfosVonAllenBeitraegenReport(
 						"");
 				mainPanel.add(vier);
 			}
 		};
-		Command cmd5 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				PinnwandForm pF = new PinnwandForm();
-				mainPanel.add(pF.zeigePost());
-			}
-		};
+//		Command cmd5 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				PinnwandForm pF = new PinnwandForm();
+//				mainPanel.add(pF.zeigePost());
+//			}
+//		};
 
-		Command cmd6 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
-			}
-		};
+//		Command cmd6 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
+//				mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in der Konsole ausgegeben
+//			}
+//		};
 		
 		Command logout = new Command() {
 			public void execute() {
@@ -119,30 +131,48 @@ public class SocialMediaFrontend extends Composite {
 			}
 		};
 		
+
+		Command pinnwandMenu = new Command() {
+			public void execute() {
+				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
+				PinnwandForm pF = new PinnwandForm();
+				mainPanel.add(pF.zeigePost());
+			//	mainPanel.add(pF.beitragAnzeigen());
+			}
+		};
+		
+		PinnwandForm pinnform = new PinnwandForm();
+		pinnform.zeigePost();
+//		pinnform.beitragAnzeigen();
+		
 		Command bearb = new Command(){
 			public void execute() {
 				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 				UserBearbeiten uB = new UserBearbeiten();
 				mainPanel.add(uB.bearbeiteProfil());
 			
 		}
 		};
 		
-		MenuBar fooMenu = new MenuBar(true);
+//		MenuBar pinnwandMenu = new MenuBar(true);
 		
 
 		MenuBar reportMenu = new MenuBar(true);
-		reportMenu.addItem("Infoausgabe von User", cmd1);
-		reportMenu.addItem("Infoausgabe von Beitrag", cmd2);
+//		reportMenu.addItem("Infoausgabe von User", cmd1);
+//		reportMenu.addItem("Infoausgabe von Beitrag", cmd2);
 		reportMenu.addItem("Infosausgabe von allen Usern", cmd3);
 		reportMenu.addItem("Infosausgabe von allen Beitreagen", cmd4);
 		reportMenu.addStyleName("reportmenu");
-		fooMenu.addItem("Textbeitrag posten", cmd5);
-		fooMenu.addItem("Pinnwand anzeigen", cmd6);
+//		fooMenu.addItem("Textbeitrag posten", cmd5);
+//		fooMenu.addItem("Pinnwand anzeigen", cmd6);
 		
 	
 		MenuBar menu = new MenuBar();
-		menu.addItem("Pinnwand", fooMenu);
+		menu.addItem("Pinnwand", pinnwandMenu);
 		menu.addItem("Reports", reportMenu);
 		menu.addItem("Mein Profil", bearb);
 		menu.addItem("LogOut", logout);
@@ -188,6 +218,7 @@ public class SocialMediaFrontend extends Composite {
 
 
 	});
+		
 		
 		
 		/**
