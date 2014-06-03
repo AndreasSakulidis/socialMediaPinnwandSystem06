@@ -7,7 +7,6 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -26,7 +25,6 @@ public class UserBearbeiten {
 	private TextBox tbRname = new TextBox();
 	private Label lbRs = new Label("Nachname");
 	private TextBox tbNachname = new TextBox();
-	private Label lbNick = new Label("Nickname");
 	private TextBox tbNick = new TextBox();
 	private Label lbEmail = new Label("Email-Adresse");
 	private TextBox tbEmail = new TextBox();
@@ -34,8 +32,8 @@ public class UserBearbeiten {
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Label bearbeiten = new Label("User Einstellungen bearbeiten: ");
 	private Button bbutton = new Button("Bearbeiten");
-	private Label info = new Label("Hier klicken um Profil zu lÃ¶schen: ");
-	private Button lbutton = new Button("Profil lÃ¶schen");
+	private Label info = new Label("Hier klicken um Profil zu löschen: ");
+	private Button lbutton = new Button("Profil löschen");
 	private VerticalPanel deleteUserPanel = new VerticalPanel();
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label hinweisnick = new Label();
@@ -66,10 +64,11 @@ public class UserBearbeiten {
 				vPanel.add(lbRs);
 				vPanel.add(tbNachname);
 				tbNachname.setText(result.getNachname());
-				vPanel.add(lbNick);
 				vPanel.add(tbNick);
 				vPanel.add(hinweisnick);
 				tbNick.setText(result.getNickname());
+				tbNick.setVisible(false);
+
 				vPanel.add(lbEmail);
 				vPanel.add(tbEmail);
 				tbEmail.setText(result.getEmail());
@@ -80,50 +79,74 @@ public class UserBearbeiten {
 				deleteUserPanel.add(info);
 				deleteUserPanel.add(lbutton);
 				deleteUserPanel.addStyleName("deleteUserPanel");
-				
+
 				mainPanel.add(vPanel);
 				mainPanel.add(deleteUserPanel);
 				mainPanel.addStyleName("einstellungenPanel");
 				RootPanel.get("Details").add(mainPanel);
-				
+
 				hinweisnick.addStyleName("hinweisnick");
 				tbNick.addStyleName("nick");
-		
+
 			}
 		});
-		
-		lbutton.addClickHandler(new ClickHandler(){
+
+		lbutton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				int uid = Integer.parseInt(id);
-				String vorname = tbRname.getText();
-				String nachname = tbNachname.getText();
-				String nickname = tbNick.getText();
-				String email = tbEmail.getText();
-				String passwort = tbRPasswort.getText();
-				pinnwandVerwaltung.userLoeschen(uid, vorname, nachname,
-						nickname, email, passwort, new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("Fehler beim LÃ¶schen!");
-							}
+				final Warnung warnung = new Warnung("");
+				warnung.center();
+				warnung.setText("Profil wirklich löschen?");
 
-							@Override
-							public void onSuccess(Void result) {
-								mainPanel.clear();
-								RootPanel.get("Navigator").clear();
-								RootPanel.get("Header").clear();
-								RootPanel.get().clear();
-								Window.alert("Deine Prodildaten wurden erfolgreich gelÃ¶scht!");
-								Cookies.removeCookie("SocialMedia6");
-								Anmelden startseite = new Anmelden();
-								startseite.anmelden();
+				warnung.abbrechen.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						warnung.hide();
 
-							}
-				
+					}
+
 				});
+
+				warnung.ok.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						warnung.hide();
+
+						int uid = Integer.parseInt(id);
+						String vorname = tbRname.getText();
+						String nachname = tbNachname.getText();
+						String nickname = tbNick.getText();
+						String email = tbEmail.getText();
+						String passwort = tbRPasswort.getText();
+						pinnwandVerwaltung.userLoeschen(uid, vorname, nachname,
+								nickname, email, passwort,
+								new AsyncCallback<Void>() {
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert("Fehler beim Löschen!");
+									}
+
+									@Override
+									public void onSuccess(Void result) {
+										mainPanel.clear();
+										RootPanel.get("Navigator").clear();
+										RootPanel.get("Header").clear();
+										RootPanel.get().clear();
+										Window.alert("Deine Prodildaten wurden erfolgreich gelöscht!");
+										Cookies.removeCookie("SocialMedia6");
+										Anmelden startseite = new Anmelden();
+										startseite.anmelden();
+									}
+								});
+
+					}
+				});
+
+				warnung.show();
 			}
-			
+
 		});
+		Anmelden startseite = new Anmelden();
 
 		bbutton.addClickHandler(new ClickHandler() {
 			@Override
@@ -135,8 +158,8 @@ public class UserBearbeiten {
 				String nickname = tbNick.getText();
 				String email = tbEmail.getText();
 				String passwort = tbRPasswort.getText();
-				pinnwandVerwaltung.userEditieren(uid, vorname, nachname, nickname,
-						email, passwort, new AsyncCallback<User>() {
+				pinnwandVerwaltung.userEditieren(uid, vorname, nachname,
+						nickname, email, passwort, new AsyncCallback<User>() {
 							@Override
 							public void onFailure(Throwable caught) {
 								Window.alert("Fehler beim Editieren!");
@@ -145,10 +168,7 @@ public class UserBearbeiten {
 							@Override
 							public void onSuccess(User result) {
 								Window.alert("Deine Profildaten wurden erfolgreich editiert!");
-								mainPanel.clear();
-								RootPanel.get("Navigator").clear();
-								RootPanel.get("Header").clear();
-								RootPanel.get().clear();
+
 							}
 						});
 			}

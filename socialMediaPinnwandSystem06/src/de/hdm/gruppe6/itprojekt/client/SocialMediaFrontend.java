@@ -67,26 +67,26 @@ public class SocialMediaFrontend extends Composite {
 		/**
 		 * Hier wird die Menï¿½leiste mit den Commands erstellt .
 		 */
-		Command cmd1 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(mainPanel);
-				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
-				mainPanel.add(eins);
-			}
-		};
+//		Command cmd1 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
+//				mainPanel.add(eins);
+//			}
+//		};
 
-		Command cmd2 = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(mainPanel);
-				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport(
-						"");
-				mainPanel.add(zwei);
-			}
-		};
+//		Command cmd2 = new Command() {
+//			public void execute() {
+//				mainPanel.clear();
+//				RootPanel.get("Details").clear();
+//				RootPanel.get("Details").add(mainPanel);
+//				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport(
+//						"");
+//				mainPanel.add(zwei);
+//			}
+//		};
 
 		Command cmd3 = new Command() {
 			public void execute() {
@@ -110,16 +110,7 @@ public class SocialMediaFrontend extends Composite {
 			}
 		};
 
-		Command pinnwand = new Command() {
-			public void execute() {
-				mainPanel.clear();
-				RootPanel.get("Details").clear();
-				RootPanel.get("Details").add(mainPanel);
-				PinnwandForm pF = new PinnwandForm();
-				mainPanel.add(pF.zeigePost());
-//				mainPanel.add(pF.zeigeBeiträge());
-			}
-		};
+
 		//
 		// Command cmd6 = new Command() {
 		// public void execute() {
@@ -148,6 +139,24 @@ public class SocialMediaFrontend extends Composite {
 
 			}
 		};
+		
+		Command pinnwandMenu = new Command() {
+			public void execute() {
+				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
+				PinnwandForm pF = new PinnwandForm();
+				mainPanel.add(pF.zeigePost());
+//				mainPanel.add(pF.zeigeBeiträge());
+			}
+		};
+		
+		PinnwandForm pinnform = new PinnwandForm();
+		pinnform.zeigePost();
+
+		pinnform.anzeigen();
+//		Window.Location.reload();
+//		pinnform.beitragAnzeigen(a);
 
 		Command bearb = new Command() {
 			public void execute() {
@@ -161,14 +170,14 @@ public class SocialMediaFrontend extends Composite {
 		};
 
 		MenuBar reportMenu = new MenuBar(true);
-		reportMenu.addItem("Infoausgabe von User", cmd1);
-		reportMenu.addItem("Infoausgabe von Beitrag", cmd2);
+//		reportMenu.addItem("Infoausgabe von User", cmd1);
+//		reportMenu.addItem("Infoausgabe von Beitrag", cmd2);
 		reportMenu.addItem("Infosausgabe von allen Usern", cmd3);
 		reportMenu.addItem("Infosausgabe von allen Beitreagen", cmd4);
 		reportMenu.addStyleName("reportmenu");
 
 		MenuBar menu = new MenuBar();
-		menu.addItem("Pinnwand", pinnwand);
+		menu.addItem("Pinnwand", pinnwandMenu);
 		menu.addItem("Reports", reportMenu);
 		menu.addItem("Mein Profil", bearb);
 		menu.addItem("LogOut", logout);
@@ -411,12 +420,15 @@ public class SocialMediaFrontend extends Composite {
 			public void onClick(ClickEvent event) {
 				System.out.println("On Click in der User Trefferliste ");
 				System.out.println(nameField.getText());
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
 
 				String text = nameField.getText();
 
 				if (text.isEmpty()) {
 
 					UserTrefferliste ut = new UserTrefferliste();
+
 					mainPanel.clear();
 					mainPanel.add(ut.zeigeTabelle());
 
@@ -426,6 +438,7 @@ public class SocialMediaFrontend extends Composite {
 							+ nameField.getText());
 					UserTrefferliste ut = new UserTrefferliste();
 					mainPanel.add(ut.zeigeUserNameTabelle(text));
+
 
 				}
 

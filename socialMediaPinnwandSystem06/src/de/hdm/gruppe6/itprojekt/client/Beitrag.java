@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
@@ -45,64 +46,8 @@ public class Beitrag extends Composite {
 	private Label label = new Label();
 	private Label lastUpdatedLabel = new Label();
 	private Label lbId = new Label();
-
+	private Label likeLabel = new Label();
 	
-	// für die Pinnwand
-	
-	
-	
-	
-	
-	// private VerticalPanel mainPanel = new VerticalPanel();
-
-//	class BearbeitenPost implements ClickHandler {
-//
-//		public void onClick(ClickEvent event) {
-//
-//			final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
-//			comment.center();
-//			comment.setText("Bearbeiten");
-//			comment.setContent(post.getText());
-//
-//			comment.abbrechen.addClickHandler(new ClickHandler() {
-//				@Override
-//				public void onClick(ClickEvent event) {
-//					comment.hide();
-//
-//				}
-//
-//			});
-//
-//			comment.ok.addClickHandler(new ClickHandler() {
-//
-//				@Override
-//				public void onClick(ClickEvent event) {
-//					comment.hide();
-//					post.setText(comment.getContent());
-//
-//					int id = Integer.parseInt(lbId.getText());
-//					final String text = post.getText();
-//					pinnwandVerwaltung.textbeitragEditieren(text, id,
-//							new AsyncCallback<Textbeitrag>() {
-//
-//								@Override
-//								public void onFailure(Throwable caught) {
-//									Window.alert("Fehler beim Editieren!");
-//								}
-//
-//								@Override
-//								public void onSuccess(Textbeitrag result) {
-//									Window.alert("Textbeitrag wurde editiert!");
-//								}
-//							});
-//
-//				}
-//			});
-//
-//			comment.show();
-//		}
-//	}
-
 	public Beitrag() {
 
 	}
@@ -122,8 +67,11 @@ public class Beitrag extends Composite {
 		postFlexTable.setWidget(1, 2, bearbeiten);
 		postFlexTable.setWidget(1, 3, kommentieren);
 		postFlexTable.setWidget(1, 4, liken);
-		postFlexTable.setText(0, 5, "ID");
-		postFlexTable.setWidget(1, 5, lbId);
+		postFlexTable.setWidget(1,5, likeLabel);
+//		postFlexTable.setText(0, 6, "ID");
+		
+		postFlexTable.setWidget(1, 6, lbId);
+		lbId.setVisible(false);
 
 		postFlexTable.setWidget(2, 0, lastUpdatedLabel);
 
@@ -252,6 +200,23 @@ public class Beitrag extends Composite {
 
 							public void onSuccess(Like like) {
 								Window.alert("Erfolgreich geliked!");
+								
+								
+								int tid = Integer.parseInt(lbId.getText()); 
+								pinnwandVerwaltung.zaehleLikesZuTextbeitrag(tid,
+										new AsyncCallback<Integer>() {
+											public void onFailure(Throwable caught) {
+												Window.alert("Fehler beim Liken!");
+											}
+
+											public void onSuccess(Integer result) {
+												Window.alert("Erfolgreich geliked!");
+												String likes = Integer.toString(result);
+												likeLabel.setText(likes + " Like(s)");
+																							
+											}
+										});
+								
 							}
 						});
 			}
@@ -273,6 +238,10 @@ public class Beitrag extends Composite {
 						lbId.setText(String.valueOf(textbeitrag.getId()));
 						// user.setText()
 						Window.alert("Textbeitrag wurde gepostet!");
+						RootPanel.get("Details").clear();
+						PinnwandForm pinnForm = new PinnwandForm();
+						pinnForm.zeigePost();
+						pinnForm.anzeigen();
 
 					}
 				});

@@ -39,7 +39,7 @@ public interface PinnwandVerwaltungServiceAsync {
 	void findeKommentarAnhandID(int kommentarID,
 			AsyncCallback<Kommentar> callback);
 
-	void findeKommentareZuTextbeitrag(Textbeitrag textbeitrag,
+	void findeKommentareZuTextbeitrag(int textID,
 			AsyncCallback<Vector<Kommentar>> callback);
 
 	void findeLikeAnhandID(int likeID, AsyncCallback<Like> callback);
@@ -90,7 +90,7 @@ public interface PinnwandVerwaltungServiceAsync {
 	void userLoeschen(int id, String vorname,
 			String nachname, String nickname, String email, String passwort, AsyncCallback<Void> callback);
 
-	void zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag,
+	void zaehleLikesZuTextbeitrag(int tid,
 			AsyncCallback<Integer> callback);
 
 	void findeTextbeitragAnhandVonUser(User user,

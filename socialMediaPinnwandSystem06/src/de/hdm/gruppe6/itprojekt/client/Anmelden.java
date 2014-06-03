@@ -2,7 +2,7 @@ package de.hdm.gruppe6.itprojekt.client;
 
 /**
  * @author Bharti Kumar, �zlem G�l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
- * 
+ *
  * Die Klasse Anmelden erh�lt das Formular Anmelden. Der User kann sich hier registrieren oder mit seinem bereits bestehenden Konto einloggen.
  */
 import com.google.gwt.core.shared.GWT;
@@ -27,17 +27,18 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
-public class Anmelden{
+public class Anmelden {
 	/**
 	 * Hier werden die Panels und die Widgets f�r die Anmeldung festgelegt.
 	 */
 
 	private HorizontalPanel hPanel = new HorizontalPanel();
-	
-	private Label hinweis = new Label("*Nickname kann nur einmal festgelegt werden");
-	private Label lbname = new Label("Nickname   :  ");
+
+	private Label hinweis = new Label(
+			"*Nickname kann nur einmal festgelegt werden");
+	private Label lbname = new Label("Nickname : ");
 	private TextBox tbName = new TextBox();
-	private Label lbPasswort = new Label("Passwort   :  ");
+	private Label lbPasswort = new Label("Passwort : ");
 	private PasswordTextBox tbPasswort = new PasswordTextBox();
 	private Button loginButton = new Button("Anmelden");
 	private HorizontalPanel loginPanel = new HorizontalPanel();
@@ -58,19 +59,20 @@ public class Anmelden{
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Button regButton = new Button("Registrieren");
 	private Label regi = new Label("Registrierung: ");
-	
+
 	private VerticalPanel addPanel = new VerticalPanel();
-	private HorizontalPanel horziPanel= new HorizontalPanel();
-	
-	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
-	
+	private HorizontalPanel horziPanel = new HorizontalPanel();
+
+	private PinnwandVerwaltungServiceAsync socialmedia = GWT
+			.create(PinnwandVerwaltungService.class);
+
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public Widget anmelden() {
-		
+
 		hinweis.addStyleName("hinweis");
-		
+
 		/**
 		 * Die Widgets f�r die Anmeldung werden dem loginPanel hinzugef�gt.
 		 */
@@ -81,17 +83,16 @@ public class Anmelden{
 		loginPanel.add(tbPasswort);
 		loginPanel.add(loginButton);
 
-		
-//		 public void setFocus(boolean focus) {
-//			 tbName.setFocus(focus);
-//		 }
+		// public void setFocus(boolean focus) {
+		// tbName.setFocus(focus);
+		// }
 		loginPanel.addStyleName("loginPanel");
 		RootPanel.get("Details").add(loginPanel);
-//		for(int i = 0; i<10; i++){
-//			addPanel.add(lTrennWand);
-//		}
-//		vPanel.add(addPanel);
-		
+		// for(int i = 0; i<10; i++){
+		// addPanel.add(lTrennWand);
+		// }
+		// vPanel.add(addPanel);
+
 		/**
 		 * Die Widgets f�r die Registrierung werden dem addPanel hinzugef�gt.
 		 */
@@ -108,11 +109,12 @@ public class Anmelden{
 		addPanel.add(lbEmail);
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
-		
+
 		addPanel.addStyleName("addPanelAnmelden");
 
 		/**
-		 *  Mit einem Klick auf den Registrierung Button kann sich der User registrieren.
+		 * Mit einem Klick auf den Registrierung Button kann sich der User
+		 * registrieren.
 		 */
 		regButton.addClickHandler(new ClickHandler() {
 
@@ -127,8 +129,7 @@ public class Anmelden{
 				if (!tbEmail.getText().matches(EMAIL_PATTERN)
 						|| tbRname.getText().equals(a)
 						|| tbNachname.getText().equals(a)
-						|| tbNick.getText().equals(a)
-						|| tbRPasswort.equals(a)) {
+						|| tbNick.getText().equals(a) || tbRPasswort.equals(a)) {
 					Window.alert("Gib eine g�ltige E-Mail Adresse ein!");
 				} else {
 
@@ -152,35 +153,25 @@ public class Anmelden{
 										Window.alert("Anlegen erfolgreich!");
 										addPanel.clear();
 										tbName.setFocus(true);
-//										tbName.setVisible(false);
-//										tbPasswort.setVisible(false);
-//										loginButton.setVisible(false);
-										
-										RootPanel.get("Details").clear();
-
-										
-										SocialMediaFrontend smf = new SocialMediaFrontend();
-										smf.angemeldet();
-										
 									}
 								}
 							});
 				}
 			}
 		});
-		
-//		addPanel.add(addPanel);
+
+		// addPanel.add(addPanel);
 		tbName.setFocus(true);
 		RootPanel.get("Details").add(addPanel);
-//		RootPanel.get().add(vPanel);
+		// RootPanel.get().add(vPanel);
 
-
-//		hPanel.add(anmelden);
+		// hPanel.add(anmelden);
 		/**
-		 * Mit einem Klick auf den Anmelden Button kann sich der bereits registrierter User einloggen.
+		 * Mit einem Klick auf den Anmelden Button kann sich der bereits
+		 * registrierter User einloggen.
 		 */
 		loginButton.addClickHandler(new ClickHandler() {
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				socialmedia.userAnmelden(tbName.getText(),
@@ -202,8 +193,8 @@ public class Anmelden{
 
 									Window.alert("Erfolgreich angemeldet... Nickname: "
 											+ result.getNickname());
-//											+ " und Passwort"
-//											+ result.getPasswort());
+									// + " und Passwort"
+									// + result.getPasswort());
 									tbName.setVisible(false);
 									tbPasswort.setVisible(false);
 									loginButton.setVisible(false);
@@ -221,7 +212,7 @@ public class Anmelden{
 									regButton.setVisible(false);
 									regi.setVisible(false);
 
-//									TODO wie bei EntryPoint Klasse
+									// TODO wie bei EntryPoint Klasse
 									SocialMediaFrontend smf = new SocialMediaFrontend();
 									smf.angemeldet();
 									// --------------------------------------------------------------------------------------------------------
@@ -240,13 +231,14 @@ public class Anmelden{
 
 			}
 		});
-		
+
 		/**
 		 * Der tbEmail Textbox wird der KeyPressHandler hinzugef�gt.
 		 */
 
 		tbEmail.addKeyPressHandler(new KeyPressHandler() {
 			String a = "";
+
 			public void onKeyPress(KeyPressEvent event) {
 				System.out.println("Email: " + tbEmail.getText() + " Vorname "
 						+ tbRname.getText() + " Nachname "
@@ -276,7 +268,7 @@ public class Anmelden{
 									@Override
 									public void onSuccess(User result) {
 										if (result == null) {
-											Window.alert("Nickname exisitert bereits!");
+											Window.alert("Nickname exisert bereits!");
 										} else {
 											Window.alert("Anlegen erfolgreich!");
 										}
@@ -287,23 +279,23 @@ public class Anmelden{
 				}
 			}
 		});
-		
+
 		/**
 		 * Dem Passworttextbox wird der KeyPressHandler hinzugef�gt.
 		 */
 
 		tbPasswort.addKeyPressHandler(new KeyPressHandler() {
 			public void onKeyPress(KeyPressEvent event) {
-				
+
 				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
 
-				socialmedia.userAnmelden(tbName.getText(),
-						tbPasswort.getText(), new AsyncCallback<User>() {
+					socialmedia.userAnmelden(tbName.getText(),
+							tbPasswort.getText(), new AsyncCallback<User>() {
 
-							public void onSuccess(User result) {
+								public void onSuccess(User result) {
 
-								// ------------------------------------------------------------------
-								
+									// ------------------------------------------------------------------
+
 									if (result.getId() != 0) {
 
 										Cookies.setCookie("SocialMedia6",
@@ -343,32 +335,30 @@ public class Anmelden{
 										// nicht richtig hier!
 									}
 								}
-							
 
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("Ein fehler ist aufgetreten: "
-										+ caught.getMessage());
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert("Ein fehler ist aufgetreten: "
+											+ caught.getMessage());
 
-							}
-						});
-				}//NEUU
+								}
+							});
+				}// NEUU
 			}
-		});	
-		
-		
+		});
+
 		/**
-		 *  Dem Widgets werden Stylenames zugeordnet. 
+		 * Dem Widgets werden Stylenames zugeordnet.
 		 */
-		
+
 		regi.addStyleName("regi");
-//		anmelden.addStyleName("Anmelde�ber");
-//		hPanel.addStyleName("Anmelden");
-//		vPanel.addStyleName("Regi");
-//		
+		// anmelden.addStyleName("Anmelde�ber");
+		// hPanel.addStyleName("Anmelden");
+		// vPanel.addStyleName("Regi");
+		//
 		horziPanel.add(hPanel);
 		horziPanel.add(vPanel);
 
 		return horziPanel;
-		}
+	}
 }

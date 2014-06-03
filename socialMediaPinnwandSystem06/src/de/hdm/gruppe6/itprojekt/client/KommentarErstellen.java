@@ -1,5 +1,5 @@
-	
 package de.hdm.gruppe6.itprojekt.client;
+
 /**
  * @author Bharti Kumar, �zlem G�l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  * 
@@ -7,6 +7,7 @@ package de.hdm.gruppe6.itprojekt.client;
  */
 
 import java.util.Date;
+import java.util.Vector;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,7 +32,7 @@ public class KommentarErstellen extends Composite {
 	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
 			.create(PinnwandVerwaltungService.class);
 	/**
-	 * Hier werden die Widgets und die Panels festgelegt. 
+	 * Hier werden die Widgets und die Panels festgelegt.
 	 */
 	private VerticalPanel kommentarPanel = new VerticalPanel();
 	private FlexTable kommentarTable = new FlexTable();
@@ -42,9 +43,10 @@ public class KommentarErstellen extends Composite {
 	private Label lbId = new Label();
 
 	public Widget setComment(final String content, final int tid) {
-/**
- * Die Klasse MeineDialogBox wird aufgerufen, indem der Textbeitrag kommentiert werden kann.
- */
+		/**
+		 * Die Klasse MeineDialogBox wird aufgerufen, indem der Textbeitrag
+		 * kommentiert werden kann.
+		 */
 		final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
 		comment.center();
 		comment.setText("Kommentieren");
@@ -60,18 +62,19 @@ public class KommentarErstellen extends Composite {
 			}
 
 		});
-		
+
 		/**
-		 * Mit einem Klick auf ok wird ein Kommentar gepostet und in einer FlexTable angelegt.
+		 * Mit einem Klick auf ok wird ein Kommentar gepostet und in einer
+		 * FlexTable angelegt.
 		 */
 
 		comment.ok.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				comment.hide();			
+				comment.hide();
 
-//				kommentarTable.setText(1, 1, comment.getContent());
+				// kommentarTable.setText(1, 1, comment.getContent());
 				kommentarTable.setWidget(1, 1, commentL);
 				kommentarTable.setWidget(1, 2, kloeschen);
 				kommentarTable.setWidget(1, 3, kbearbeiten);
@@ -80,16 +83,15 @@ public class KommentarErstellen extends Composite {
 
 				kommentarPanel.add(kommentarTable);
 
-				//vPanel.add(kommentarPanel);
+				// vPanel.add(kommentarPanel);
 				kommentarPanel.addStyleName("Kommentare");
-
 
 				commentL.setText(comment.getContent());
 
 				String text = commentL.getText();
 				String uid = Cookies.getCookie("SocialMedia6ID");
 
-				pinnwandVerwaltung.kommentarAnlegen(text, uid, tid, 
+				pinnwandVerwaltung.kommentarAnlegen(text, uid, tid,
 						new AsyncCallback<Kommentar>() {
 
 							@Override
@@ -106,16 +108,18 @@ public class KommentarErstellen extends Composite {
 						});
 
 				/**
-				 * Um den Kommentar bearbeiten zu k�nnen wird die Klasse MeineDialogBox aufgerufen.
+				 * Um den Kommentar bearbeiten zu k�nnen wird die Klasse
+				 * MeineDialogBox aufgerufen.
 				 */
 				kbearbeiten.addClickHandler(new ClickHandler() {
 					@Override
 					public void onClick(ClickEvent event) {
-						final MeineDialogBox comment = new MeineDialogBox("Bearbeiten");
+						final MeineDialogBox comment = new MeineDialogBox(
+								"Bearbeiten");
 						comment.center();
 						comment.setText("Bearbeiten");
 						comment.setContent(commentL.getText());
-						
+
 						/**
 						 * Die Bearbeitung des Kommentars wird abgebrochen.
 						 */
@@ -128,7 +132,7 @@ public class KommentarErstellen extends Composite {
 							}
 
 						});
-						
+
 						/**
 						 * Der Kommentar wird erfolgreich bearbeitet.
 						 */
@@ -147,12 +151,14 @@ public class KommentarErstellen extends Composite {
 										new AsyncCallback<Kommentar>() {
 
 											@Override
-											public void onFailure(Throwable caught) {
+											public void onFailure(
+													Throwable caught) {
 												Window.alert("Fehler beim Editieren!");
 											}
 
 											@Override
-											public void onSuccess(Kommentar result) {
+											public void onSuccess(
+													Kommentar result) {
 
 												Window.alert("Textbeitrag wurde editiert!");
 											}
@@ -165,7 +171,7 @@ public class KommentarErstellen extends Composite {
 					}
 
 				});
-				
+
 				/**
 				 * Der Kommentar wird gel�scht.
 				 */
@@ -178,22 +184,21 @@ public class KommentarErstellen extends Composite {
 						int id = Integer.parseInt(lbId.getText());
 						String text = commentL.getText();
 						pinnwandVerwaltung.kommentarLoeschen(text, id,
-						new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("Fehler beim loeschen!");
-							}
+								new AsyncCallback<Void>() {
+									@Override
+									public void onFailure(Throwable caught) {
+										Window.alert("Fehler beim loeschen!");
+									}
 
-							@Override
-							public void onSuccess(Void result) {
-								Window.alert("Kommentar wurde geloescht!");
-								kommentarTable.removeFromParent();
-							}
-						});
+									@Override
+									public void onSuccess(Void result) {
+										Window.alert("Kommentar wurde geloescht!");
+										kommentarTable.removeFromParent();
+									}
+								});
 					}
 
 				});
-
 
 			}
 		});
@@ -201,7 +206,8 @@ public class KommentarErstellen extends Composite {
 		comment.show();
 
 		/**
-		 * Der Zeitpunkt der letzten Aktualisierung des Kommentars wird angegeben.
+		 * Der Zeitpunkt der letzten Aktualisierung des Kommentars wird
+		 * angegeben.
 		 */
 		commentUpdatedLabel.setText("Es wurde kommentiert am: "
 				+ DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
@@ -209,5 +215,53 @@ public class KommentarErstellen extends Composite {
 		return kommentarPanel;
 	}
 
+	// Methode zum Kommentarauslesen pro Beitrag
+
+	public void holeAlleKommentare(final int id) {
+		// kommentarTable.setText(1, 1, comment.getContent());
+
+		// String text = commentL.getText();
+		// String uid = Cookies.getCookie("SocialMedia06");
+		pinnwandVerwaltung.findeKommentareZuTextbeitrag(id,
+				new AsyncCallback<Vector<Kommentar>>() {
+					int i = 0;
+
+					@Override
+					public void onSuccess(Vector<Kommentar> result) {
+						// Window.alert("Funktioniert Kommentar zu Textbeitrag anzeigen");
+
+						for (Kommentar k : result) {
+							// setComment(k.getText(), id);
+
+							kommentarTable.setText(1, 1, k.getText());
+							kommentarTable.setWidget(1, 2, kloeschen);
+							kommentarTable.setWidget(1, 3, kbearbeiten);
+							kommentarTable.setWidget(2, 1, commentUpdatedLabel);
+							kommentarTable.setWidget(1, 4, lbId);
+
+							kommentarPanel.add(kommentarTable);
+
+							// vPanel.add(kommentarPanel);
+							kommentarPanel.addStyleName("Kommentare");
+							System.out.println("kommentarPanel "
+									+ kommentarPanel.getElement());
+							System.out.println("Kommentarobjekt : "
+									+ k.getText() + "Kommentar ID: "
+									+ k.getId());
+
+							i++;
+						}
+
+					}
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Hat leider nicht funktioniert");
+
+					}
+				});
+
+		// return kommentarPanel;
+	}
 
 }

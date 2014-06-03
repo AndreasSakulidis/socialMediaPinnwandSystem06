@@ -255,26 +255,27 @@ public class TextbeitragMapper {
 			stmt = con.createStatement();
 
 			rs = stmt
-					.executeQuery("SELECT TextbeitragID, ErstellungsZeitpunkt, kommentar.Text, kommentar.ErstellungsZeitpunkt FROM textbeitrag INNER JOIN kommentar"
-							+ "ON TextbeitragID="
-							+ textbeitrag.getId()
-							+ "ON textbeitrag.KommentarID = kommentar.KommentarID ORDER BY kommentar.ErstellungsZeitpunkt");
+					.executeQuery("SELECT kommentar.KommentarID, kommentar.Text, kommentar.ErstellungsZeitpunkt "
+							+ "FROM textbeitrag INNER JOIN kommentar ON textbeitrag.TextbeitragID = kommentar.TextbeitragID "
+							+ "WHERE textbeitrag.TextbeitragID ="+ textbeitrag.getId());
 
 			while (rs.next()) {
 				Kommentar kommentar = new Kommentar();
-				kommentar.setId(rs.getInt("KommentarID"));
+				kommentar.setId(rs.getInt("kommentar.KommentarID"));
 				kommentar.setErstellungsZeitpunkt(rs
 						.getTimestamp("kommentar.ErstellungsZeitpunkt"));
 				kommentar.setText(rs.getString("kommentar.Text"));
-				kommentar.setId(rs.getInt("TextbeitragID"));
-
+//				kommentar.setId(rs.getInt("TextbeitragID"));
+				System.out.println("Kommentarobjekt : "+kommentar.getText() + "Kommentar ID: " + kommentar.getId());
+				result.addElement(kommentar); 
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
 		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
 		return result;
 	}
 	 /** 
@@ -283,27 +284,35 @@ public class TextbeitragMapper {
 	   * @return 
 	   * @throws Exception
 	   */
-	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag)
+	public int zaehleLikesZuTextbeitrag(int tid)
 			throws Exception {
 		Connection con = DBVerbindung.connection();
-		ResultSet rs = null;
+//		ResultSet rs = null;
 		Statement stmt = null;
 
 		try {
 			stmt = con.createStatement();
+			int AnzahlLikes = 0;
 
-			rs = stmt
-					.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlLikes FROM like WHERE TextbeitragID = "
-							+ textbeitrag.getId());
-
-			return rs.getInt("AnzahlLikes");
+			ResultSet rs = stmt
+					.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlLikes FROM liken WHERE TextbeitragID = "
+							+ tid);
+			
+			if(rs.next()){
+				   AnzahlLikes = rs.getInt("AnzahlLikes");
+				   
+				}
+			
+			return AnzahlLikes;
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		
 
 	}
 	/** 
@@ -375,7 +384,8 @@ public class TextbeitragMapper {
 //		}
 	}
 	
-	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception {
+	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
+			throws Exception {
 		Connection con = DBVerbindung.connection();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -386,8 +396,8 @@ public class TextbeitragMapper {
 			stmt = con.createStatement();
 
 			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
-					+ "WHERE UserID ="
-					+ userID);
+					+ "WHERE UserID =" + userID
+					+ " ORDER BY ErstellungsZeitpunkt DESC");
 
 			while (rs.next()) {
 				Textbeitrag textbeitrag = new Textbeitrag();
@@ -401,12 +411,48 @@ public class TextbeitragMapper {
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} 
-//		finally {
-//			DBVerbindung.closeAll(rs, stmt, con);
-//		}
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
 
 		return result;
 	}
+	
+	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
+			throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Textbeitrag> result = new ArrayList<Textbeitrag>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
+					+ "WHERE UserID =" + userID
+					+ " ORDER BY ErstellungsZeitpunkt DESC");
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				result.add(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
+
+		return result;
+	}
+	
 	
 }

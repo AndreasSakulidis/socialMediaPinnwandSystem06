@@ -166,11 +166,11 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 /**
 	  * Finden von Kommentaren zu Textbeitr�gen.
 	  */
-	public Vector <Kommentar> findeKommentareZuTextbeitrag( Textbeitrag textbeitrag) throws Exception;
+	public Vector <Kommentar> findeKommentareZuTextbeitrag(int textID) throws Exception;
 	/**
 	  * Z�hlen von Likes zu einem Textbeitrag.
 	  */
-	public int zaehleLikesZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
+	public int zaehleLikesZuTextbeitrag(int tid) throws Exception;
 	/**
 	 * Finden von allen Textbeitr�gen.
 	 */

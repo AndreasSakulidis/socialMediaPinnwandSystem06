@@ -87,9 +87,10 @@ public class LikeMapper {
 		catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return like;
 	}
 	/**
