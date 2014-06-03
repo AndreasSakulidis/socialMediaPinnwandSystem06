@@ -6,8 +6,8 @@ package de.hdm.gruppe6.itprojekt.client;
  * Die Klasse KommentarErstellen erm�glicht dem angelmeldeten User einen bestehenden Textbeitrag zu kommentieren, diesen Kommentar zu bearbeiten und zu l�schen.
  */
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -223,11 +223,11 @@ public class KommentarErstellen extends Composite {
 		// String text = commentL.getText();
 		// String uid = Cookies.getCookie("SocialMedia06");
 		pinnwandVerwaltung.findeKommentareZuTextbeitrag(id,
-				new AsyncCallback<Vector<Kommentar>>() {
+				new AsyncCallback<ArrayList<Kommentar>>() {
 					int i = 0;
 
 					@Override
-					public void onSuccess(Vector<Kommentar> result) {
+					public void onSuccess(ArrayList<Kommentar> result) {
 						// Window.alert("Funktioniert Kommentar zu Textbeitrag anzeigen");
 
 						for (Kommentar k : result) {

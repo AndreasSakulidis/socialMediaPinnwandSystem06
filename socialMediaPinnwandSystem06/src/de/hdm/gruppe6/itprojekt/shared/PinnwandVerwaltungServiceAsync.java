@@ -40,7 +40,7 @@ public interface PinnwandVerwaltungServiceAsync {
 			AsyncCallback<Kommentar> callback);
 
 	void findeKommentareZuTextbeitrag(int textID,
-			AsyncCallback<Vector<Kommentar>> callback);
+			AsyncCallback<ArrayList<Kommentar>> callback);
 
 	void findeLikeAnhandID(int likeID, AsyncCallback<Like> callback);
 

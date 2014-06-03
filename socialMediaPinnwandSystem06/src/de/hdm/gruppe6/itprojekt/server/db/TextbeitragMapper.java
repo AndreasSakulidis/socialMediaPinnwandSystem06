@@ -243,13 +243,13 @@ public class TextbeitragMapper {
 	   * @return 
 	   * @throws Exception
 	   */
-	public Vector<Kommentar> findeKommentareZuTextbeitrag(
+	public ArrayList<Kommentar> findeKommentareZuTextbeitrag(
 			Textbeitrag textbeitrag) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
 
-		Vector<Kommentar> result = new Vector<Kommentar>();
+		ArrayList<Kommentar> result = new ArrayList<Kommentar>();
 
 		try {
 			stmt = con.createStatement();
@@ -267,7 +267,7 @@ public class TextbeitragMapper {
 				kommentar.setText(rs.getString("kommentar.Text"));
 //				kommentar.setId(rs.getInt("TextbeitragID"));
 				System.out.println("Kommentarobjekt : "+kommentar.getText() + "Kommentar ID: " + kommentar.getId());
-				result.addElement(kommentar); 
+				result.add(kommentar); 
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -419,40 +419,7 @@ public class TextbeitragMapper {
 		return result;
 	}
 	
-	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
-			throws Exception {
-		Connection con = DBVerbindung.connection();
-		Statement stmt = null;
-		ResultSet rs = null;
 
-		ArrayList<Textbeitrag> result = new ArrayList<Textbeitrag>();
-
-		try {
-			stmt = con.createStatement();
-
-			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
-					+ "WHERE UserID =" + userID
-					+ " ORDER BY ErstellungsZeitpunkt DESC");
-
-			while (rs.next()) {
-				Textbeitrag textbeitrag = new Textbeitrag();
-				textbeitrag.setId(rs.getInt("TextbeitragID"));
-				textbeitrag.setText(rs.getString("Text"));
-				textbeitrag.setErstellungsZeitpunkt(rs
-						.getTimestamp("ErstellungsZeitpunkt"));
-
-				result.add(textbeitrag);
-			}
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
-		}
-		// finally {
-		// DBVerbindung.closeAll(rs, stmt, con);
-		// }
-
-		return result;
-	}
 	
 	
 }

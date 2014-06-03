@@ -119,8 +119,12 @@ public class PinnwandForm extends Composite {
 						for (Textbeitrag tb : result) {
 							// String pinnwand = tb.getText();
 							PinnwandForm pinnwandAnzeigen = new PinnwandForm();
-							pinnwandAnzeigen.beitragAnzeigen(tb);	
-							pinnwandAnzeigen.holeAlleKommentare(tb.getId());
+							pinnwandAnzeigen.beitragAnzeigen(tb);
+							pinnwandAnzeigen.kommentarAnzeigen(tb);
+							pinnwandAnzeigen.likesAnzeigen(tb);
+
+							
+							
 							
 							
 //							KommentarErstellen kommentar = new KommentarErstellen();
@@ -142,6 +146,25 @@ public class PinnwandForm extends Composite {
 				});
 
 		return addPanel;
+	}
+	
+	public void likesAnzeigen(Textbeitrag a){
+		lbId.setText(String.valueOf(a.getId()));
+		int tid = Integer.parseInt(lbId.getText()); 
+		
+		socialmedia.zaehleLikesZuTextbeitrag(tid,
+				new AsyncCallback<Integer>() {
+					public void onFailure(Throwable caught) {
+						
+					}
+
+					public void onSuccess(Integer result) {
+						
+						String likes = Integer.toString(result);
+						likeLabel.setText(likes + " Like(s)");
+																	
+					}
+				});
 	}
 
 	// METHODE
@@ -337,50 +360,98 @@ public class PinnwandForm extends Composite {
 
 	}
 	
-	public void holeAlleKommentare(final int id){
-//		kommentarTable.setText(1, 1, comment.getContent());
+//	public void holeAlleKommentare(final int id){
+////		kommentarTable.setText(1, 1, comment.getContent());
+//
+//
+//		//String text = commentL.getText();
+////		String uid = Cookies.getCookie("SocialMedia06");
+//		socialmedia.findeKommentareZuTextbeitrag(id, new AsyncCallback<Vector<Kommentar>>() {
+//			int i =0;
+//			@Override
+//			public void onSuccess(Vector<Kommentar> result) {
+////				Window.alert("Funktioniert Kommentar zu Textbeitrag anzeigen");
+//				
+//				for(Kommentar k : result){
+////					setComment(k.getText(), id);
+//					
+//					
+//					kommentarTable.setText(1,1, k.getText());
+//					kommentarTable.setWidget(1, 2, kloeschen);
+//					kommentarTable.setWidget(1, 3, kbearbeiten);
+//					kommentarTable.setWidget(2, 1, commentUpdatedLabel);
+//					kommentarTable.setText(1, 4, String.valueOf(k.getId()));
+//
+//					kommentarPanel.add(kommentarTable);
+//
+//					//vPanel.add(kommentarPanel);
+//					kommentarPanel.addStyleName("Kommentare");
+//					System.out.println("kommentarPanel "+kommentarPanel.getElement());
+//					System.out.println("Kommentarobjekt : "+k.getText() + "Kommentar ID: " + k.getId());
+//
+//					
+//					i++;
+//				}
+//				
+//			}
+//			
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				Window.alert("Hat leider nicht funktioniert");
+//				
+//			}
+//		});
+//		
+//		
+////		return kommentarPanel;
+//	}
+	
+	public void kommentarAnzeigen(final Textbeitrag a){
 
-
-		//String text = commentL.getText();
-//		String uid = Cookies.getCookie("SocialMedia06");
-		socialmedia.findeKommentareZuTextbeitrag(id, new AsyncCallback<Vector<Kommentar>>() {
-			int i =0;
-			@Override
-			public void onSuccess(Vector<Kommentar> result) {
-//				Window.alert("Funktioniert Kommentar zu Textbeitrag anzeigen");
-				
-				for(Kommentar k : result){
-//					setComment(k.getText(), id);
-					
-					
-					kommentarTable.setText(1,1, k.getText());
-					kommentarTable.setWidget(1, 2, kloeschen);
-					kommentarTable.setWidget(1, 3, kbearbeiten);
-					kommentarTable.setWidget(2, 1, commentUpdatedLabel);
-					kommentarTable.setText(1, 4, String.valueOf(k.getId()));
-
-					kommentarPanel.add(kommentarTable);
-
-					//vPanel.add(kommentarPanel);
-					kommentarPanel.addStyleName("Kommentare");
-					System.out.println("kommentarPanel "+kommentarPanel.getElement());
-					System.out.println("Kommentarobjekt : "+k.getText() + "Kommentar ID: " + k.getId());
-
-					
-					i++;
-				}
-				
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("Hat leider nicht funktioniert");
-				
-			}
-		});
 		
 		
-//		return kommentarPanel;
-	}
+		
+		lbId.setText(String.valueOf(a.getId()));
+		int tid = Integer.parseInt(lbId.getText()); 
+		
+		socialmedia.findeKommentareZuTextbeitrag(tid,
+				new AsyncCallback<ArrayList<Kommentar>>() {
+
+
+					public void onSuccess(ArrayList<Kommentar> result) {
+						
+						for(Kommentar k : result){
+//							setComment(k.getText(), id);
+							
+							
+							kommentarTable.setText(1,1, k.getText());
+							kommentarTable.setWidget(1, 2, kloeschen);
+							kommentarTable.setWidget(1, 3, kbearbeiten);
+							kommentarTable.setWidget(2, 1, commentUpdatedLabel);
+							kommentarTable.setText(1, 4, String.valueOf(k.getId()));
+
+							kommentarPanel.add(kommentarTable);
+							
+							vPanel.add(kommentarPanel);
+							kommentarPanel.addStyleName("Kommentare");
+							System.out.println("kommentarPanel "+kommentarPanel.getElement());
+							System.out.println("Kommentarobjekt : "+k.getText() + "Kommentar ID: " + k.getId());
+		
+							
+//							i++;
+						}
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Hat leider nicht funktioniert");
+						
+					}
+				});
+				
+				
+//				return kommentarPanel;
+			}
 
 }

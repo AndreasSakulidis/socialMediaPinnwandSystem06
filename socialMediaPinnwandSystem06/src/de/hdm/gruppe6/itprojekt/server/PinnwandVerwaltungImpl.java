@@ -411,7 +411,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	/**
 	 * Finden von Kommentaren zu Textbeitr�gen.
 	 */
-	public Vector<Kommentar> findeKommentareZuTextbeitrag(
+	public ArrayList<Kommentar> findeKommentareZuTextbeitrag(
 			int textID) throws Exception {
 		
 		Textbeitrag text = new Textbeitrag();
