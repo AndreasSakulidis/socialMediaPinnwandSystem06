@@ -176,17 +176,18 @@ public class PinnwandForm extends Composite {
 		// label.setText(content);
 		initWidget(this.vPanel);
 		// lbId.setText(String.valueOf(id));
-		userFlexTable.setWidget(0, 0, user);
-		userFlexTable.addStyleName("Userspalte");
+//		userFlexTable.setWidget(0, 0, user);
+		user.addStyleName("Userspalte");
 		/**
 		 * Die Textbeitr�ge werden in einer Flextable gepostet.
 		 */
-		postFlexTable.setText(0, 0, a.getText());
-		postFlexTable.setWidget(1, 1, loePinnwand);
-		postFlexTable.setWidget(1, 2, bePinnwand);
-		postFlexTable.setWidget(1, 3, koPinnwand);
-		postFlexTable.setWidget(1, 4, liken);
-		postFlexTable.setWidget(1, 5, likeLabel);
+		postFlexTable.setText(1, 0, a.getText());
+		postFlexTable.setWidget(0, 0, user);
+		postFlexTable.setWidget(0, 1, loePinnwand);
+		postFlexTable.setWidget(0, 2, bePinnwand);
+		postFlexTable.setWidget(0, 3, koPinnwand);
+		postFlexTable.setWidget(0, 4, liken);
+		postFlexTable.setWidget(0, 5, likeLabel);
 //		postFlexTable.setText(0, 5, "ID");
 		lbId.setText(String.valueOf(a.getId()));
 		postFlexTable.setWidget(1, 6, lbId);
@@ -268,7 +269,7 @@ public class PinnwandForm extends Composite {
 							}
 
 							public void onSuccess(Like like) {
-								Window.alert("Erfolgreich geliked!");
+//								Window.alert("Erfolgreich geliked!");
 								
 								
 								int tid = Integer.parseInt(lbId.getText()); 

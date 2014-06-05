@@ -163,8 +163,11 @@ background-color: ghostwhite;
 }
 
 .Userspalte {
-	background-color: ghostwhite;
-	font-style: italic;
+background-color: ghostwhite;
+font-style: italic;
+border: 1px solid black;
+height: 20px;
+width:50px;
 }
 
 .loginPanel {

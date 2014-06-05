@@ -57,30 +57,30 @@ public class Beitrag extends Composite {
 		label.setText(content);
 		initWidget(this.vPanel);
 		// lbId.setText(String.valueOf(id));
-		userFlexTable.setWidget(0, 0, user);
-		userFlexTable.addStyleName("Userspalte");
+//		userFlexTable.setWidget(0, 0, user);
+	    user.addStyleName("Userspalte");
 		/**
-		 * Die Textbeitrï¿½ge werden in einer Flextable gepostet.
+		 * Die Textbeitr�ge werden in einer Flextable gepostet.
 		 */
-		postFlexTable.setWidget(0, 0, post);
-		postFlexTable.setWidget(1, 1, loeschen);
-		postFlexTable.setWidget(1, 2, bearbeiten);
-		postFlexTable.setWidget(1, 3, kommentieren);
-		postFlexTable.setWidget(1, 4, liken);
-		postFlexTable.setWidget(1,5, likeLabel);
-//		postFlexTable.setText(0, 6, "ID");
-		
-		postFlexTable.setWidget(1, 6, lbId);
-		lbId.setVisible(false);
+	    postFlexTable.setWidget(0, 0, user);
+		postFlexTable.setWidget(0, 1, loeschen);
+		postFlexTable.setWidget(0, 2, bearbeiten);
+		postFlexTable.setWidget(0, 3, kommentieren);
+		postFlexTable.setWidget(0, 4, liken);
+		postFlexTable.setText(0, 5, "ID");
+		postFlexTable.setWidget(1, 0, post);
+		postFlexTable.setWidget(1, 5, lbId);
 
 		postFlexTable.setWidget(2, 0, lastUpdatedLabel);
 
 		/**
 		 * Die Flextable wird dem vPanel zugeordnet.
 		 */
-		vPanel.add(userFlexTable);
+		// vPanel.add(userFlexTable);
 		vPanel.add(postFlexTable);
+		
 		vPanel.addStyleName("Textbeitrag");
+
 
 		/**
 		 * Mit einem Klick auf den Kommentieren Button wird die Klasse
