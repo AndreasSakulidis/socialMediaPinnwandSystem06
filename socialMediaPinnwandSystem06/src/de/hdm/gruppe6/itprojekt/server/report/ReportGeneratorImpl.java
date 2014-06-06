@@ -282,7 +282,7 @@ public class ReportGeneratorImpl extends RemoteServiceServlet
 	
 	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.findeUserZuTextbeitrag(textbeitrag))));
 	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleKommentareVonTextbeitrag(textbeitrag))));
-	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleLikesZuTextbeitrag(tid))));
+//	  textbeitragRow.addColumn(new Column(String.valueOf(textbeitragmapper.zaehleLikesZuTextbeitrag(tid))));
 	  
 } catch (Exception e) {
 	// TODO Auto-generated catch block

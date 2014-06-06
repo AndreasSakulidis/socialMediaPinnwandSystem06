@@ -97,6 +97,10 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 * Finden von allen Pinnw�nden.
 	 */
 	public Vector<Pinnwand> findeAllePinnwaende() throws Exception;
+	
+	public ArrayList<Integer> findePinnwandIDAnhandUserID(int userID) throws Exception;
+	
+	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID) throws Exception;
 	/**
 	 * Finden einer Pinnwand anhand seiner ID.
 	 */
@@ -204,6 +208,9 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public Like findeLikeAnhandID (int likeID) throws Exception; 	 
 	
 	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception;
+	
+	public String findeUserZuTextbeitragID(int textbeitragID )
+			throws Exception;
 		 	
 		 	
 }

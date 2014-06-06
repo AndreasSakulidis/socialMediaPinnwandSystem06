@@ -29,6 +29,7 @@ import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
 import de.hdm.gruppe6.itprojekt.shared.bo.Kommentar;
 import de.hdm.gruppe6.itprojekt.shared.bo.Like;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
+import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class PinnwandForm extends Composite {
 	/**
@@ -114,25 +115,19 @@ public class PinnwandForm extends Composite {
 						System.out
 								.println("in der Methode findeAlleUserBeitraege vor der Schleife");
 						System.out.println("Werte von result: " + result.size());
-						// VerticalPanel addPanel = new VerticalPanel();
 
 						for (Textbeitrag tb : result) {
-							// String pinnwand = tb.getText();
+							
 							PinnwandForm pinnwandAnzeigen = new PinnwandForm();
+							//TODO TB evtl. NULL ? überprüfen
 							pinnwandAnzeigen.beitragAnzeigen(tb);
+							System.out.println("PinnwandForm Textbeiträge: "+tb.getText());
 							pinnwandAnzeigen.kommentarAnzeigen(tb);
 							pinnwandAnzeigen.likesAnzeigen(tb);
+							pinnwandAnzeigen.nicknameAnzeigen(tb); 
 
-							
-							
-							
-							
-//							KommentarErstellen kommentar = new KommentarErstellen();
-//							kommentar.holeAlleKommentare(tb.getId());
 							
 							addPanel.add(pinnwandAnzeigen);
-							// addPanel.add(child);
-
 						}
 
 					}
@@ -146,6 +141,34 @@ public class PinnwandForm extends Composite {
 				});
 
 		return addPanel;
+	}
+	
+	public void nicknameAnzeigen(Textbeitrag a){
+		lbId.setText(String.valueOf(a.getId()));
+		int tid = Integer.parseInt(lbId.getText()); 
+		//TODO statt das untere eine Methode findeUserAnhandTextbeitragID -> Methode in Mapper auch schreiben
+//		gebe ein String zurück
+		socialmedia.findeUserZuTextbeitragID(a.getId(), new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				try{
+					user.setText(result);
+
+				}
+				catch(Exception e){
+					
+				}
+			}
+		});
+
 	}
 	
 	public void likesAnzeigen(Textbeitrag a){
@@ -171,11 +194,8 @@ public class PinnwandForm extends Composite {
 
 	public void beitragAnzeigen(final Textbeitrag a) {
 
-		// bePinnwand.addClickHandler(new BearbeitenPost());
-
-		// label.setText(content);
 		initWidget(this.vPanel);
-		// lbId.setText(String.valueOf(id));
+
 		userFlexTable.setWidget(0, 0, user);
 		userFlexTable.addStyleName("Userspalte");
 		/**
@@ -187,12 +207,14 @@ public class PinnwandForm extends Composite {
 		postFlexTable.setWidget(1, 3, koPinnwand);
 		postFlexTable.setWidget(1, 4, liken);
 		postFlexTable.setWidget(1, 5, likeLabel);
-//		postFlexTable.setText(0, 5, "ID");
+		
 		lbId.setText(String.valueOf(a.getId()));
 		postFlexTable.setWidget(1, 6, lbId);
 		lbId.setVisible(false);
+		
+		//TODO Fehler beim Erstellungszeitpunkt- vllt. NULL ?  
+		System.out.println("Erstellungszeitraum "+a.getErstellungsZeitpunkt().toString()+" ID "+a.getId());
 		String b = a.getErstellungsZeitpunkt().toString();
-
 		postFlexTable.setText(2, 0, b);
 
 		/**
@@ -334,81 +356,16 @@ public class PinnwandForm extends Composite {
 			}
 
 		});
+		
+	}
 
 		/**
 		 * Mit einem Klick auf den Bearbeiten Button wird ein Dialogbox
 		 * ge�ffnet, indem der User den Textbeitrag bearbeiten kann.
 		 * 
 		 */
-
-//		liken.addClickHandler(new ClickHandler() {
-//			@Override
-//			public void onClick(ClickEvent event) {
-//				String uid = Cookies.getCookie("SocialMedia6ID");
-//				int tid = Integer.parseInt(lbId.getText());
-//				socialmedia.likeAnlegen(uid, tid, new AsyncCallback<Like>() {
-//					public void onFailure(Throwable caught) {
-//						Window.alert("Fehler beim Liken!");
-//					}
-//
-//					public void onSuccess(Like like) {
-//						Window.alert("Erfolgreich geliked!");
-//					}
-//				});
-//			}
-//		});
-
-	}
-	
-//	public void holeAlleKommentare(final int id){
-////		kommentarTable.setText(1, 1, comment.getContent());
-//
-//
-//		//String text = commentL.getText();
-////		String uid = Cookies.getCookie("SocialMedia06");
-//		socialmedia.findeKommentareZuTextbeitrag(id, new AsyncCallback<Vector<Kommentar>>() {
-//			int i =0;
-//			@Override
-//			public void onSuccess(Vector<Kommentar> result) {
-////				Window.alert("Funktioniert Kommentar zu Textbeitrag anzeigen");
-//				
-//				for(Kommentar k : result){
-////					setComment(k.getText(), id);
-//					
-//					
-//					kommentarTable.setText(1,1, k.getText());
-//					kommentarTable.setWidget(1, 2, kloeschen);
-//					kommentarTable.setWidget(1, 3, kbearbeiten);
-//					kommentarTable.setWidget(2, 1, commentUpdatedLabel);
-//					kommentarTable.setText(1, 4, String.valueOf(k.getId()));
-//
-//					kommentarPanel.add(kommentarTable);
-//
-//					//vPanel.add(kommentarPanel);
-//					kommentarPanel.addStyleName("Kommentare");
-//					System.out.println("kommentarPanel "+kommentarPanel.getElement());
-//					System.out.println("Kommentarobjekt : "+k.getText() + "Kommentar ID: " + k.getId());
-//
-//					
-//					i++;
-//				}
-//				
-//			}
-//			
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				Window.alert("Hat leider nicht funktioniert");
-//				
-//			}
-//		});
-//		
-//		
-////		return kommentarPanel;
-//	}
 	
 	public void kommentarAnzeigen(final Textbeitrag a){
-
-		
 		
 		
 		lbId.setText(String.valueOf(a.getId()));
@@ -417,13 +374,10 @@ public class PinnwandForm extends Composite {
 		socialmedia.findeKommentareZuTextbeitrag(tid,
 				new AsyncCallback<ArrayList<Kommentar>>() {
 
-
 					public void onSuccess(ArrayList<Kommentar> result) {
 						
 						for(Kommentar k : result){
-//							setComment(k.getText(), id);
-							
-							
+														
 							kommentarTable.setText(1,1, k.getText());
 							kommentarTable.setWidget(1, 2, kloeschen);
 							kommentarTable.setWidget(1, 3, kbearbeiten);
@@ -434,11 +388,6 @@ public class PinnwandForm extends Composite {
 							
 							vPanel.add(kommentarPanel);
 							kommentarPanel.addStyleName("Kommentare");
-							System.out.println("kommentarPanel "+kommentarPanel.getElement());
-							System.out.println("Kommentarobjekt : "+k.getText() + "Kommentar ID: " + k.getId());
-		
-							
-//							i++;
 						}
 						
 					}
@@ -449,9 +398,6 @@ public class PinnwandForm extends Composite {
 						
 					}
 				});
-				
-				
-//				return kommentarPanel;
 			}
 
 }

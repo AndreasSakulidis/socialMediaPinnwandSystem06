@@ -124,6 +124,17 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findePinnwandIDAnhandNickname(String nickname,
 			AsyncCallback<Integer> callback);
+
+
+	void findePinnwandIDAnhandUserID(int userID,
+			AsyncCallback<ArrayList<Integer>> callback);
+
+
+	void findeTextbeitragIDsAnhandPinnwandID(int pinnwandID,
+			AsyncCallback<ArrayList<Integer>> callback);
+
+	void findeUserZuTextbeitragID(int textbeitragID,
+			AsyncCallback<String> callback);
 	
 	
 

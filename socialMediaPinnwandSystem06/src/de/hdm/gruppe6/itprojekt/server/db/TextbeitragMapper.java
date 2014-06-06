@@ -202,6 +202,35 @@ public class TextbeitragMapper {
 		return null;
 	}
 
+	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT TextbeitragID "
+					+ "FROM textbeitrag" + "WHERE PinnwandID="
+					+ pinnwandID 
+					+ " ORDER BY ErstellungsZeitpunkt DESC");
+
+			while (rs.next()) {
+				Integer textbeitragID = new Integer(rs.getInt("TextbeitragID"));
+
+				result.add(textbeitragID);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return result;
+	}
 	 /** 
 	  * Alle Datens�tze aus der Tabelle Textbeitrag werden herausgelesen.
 	   * @return 
@@ -384,6 +413,43 @@ public class TextbeitragMapper {
 //		}
 	}
 	
+	//SELECT UserID FROM textbeitrag WHERE TextbeitragID
+	
+	public int findeUserZuTextbeitragID(int textbeitragID )
+			throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		int result = 0;
+		
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt
+					.executeQuery("SELECT UserID FROM textbeitrag WHERE TextbeitragID = "
+							+ textbeitragID);
+			
+			if(rs.next()){
+				result = rs.getInt("UserID");
+				   
+				}
+
+			return result;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+
+		} 
+//			finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+	}
+	
+	
+	
+	
+	
 	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
 			throws Exception {
 		Connection con = DBVerbindung.connection();
@@ -407,6 +473,43 @@ public class TextbeitragMapper {
 						.getTimestamp("ErstellungsZeitpunkt"));
 
 				result.add(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+		// finally {
+		// DBVerbindung.closeAll(rs, stmt, con);
+		// }
+
+		return result;
+	}
+	
+	public ArrayList<Textbeitrag> findeAlleUserBeitraegeAnhandPinnwandID(int pinnwandID)
+			throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Textbeitrag> result = new ArrayList<Textbeitrag>();
+		
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
+					+ "WHERE PinnwandID =" + pinnwandID
+					+ " ORDER BY ErstellungsZeitpunkt DESC");
+//			rs = stmt.executeQuery("SELECT * FROM textbeitrag WHERE PinnwandID = 1 OR PinnwandID = 3 ORDER BY ErstellungsZeitpunkt DESC");
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+
+				result.add(textbeitrag);
+				System.out.println("TextbeitragMapper: "+textbeitrag.getText()+" Textbeitrag ID "+textbeitrag.getId());
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();

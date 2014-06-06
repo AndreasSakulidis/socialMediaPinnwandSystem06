@@ -416,8 +416,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 		
 		Textbeitrag text = new Textbeitrag();
 		text.setId(textID);
-	
-
+		
 		return this.textbeitragMapper.findeKommentareZuTextbeitrag(text);
 	}
 
@@ -493,13 +492,69 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 
 	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
 			throws Exception {
+		System.out.println("Mehtode FindeAlle User Beiträge");
+		ArrayList<Textbeitrag>textbeitrag = new ArrayList<Textbeitrag>();
+		ArrayList<Integer> pinnwandID= pinnwandMapper.findePinnwandIDAnhandUserID(userID);
+		System.out.println("pinnwandID " + pinnwandID.size());
+		
+				
+		if(pinnwandID.size()== 0){
+	
+				textbeitrag.addAll( this.textbeitragMapper.findeAlleUserBeitraege(userID));
+				System.out.println("Impl, findeAlleUserBeoitraege, Pinnwand Text: "+this.textbeitragMapper.findeAlleUserBeitraege(userID));
+			
+		}
+		
+		else{
+			//Array Mapper hier aufrufen
+			// die Array in der Schleife alle auslesen
+			//ausgeben...
+			//evntl nach der for schleife ???
+		for(Integer t: pinnwandID){
+		
+			try{
+				if(t!=0);
+				textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
+			}
+			catch(Exception e){
+				System.out.println("Fehler "+e.getMessage());
+			}
 
-		return this.textbeitragMapper.findeAlleUserBeitraege(userID);
+
+//			textbeitrag.add( this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
+//			System.out.println("Impl, findeAlleUserBeoitraege, Pinnwand Text: "+this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t).getText()+" ID: "+this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t).getId());
+		}
+	}
+//		return this.textbeitragMapper.findeAlleUserBeitraege(userID);
+		return  textbeitrag;
+		
+	}
+	
+	public String findeUserZuTextbeitragID(int textbeitragID )
+			throws Exception{
+		int id = textbeitragMapper.findeUserZuTextbeitragID(textbeitragID);
+		User u = userMapper.findeAnhandID(id);
+		
+		return u.getNickname();
 	}
 
 	@Override
 	public int findePinnwandIDAnhandNickname(String nickname) throws Exception {
 		return this.pinnwandMapper.findePinnwandIDAnhandNickname(nickname);
+	}
+
+	@Override
+	public ArrayList<Integer> findePinnwandIDAnhandUserID(int userID)
+			throws Exception {
+		
+		return this.pinnwandMapper.findePinnwandIDAnhandUserID(userID);
+	}
+
+	@Override
+	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID)
+			throws Exception {
+		
+		return this.textbeitragMapper.findeTextbeitragIDsAnhandPinnwandID(pinnwandID);
 	}
 
 }

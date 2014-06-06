@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
@@ -289,5 +290,35 @@ public class PinnwandMapper {
 //		}
 
 		return 0;
+	}
+	
+	public ArrayList<Integer> findePinnwandIDAnhandUserID(int userID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Integer> result = new ArrayList<Integer>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT PinnwandID "
+							+ "FROM abonnement "
+							+ "WHERE UserID="
+							+ userID);
+
+			while (rs.next()) {
+				Integer pinnwandID = new Integer(rs.getInt("PinnwandID"));
+
+				result.add(pinnwandID);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} //finally {
+			//DBVerbindung.closeAll(rs, stmt, con);
+		//}
+
+		return result;
 	}
 }
