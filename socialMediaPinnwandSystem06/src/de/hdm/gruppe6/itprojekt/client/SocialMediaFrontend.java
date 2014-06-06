@@ -146,6 +146,7 @@ public class SocialMediaFrontend extends Composite {
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(mainPanel);
 				PinnwandForm pF = new PinnwandForm();
+				pF.anzeigen();
 				mainPanel.add(pF.zeigePost());
 //				mainPanel.add(pF.zeigeBeiträge());
 			}

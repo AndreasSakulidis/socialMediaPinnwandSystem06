@@ -3,6 +3,7 @@ package de.hdm.gruppe6.itprojekt.server;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -497,11 +498,10 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 		ArrayList<Integer> pinnwandID= pinnwandMapper.findePinnwandIDAnhandUserID(userID);
 		System.out.println("pinnwandID " + pinnwandID.size());
 		
-				
+		textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraege(userID));		
 		if(pinnwandID.size()== 0){
 	
-				textbeitrag.addAll( this.textbeitragMapper.findeAlleUserBeitraege(userID));
-				System.out.println("Impl, findeAlleUserBeoitraege, Pinnwand Text: "+this.textbeitragMapper.findeAlleUserBeitraege(userID));
+				
 			
 		}
 		
@@ -515,6 +515,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 			try{
 				if(t!=0);
 				textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
+				
 			}
 			catch(Exception e){
 				System.out.println("Fehler "+e.getMessage());

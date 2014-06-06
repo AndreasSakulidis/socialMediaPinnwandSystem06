@@ -128,7 +128,12 @@ public class PinnwandForm extends Composite {
 
 							
 							addPanel.add(pinnwandAnzeigen);
+							
+							
+							
 						}
+						
+						
 
 					}
 
@@ -290,7 +295,7 @@ public class PinnwandForm extends Composite {
 							}
 
 							public void onSuccess(Like like) {
-								Window.alert("Erfolgreich geliked!");
+								
 								
 								
 								int tid = Integer.parseInt(lbId.getText()); 

@@ -97,6 +97,13 @@ public class UserTrefferliste{
 								public void onClick(ClickEvent event) {
 									String id = Cookies.getCookie("SocialMedia6ID");
 									int pid = u.getId();
+									int uid = Integer.parseInt(id);
+									if(uid == pid){
+										Window.alert("Such dir Freunde!");
+									}
+									else {
+										
+									
 									pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
 										@Override
 										public void onSuccess(Abonnement result) {
@@ -111,7 +118,7 @@ public class UserTrefferliste{
 															+ caught.getMessage());
 										}
 									});
-							
+									}
 							
 							}
 						
@@ -194,8 +201,33 @@ public class UserTrefferliste{
 
 						@Override
 						public void onClick(ClickEvent event) {
-							//abonnieren
-						}
+							String id = Cookies.getCookie("SocialMedia6ID");
+							int pid = u.getId();
+							int uid = Integer.parseInt(id);
+
+							if(uid == pid){
+								Window.alert("Such dir Freunde!");
+							}
+							else{
+								
+							
+							pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
+								@Override
+								public void onSuccess(Abonnement result) {
+									Window.alert("Abo wurde angelegt");
+									Window.Location.reload();
+								
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									System.out
+											.println("hat nicht geklappt mit den Post ausgaben: "
+													+ caught.getMessage());
+								}
+							});
+							}
+					
+					}
 
 					});
 

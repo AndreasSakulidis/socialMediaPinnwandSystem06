@@ -176,6 +176,13 @@ public class Anmelden {
 			public void onClick(ClickEvent event) {
 				socialmedia.userAnmelden(tbName.getText(),
 						tbPasswort.getText(), new AsyncCallback<User>() {
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Ein fehler ist aufgetreten: "
+								+ caught.getMessage());
+
+					}
 
 							@Override
 							public void onSuccess(User result) {
@@ -191,8 +198,8 @@ public class Anmelden {
 
 									RootPanel.get("Details").clear();
 
-									Window.alert("Erfolgreich angemeldet... Nickname: "
-											+ result.getNickname());
+//									Window.alert("Erfolgreich angemeldet... Nickname: "
+//											+ result.getNickname());
 									// + " und Passwort"
 									// + result.getPasswort());
 									tbName.setVisible(false);
@@ -211,6 +218,10 @@ public class Anmelden {
 									tbEmail.setVisible(false);
 									regButton.setVisible(false);
 									regi.setVisible(false);
+								
+
+									
+								
 
 									// TODO wie bei EntryPoint Klasse
 									SocialMediaFrontend smf = new SocialMediaFrontend();
@@ -219,14 +230,12 @@ public class Anmelden {
 									// TODO ... Alles was da drunter ist, ist
 									// nicht richtig hier!
 								}
+								else{
+										Window.alert("lala");
+								}
 							}
 
-							@Override
-							public void onFailure(Throwable caught) {
-								Window.alert("Ein fehler ist aufgetreten: "
-										+ caught.getMessage());
 
-							}
 						});
 
 			}
@@ -271,6 +280,8 @@ public class Anmelden {
 											Window.alert("Nickname exisert bereits!");
 										} else {
 											Window.alert("Anlegen erfolgreich!");
+											addPanel.clear();
+											tbName.setFocus(true);
 										}
 									}
 								});
@@ -305,10 +316,10 @@ public class Anmelden {
 
 										RootPanel.get("Details").clear();
 
-										Window.alert("Erfolgreich angemeldet... Nickname: "
-												+ result.getNickname()
-												+ " und Passwort"
-												+ result.getPasswort());
+//										Window.alert("Erfolgreich angemeldet... Nickname: "
+//												+ result.getNickname());
+//												+ " und Passwort"
+//												+ result.getPasswort());
 										tbName.setVisible(false);
 										tbPasswort.setVisible(false);
 										loginButton.setVisible(false);
