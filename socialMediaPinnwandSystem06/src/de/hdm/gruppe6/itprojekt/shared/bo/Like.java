@@ -10,17 +10,17 @@ public class Like extends BusinessObject{
 	 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Textbeitrag textId;
-	private User userId;
+	private int tid;
+	private String uid;
 
 	/** 
 	 * Konstruktor
 	 * @param textid
 	 * @param userId
 	 */
-	public Like(Textbeitrag textid, User userId) {
-		this.setTextId(textid);
-		this.setUserId(userId);
+	public Like(String uid, int tid) {
+		this.setTextId(tid);
+		this.setUserId(uid);
 	}
 	
 	public Like(){
@@ -30,32 +30,32 @@ public class Like extends BusinessObject{
  * Setzen der ID
  * @param textId
  */
-	public void setTextId(Textbeitrag textId) {
-		this.textId= textId;
+	public void setTextId(int tid) {
+		this.tid= tid;
 	}
 	
 	/** Auslesen der ID
 	 * *
 	 * @param userId
 	 */
-	public void setUserId(User userId) {
-		this.userId= userId;
+	public void setUserId(String uid) {
+		this.uid= uid;
 	}
 
 	/** Setzen der TextbeitragID
 	 * 
 	 * @return
 	 */
-	public Textbeitrag getTextId() {
-		return textId;
+	public int getTextId() {
+		return tid;
 	}
 	/**
 	 * Auslesen der TextbeitragID
 	 * @return
 	 */
 
-	public User getUserId() {
-		return userId;
+	public String getUserId() {
+		return uid;
 	}
 	
 }

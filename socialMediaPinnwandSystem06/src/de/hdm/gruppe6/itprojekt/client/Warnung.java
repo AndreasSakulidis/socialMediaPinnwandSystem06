@@ -4,7 +4,6 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.TextArea;
 
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
@@ -30,11 +29,15 @@ public class Warnung extends DialogBox {
 
 		ok = new Button("OK");
 		abbrechen = new Button("Abbrechen");
+		
 
 		commentPanel.add(ok);
 		commentPanel.add(abbrechen);
+		
 
 		this.setWidget(commentPanel);
+		
+		
 
 	}
 

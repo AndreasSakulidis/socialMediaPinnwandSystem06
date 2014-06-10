@@ -16,6 +16,7 @@ public class Textbeitrag extends BusinessObject {
 	private String text;
 	private int likeId;
 	private String nameUser;
+	private int userID;
 
 	public String getNameUser() {
 		return nameUser;
@@ -72,4 +73,10 @@ public class Textbeitrag extends BusinessObject {
 	public void setLikeId(int likeId) {
 		this.likeId = likeId;
 	}
+public int getUserID() {
+	return userID;
+}
+public void setUserID(int userID) {
+	this.userID = userID;
+}
 }

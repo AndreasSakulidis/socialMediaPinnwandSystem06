@@ -148,7 +148,7 @@ public class SocialMediaFrontend extends Composite {
 				PinnwandForm pF = new PinnwandForm();
 				pF.anzeigen();
 				mainPanel.add(pF.zeigePost());
-//				mainPanel.add(pF.zeigeBeiträge());
+//				mainPanel.add(pF.zeigeBeitrï¿½ge());
 			}
 		};
 		
@@ -282,13 +282,13 @@ public class SocialMediaFrontend extends Composite {
 
 												@Override
 												public void onFailure(Throwable caught) {
-													Window.alert("Fehler beim Löschen des Abos!");
+													Window.alert("Fehler beim LÃ¶schen des Abos!");
 												}
 
 												@Override
 												public void onSuccess(Void result) {
 
-													Window.alert("Das Abo wurde gelöscht!");
+													Window.alert("Das Abo wurde gelÃ¶scht!");
 													Window.Location.reload();
 												}
 											});

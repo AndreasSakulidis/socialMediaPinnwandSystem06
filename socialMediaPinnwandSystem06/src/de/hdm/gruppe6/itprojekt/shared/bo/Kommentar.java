@@ -13,6 +13,7 @@ public class Kommentar extends BusinessObject {
 
 	private String text;
 	private Textbeitrag textbeitrag;
+	private int userID;
 
 	/**Kontstruktor
 	 * @param text
@@ -50,5 +51,13 @@ public class Kommentar extends BusinessObject {
 
 	public Textbeitrag getTextbeitrag() {
 		return textbeitrag ;
+	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 }

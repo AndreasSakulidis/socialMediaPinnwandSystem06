@@ -63,7 +63,7 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void likeAnlegen(String uid, int tid, AsyncCallback<Like> callback);
 
-	void likeLoeschen(Like like, AsyncCallback<Void> callback);
+	void likeLoeschen(String uid, int tid, AsyncCallback<Void> callback);
 
 	void pinnwandAnlegen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Pinnwand> callback);
 
@@ -135,6 +135,50 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserZuTextbeitragID(int textbeitragID,
 			AsyncCallback<String> callback);
+
+
+	void tZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort,
+			AsyncCallback<Void> callback);
+
+
+	void kZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort,
+			AsyncCallback<Void> callback);
+
+
+	void lZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort,
+			AsyncCallback<Void> callback);
+
+
+	void aZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort,
+			AsyncCallback<Void> callback);
+
+
+	void kZuTextbeitragLoeschen(String text, int id,
+			AsyncCallback<Void> callback);
+
+
+	void lZuTextbeitragLoeschen(String text, int id,
+			AsyncCallback<Void> callback);
+
+
+	void findeUserIDAnhandTextbeitragID(int textbeitragID,
+			AsyncCallback<Textbeitrag> callback);
+
+
+	void findeUserIDAnhandKommentarID(int kommentarID,
+			AsyncCallback<Kommentar> callback);
+
+
+	void findeUserAnhandKommentarID(int kommentarID,
+			AsyncCallback<User> callback);
+
+
+	void kommentarLoeschenAnhandKommentarID(Kommentar kommentar,
+			AsyncCallback<Void> callback);
 	
 	
 

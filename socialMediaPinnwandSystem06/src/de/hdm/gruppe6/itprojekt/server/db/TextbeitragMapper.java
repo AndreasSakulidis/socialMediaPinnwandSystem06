@@ -166,6 +166,45 @@ public class TextbeitragMapper {
 		// }
 		return;
 	}
+	
+	public void kloeschen(Textbeitrag textbeitrag) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE kommentar FROM kommentar " + "WHERE kommentar.TextbeitragID=" + textbeitrag.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
+	public void lloeschen(Textbeitrag textbeitrag) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE liken FROM liken " + "WHERE liken.TextbeitragID=" + textbeitrag.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
 	 /** 
 	  * Methode mit der man ein Textbeitrag �ber ihre ID finden kann.
 	   * @param textbeitragID
@@ -211,10 +250,10 @@ public class TextbeitragMapper {
 		try {
 			stmt = con.createStatement();
 
-			rs = stmt.executeQuery("SELECT TextbeitragID "
-					+ "FROM textbeitrag" + "WHERE PinnwandID="
-					+ pinnwandID 
-					+ " ORDER BY ErstellungsZeitpunkt DESC");
+//			rs = stmt.executeQuery("SELECT TextbeitragID "
+//					+ "FROM textbeitrag" + "WHERE PinnwandID="
+//					+ pinnwandID 
+//					+ " ORDER BY ErstellungsZeitpunkt DESC");
 
 			while (rs.next()) {
 				Integer textbeitragID = new Integer(rs.getInt("TextbeitragID"));
@@ -523,6 +562,36 @@ public class TextbeitragMapper {
 	}
 	
 
+	public Textbeitrag findeUserIDAnhandTextbeitragID(int textbeitragID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT UserID "
+					+ " FROM textbeitrag" + " WHERE TextbeitragID=" + textbeitragID
+					+ " ORDER BY TextbeitragID");
+
+			if (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setUserID(rs.getInt("UserID"));
+
+				return textbeitrag;
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
 	
 	
 }

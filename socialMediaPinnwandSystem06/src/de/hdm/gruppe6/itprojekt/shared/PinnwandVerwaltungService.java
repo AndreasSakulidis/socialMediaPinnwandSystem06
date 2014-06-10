@@ -63,6 +63,22 @@ public interface PinnwandVerwaltungService extends RemoteService {
 
 	public void userLoeschen(int id, String vorname,
 			String nachname, String nickname, String email, String passwort) throws Exception;
+	
+	public void tZuUserLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception;
+	
+	public void kZuUserLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception;
+	
+	public void kZuTextbeitragLoeschen(String text, int id) throws Exception;
+	
+	public void lZuTextbeitragLoeschen(String text, int id) throws Exception;
+	
+	public void lZuUserLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception;
+	
+	public void aZuUserLoeschen(int id, String vorname,
+			String nachname, String nickname, String email, String passwort) throws Exception;
 	 /**
 	  * Z�hlen der Textbeitr�ge von einem User.
 	  */
@@ -200,7 +216,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
      * L�schen einer Like.
      */
 
-	public void likeLoeschen(Like like) throws Exception;
+	public void likeLoeschen(String uid, int tid) throws Exception;
 	/**
  	 * Finden einer Like anhand seiner ID.
  	 */
@@ -211,6 +227,14 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public String findeUserZuTextbeitragID(int textbeitragID )
 			throws Exception;
+	
+	public Textbeitrag findeUserIDAnhandTextbeitragID(int textbeitragID) throws Exception;
+	
+	public Kommentar findeUserIDAnhandKommentarID(int kommentarID) throws Exception;
+	
+	public User findeUserAnhandKommentarID(int kommentarID) throws Exception;
+	
+	public void kommentarLoeschenAnhandKommentarID(Kommentar kommentar) throws Exception;
 		 	
 		 	
 }

@@ -107,9 +107,24 @@ public class UserTrefferliste{
 									pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
 										@Override
 										public void onSuccess(Abonnement result) {
+											if (result == null) {
+												final Warnung warnung = new Warnung("");
+												warnung.center();
+												warnung.setText("Dieses Abonnement existiert bereits!");
+												warnung.abbrechen.addClickHandler(new ClickHandler(){
+													public void onClick(ClickEvent event){
+														warnung.hide();
+													}
+												});
+												warnung.ok.addClickHandler(new ClickHandler(){
+													public void onClick(ClickEvent event){
+														warnung.hide();
+														}
+													});
+											} else {
 											Window.alert("Abo wurde angelegt");
 											Window.Location.reload();
-										
+											}
 										}
 										@Override
 										public void onFailure(Throwable caught) {
@@ -214,9 +229,24 @@ public class UserTrefferliste{
 							pinnwandVerwaltung.aboAnlegen(id, pid, new AsyncCallback<Abonnement>() {
 								@Override
 								public void onSuccess(Abonnement result) {
+									if (result == null) {
+										final Warnung warnung = new Warnung("");
+										warnung.center();
+										warnung.setText("Dieses Abonnement existiert bereits!");
+										warnung.abbrechen.addClickHandler(new ClickHandler(){
+											public void onClick(ClickEvent event){
+												warnung.hide();
+											}
+										});
+										warnung.ok.addClickHandler(new ClickHandler(){
+											public void onClick(ClickEvent event){
+												warnung.hide();
+												}
+											});
+									} else {
 									Window.alert("Abo wurde angelegt");
 									Window.Location.reload();
-								
+									}
 								}
 								@Override
 								public void onFailure(Throwable caught) {

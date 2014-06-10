@@ -272,7 +272,83 @@ public class UserMapper {
 		try {
 			stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE user, textbeitrag, kommentar, liken, pinnwand FROM user, textbeitrag, kommentar, liken, pinnwand " + "WHERE user.UserID=" + user.getId() + " AND textbeitrag.UserID=" + user.getId() + " AND kommentar.UserID=" + user.getId() + " AND liken.UserID=" + user.getId() + " AND pinnwand.PinnwandID=" + user.getId());
+			stmt.executeUpdate("DELETE user, pinnwand FROM user, pinnwand " + "WHERE user.UserID=" + user.getId() + " AND pinnwand.PinnwandID=" + user.getId());
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
+	public void tloeschen(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE textbeitrag FROM textbeitrag " + "WHERE textbeitrag.UserID=" + user.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
+	public void kloeschen(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE kommentar FROM kommentar " + "WHERE kommentar.UserID=" + user.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
+	public void lloeschen(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE liken FROM liken " + "WHERE liken.UserID=" + user.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
+	
+	public void aloeschen(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE abonnement FROM abonnement " + "WHERE abonnement.UserID=" + user.getId()); 
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();

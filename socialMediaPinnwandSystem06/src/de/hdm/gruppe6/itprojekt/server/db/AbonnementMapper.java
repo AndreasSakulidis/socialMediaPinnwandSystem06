@@ -118,6 +118,38 @@ public class AbonnementMapper {
 //		}
 		return abo;
 	}
+	
+	public boolean aboPruefen(String userID, int pinnwandID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		int uid = 0;
+		int pid = 0;
+		String u = null;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM abonnement" + " WHERE UserID = "+ userID +  " AND PinnwandID = "+ pinnwandID );
+
+			if(rs.next()){
+
+
+				uid=(rs.getInt("UserID"));
+				pid=(rs.getInt("PinnwandID"));
+				u = String.valueOf(uid);
+				if(userID.equals(u) && pinnwandID == pid) {
+					return false;
+				}
+				else{
+				return true;
+				}
+			}
+		} catch (SQLException e2) {
+				e2.printStackTrace();
+				throw new Exception("Datenbank fehler!" + e2.toString());
+			}
+			return true;
+		}
+	
 	/**
 	 * Methode um einen Datensatz aus der Datenbank zu l�schen
 	 * 

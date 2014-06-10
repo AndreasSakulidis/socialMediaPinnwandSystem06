@@ -32,8 +32,8 @@ public class UserBearbeiten {
 	private PasswordTextBox tbRPasswort = new PasswordTextBox();
 	private Label bearbeiten = new Label("User Einstellungen bearbeiten: ");
 	private Button bbutton = new Button("Bearbeiten");
-	private Label info = new Label("Hier klicken um Profil zu löschen: ");
-	private Button lbutton = new Button("Profil löschen");
+	private Label info = new Label("Hier klicken um Profil zu lÃ¶schen: ");
+	private Button lbutton = new Button("Profil lÃ¶schen");
 	private VerticalPanel deleteUserPanel = new VerticalPanel();
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label hinweisnick = new Label();
@@ -92,10 +92,11 @@ public class UserBearbeiten {
 		});
 
 		lbutton.addClickHandler(new ClickHandler() {
+						
 			public void onClick(ClickEvent event) {
 				final Warnung warnung = new Warnung("");
 				warnung.center();
-				warnung.setText("Profil wirklich löschen?");
+				warnung.setText("Profil wirklich lÃ¶schen?");
 
 				warnung.abbrechen.addClickHandler(new ClickHandler() {
 					@Override
@@ -110,34 +111,101 @@ public class UserBearbeiten {
 
 					@Override
 					public void onClick(ClickEvent event) {
-						warnung.hide();
+						
 
+						final String id = Cookies.getCookie("SocialMedia6ID");
 						int uid = Integer.parseInt(id);
 						String vorname = tbRname.getText();
 						String nachname = tbNachname.getText();
 						String nickname = tbNick.getText();
 						String email = tbEmail.getText();
 						String passwort = tbRPasswort.getText();
+					
 						pinnwandVerwaltung.userLoeschen(uid, vorname, nachname,
 								nickname, email, passwort,
 								new AsyncCallback<Void>() {
 									@Override
 									public void onFailure(Throwable caught) {
-										Window.alert("Fehler beim Löschen!");
+										Window.alert("Fehler beim LÃ¶schen!");
 									}
 
 									@Override
 									public void onSuccess(Void result) {
+										final String id = Cookies.getCookie("SocialMedia6ID");
+										int uid = Integer.parseInt(id);
+										String vorname = tbRname.getText();
+										String nachname = tbNachname.getText();
+										String nickname = tbNick.getText();
+										String email = tbEmail.getText();
+										String passwort = tbRPasswort.getText();
+										pinnwandVerwaltung.tZuUserLoeschen(uid, vorname, nachname,
+												nickname, email, passwort,
+												new AsyncCallback<Void>() {
+													@Override
+													public void onFailure(Throwable caught) {
+														Window.alert("Fehler beim tLÃ¶schen!");
+													}
+
+													@Override
+													public void onSuccess(Void result) {
+																										
+													}
+												});
+										
+										
+										pinnwandVerwaltung.kZuUserLoeschen(uid, vorname, nachname,
+												nickname, email, passwort,
+												new AsyncCallback<Void>() {
+													@Override
+													public void onFailure(Throwable caught) {
+														Window.alert("Fehler beim kLÃ¶schen!");
+													}
+
+													@Override
+													public void onSuccess(Void result) {
+																										
+													}
+												});
+										
+										pinnwandVerwaltung.lZuUserLoeschen(uid, vorname, nachname,
+												nickname, email, passwort,
+												new AsyncCallback<Void>() {
+													@Override
+													public void onFailure(Throwable caught) {
+														Window.alert("Fehler beim lLÃ¶schen!");
+													}
+
+													@Override
+													public void onSuccess(Void result) {
+																										
+													}
+												});
+										
+										pinnwandVerwaltung.aZuUserLoeschen(uid, vorname, nachname,
+												nickname, email, passwort,
+												new AsyncCallback<Void>() {
+													@Override
+													public void onFailure(Throwable caught) {
+														Window.alert("Fehler beim aLÃ¶schen!");
+													}
+
+													@Override
+													public void onSuccess(Void result) {
+																										
+													}
+												});
+										
 										mainPanel.clear();
 										RootPanel.get("Navigator").clear();
 										RootPanel.get("Header").clear();
 										RootPanel.get().clear();
-										Window.alert("Deine Prodildaten wurden erfolgreich gelöscht!");
+										Window.alert("Deine Prodildaten wurden erfolgreich gelÃ¶scht!");
 										Cookies.removeCookie("SocialMedia6");
 										Anmelden startseite = new Anmelden();
 										startseite.anmelden();
 									}
 								});
+						warnung.hide();
 
 					}
 				});

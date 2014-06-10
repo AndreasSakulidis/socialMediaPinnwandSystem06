@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -50,6 +51,7 @@ public class KommentarErstellen extends Composite {
 		final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
 		comment.center();
 		comment.setText("Kommentieren");
+		comment.hide(true);
 
 		/**
 		 * Die Aktion wird abgebrochen und es wird kein Kommentar gepostet.
@@ -58,6 +60,7 @@ public class KommentarErstellen extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				comment.hide();
+
 
 			}
 
@@ -72,7 +75,7 @@ public class KommentarErstellen extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				comment.hide();
+				comment.hide(true);
 
 				// kommentarTable.setText(1, 1, comment.getContent());
 				kommentarTable.setWidget(1, 1, commentL);
@@ -104,6 +107,10 @@ public class KommentarErstellen extends Composite {
 							public void onSuccess(Kommentar kommentar) {
 								lbId.setText(String.valueOf(kommentar.getId()));
 								Window.alert("Kommentar wurde angelegt!");
+								Window.Location.reload();
+
+								
+								
 							}
 						});
 
@@ -161,6 +168,11 @@ public class KommentarErstellen extends Composite {
 													Kommentar result) {
 
 												Window.alert("Textbeitrag wurde editiert!");
+												RootPanel.get("Details").clear();
+												PinnwandForm pinnForm = new PinnwandForm();
+												pinnForm.zeigePost();
+												pinnForm.anzeigen();
+												comment.hide();
 											}
 										});
 

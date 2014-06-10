@@ -156,6 +156,27 @@ public class KommentarMapper {
 //		}
 		return;
 	}
+	
+	public void kommentarLoeschenAnhandKommentarID(Kommentar kommentar) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE FROM kommentar " + "WHERE KommentarID="
+					+ kommentar.getId());
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+	
+	}
+	
 	 /** 
 	  * Methode mit der man ein Kommentar �ber ihre ID finden kann.
 	   * @param kommentarID
@@ -194,6 +215,76 @@ public class KommentarMapper {
 		}
 
 		return null;
+		
+	}
+	
+	public Kommentar findeUserIDAnhandKommentarID(int kommentarID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+			
+
+			rs = stmt.executeQuery("SELECT UserID "
+					+ " FROM kommentar" + " WHERE KommentarID=" + kommentarID
+					+ " ORDER BY KommentarID");
+
+			if (rs.next()) {
+				Kommentar kommentar = new Kommentar();
+				kommentar.setUserID(rs.getInt("UserID"));
+
+				return kommentar;
+			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
+	
+	public User findeUserAnhandKommentarID(int kommentarID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		 UserMapper userMapper = null;
+		userMapper = UserMapper.userMapper();
+		try {
+			stmt = con.createStatement();
+			
+			Kommentar kommentar = new Kommentar();
+			kommentar= findeUserIDAnhandKommentarID(kommentarID);
+			
+			System.out.println("USer anhand ID gefunden "+userMapper.findeAnhandID(kommentar.getUserID()).getNickname());
+			 return userMapper.findeAnhandID(kommentar.getUserID());
+
+//			rs = stmt.executeQuery("SELECT Nickname "
+//					+ " FROM kommentar" + " WHERE KommentarID=" + kommentarID
+//					+ " ORDER BY KommentarID");
+
+//			if (rs.next()) {
+////				Kommentar kommentar = new Kommentar();
+////				kommentar.(rs.getString("Nickname"));
+//
+//				return kommentar;
+//			}
+		}
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
 	}
 
 	 /** 

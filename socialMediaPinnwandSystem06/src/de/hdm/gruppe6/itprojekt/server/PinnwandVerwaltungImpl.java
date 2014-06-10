@@ -279,10 +279,15 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	public Abonnement aboAnlegen(String uid, int pid) throws Exception {
 
 		Abonnement abonnement = new Abonnement();
+		if (!this.abonnementMapper.aboPruefen(uid, pid)){
+			return null;
+		} else {
 		int userID = Integer.parseInt(uid);
 		// pid = pinnwandMapper.findeAnhandUserID(userID);
+		
 
 		return abonnementMapper.anlegen(abonnement, userID, pid);
+		}
 	}
 
 	/**
@@ -471,15 +476,30 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	public Like likeAnlegen(String uid, int tid) throws Exception {
 
 		Like like = new Like();
-		int userID = Integer.parseInt(uid);
-		return likeMapper.anlegen(like, userID, tid);
+//		boolean check = this.likeMapper.likePruefen(uid, tid);
+		if (!this.likeMapper.likePruefen(uid, tid)){
+			return null;
+		} else {
+			
+			int userID = Integer.parseInt(uid);
+			return likeMapper.anlegen(like, userID, tid);
+		}
+		
 	}
 
 	/**
 	 * L�schen einer Like.
 	 */
 
-	public void likeLoeschen(Like like) throws Exception {
+	public void likeLoeschen(String uid, int tid) throws Exception {
+		
+		Like like = new Like();
+		
+		like.setTextId(tid);
+		like.setUserId(uid);
+
+
+		likeMapper.loeschen(like);
 
 		return;
 	}
@@ -556,6 +576,113 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 			throws Exception {
 		
 		return this.textbeitragMapper.findeTextbeitragIDsAnhandPinnwandID(pinnwandID);
+	}
+
+	@Override
+	public void tZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort) throws Exception {
+
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
+
+		userMapper.tloeschen(user);
+	}
+
+	@Override
+	public void kZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort) throws Exception {
+
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
+
+		userMapper.kloeschen(user);
+	}
+
+	@Override
+	public void lZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort) throws Exception {
+
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
+
+		userMapper.lloeschen(user);
+	}
+
+	@Override
+	public void aZuUserLoeschen(int id, String vorname, String nachname,
+			String nickname, String email, String passwort) throws Exception {
+		
+		User user = new User();
+		user.setId(id);
+		user.setVorname(vorname);
+		user.setNachname(nachname);
+		user.setNickname(nickname);
+		user.setEmail(email);
+		user.setPasswort(passwort);
+
+		userMapper.aloeschen(user);
+		
+	}
+
+	@Override
+	public void kZuTextbeitragLoeschen(String text, int id) throws Exception {
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setId(id);
+		textbeitrag.setText(text);
+		textbeitragMapper.kloeschen(textbeitrag);
+		
+	}
+
+	@Override
+	public void lZuTextbeitragLoeschen(String text, int id) throws Exception {
+		Textbeitrag textbeitrag = new Textbeitrag();
+		textbeitrag.setId(id);
+		textbeitrag.setText(text);
+		textbeitragMapper.lloeschen(textbeitrag);
+		
+	}
+
+	@Override
+	public Textbeitrag findeUserIDAnhandTextbeitragID(int textbeitragID)
+			throws Exception {
+		
+		return textbeitragMapper.findeUserIDAnhandTextbeitragID(textbeitragID);
+	}
+
+	@Override
+	public Kommentar findeUserIDAnhandKommentarID(int kommentarID)
+			throws Exception {
+		
+		return kommentarMapper.findeUserIDAnhandKommentarID(kommentarID);
+	}
+
+	@Override
+	public User findeUserAnhandKommentarID(int kommentarID) throws Exception {
+		
+		return kommentarMapper.findeUserAnhandKommentarID(kommentarID);
+	}
+
+	@Override
+	public void kommentarLoeschenAnhandKommentarID(Kommentar kommentar)
+			throws Exception {
+		
+		kommentarMapper.kommentarLoeschenAnhandKommentarID(kommentar);
+		
 	}
 
 }

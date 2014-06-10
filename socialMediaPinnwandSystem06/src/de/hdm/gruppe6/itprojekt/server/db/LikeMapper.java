@@ -93,6 +93,40 @@ public class LikeMapper {
 //		}
 		return like;
 	}
+	
+	public boolean likePruefen(String userID, int textbeitragID) throws Exception {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+		int uid = 0;
+		int tid = 0;
+		String u = null;
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM liken" + " WHERE UserID = "+ userID +  " AND TextbeitragID = "+ textbeitragID );
+
+			if(rs.next()){
+
+
+				uid=(rs.getInt("UserID"));
+				tid=(rs.getInt("TextbeitragID"));
+				u = String.valueOf(uid);
+				if(userID.equals(u) && textbeitragID == tid) {
+					return false;
+				}
+				else{
+				return true;
+				}
+			}
+
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		}
+		return true;
+	}
+	
 	/**
 	 * Methode um einen Datensatz aus der Datenbank zu l�schen
 	 * 
@@ -107,15 +141,16 @@ public class LikeMapper {
 		try {
 			stmt = con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM liken " + "WHERE LikeID="
-					+ like.getId());
+			stmt.executeUpdate("DELETE FROM liken " + " WHERE UserID="
+					+ like.getUserId() + " AND TextbeitragID=" + like.getTextId());
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
-		} finally {
-			DBVerbindung.closeAll(null, stmt, con);
-		}
+		} 
+//		finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
 		return;
 	}
 	/** 
