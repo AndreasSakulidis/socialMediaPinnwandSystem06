@@ -140,6 +140,7 @@ public class Anmelden {
 
 								@Override
 								public void onFailure(Throwable caught) {
+									ClientsideSettings.getLogger().severe("Anlegen Fehlgeschlagen" + caught.getMessage());
 									Window.alert("Anlegen Fehlgeschlagen: "
 											+ caught.getMessage());
 
@@ -179,6 +180,7 @@ public class Anmelden {
 					
 					@Override
 					public void onFailure(Throwable caught) {
+						ClientsideSettings.getLogger().severe("Ein Fehler ist aufgetreten" + caught.getMessage());
 						Window.alert("Ein fehler ist aufgetreten: "
 								+ caught.getMessage());
 
@@ -269,6 +271,7 @@ public class Anmelden {
 
 									@Override
 									public void onFailure(Throwable caught) {
+										ClientsideSettings.getLogger().severe("Anlegen fehlgeschlaten" + caught.getMessage());
 										Window.alert("Anlegen Fehlgeschlagen: "
 												+ caught.getMessage());
 

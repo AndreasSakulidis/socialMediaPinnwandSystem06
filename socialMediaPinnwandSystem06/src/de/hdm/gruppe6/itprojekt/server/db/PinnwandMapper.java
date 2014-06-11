@@ -90,9 +90,9 @@ public class PinnwandMapper {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 		} 
-//			finally {
+			finally {
 //			DBVerbindung.closeAll(null, stmt, con);
-//		}
+		}
 		return pinnwand;
 	}
 	/**

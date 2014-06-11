@@ -86,6 +86,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.google.appengine.api.rdbms.AppEngineDriver;
+
+import de.hdm.gruppe6.itprojekt.server.ServersideSettings;
+
 /**  @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
  *	In Anlehnung an Hr. Prof. Dr. Thies
  * Enthält alle Elemente und nötigen Methoden für das Durchführungs Formular
@@ -105,7 +109,9 @@ public class DBVerbindung {
 	 * Die URL um die Datenbank anzusprechen.
 	 */
 //	cloud sql
-	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
+//	private static String url = "jdbc:google:rdbms://socialmediapin:socialmediapin:gruppe06/socialMediaDB?user=root";
+	private static String url = "jdbc:google:mysql://socialmediapin:gruppe06/socialMediaDB?user=root";
+//	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=";
@@ -172,23 +178,31 @@ public class DBVerbindung {
 		//	try {
 
 				try {
-					Class.forName("com.mysql.jdbc.Driver").newInstance();
+//					Class.forName("com.mysql.jdbc.GoogleDriver").newInstance();
+					Class.forName("com.mysql.jdbc.GoogleDriver");
 
-					System.out.println("Treiber wurde erkannt!");
-				} catch (ClassNotFoundException e) {
+					DriverManager.registerDriver(new AppEngineDriver());
+					con = DriverManager.getConnection(url);
+					ServersideSettings.getLogger().severe("DB-Verbingung erfolgreich" + con.toString());
+
+				}
+				catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					ServersideSettings.getLogger().severe("Treiber wurde nicht erkannt");
 					System.out.println("Treiber wurde nicht erkannt!");
 				}
 				
-				try {
-					con = DriverManager.getConnection(url);
-					System.out.println("DB Verbindung Gelungen ;) "+con.toString());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("DB Verbindung fehlgeschlagen!");
-				}
+//				try {
+////					con = DriverManager.getConnection(url);
+//					System.out.println("DB Verbindung Gelungen ;) "+con.toString());
+//				} 
+//				catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					ServersideSettings.getLogger().severe("DB Verbindung fehlgeschlagen");
+//					System.out.println("DB Verbindung fehlgeschlagen!");
+//				}
 				
 			} 
 //			catch (SQLException e1) {

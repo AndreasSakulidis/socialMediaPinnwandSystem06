@@ -111,9 +111,9 @@ public class UserMapper {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 		}
-		// finally {
-		// DBVerbindung.closeAll(null, stmt, con);
-		// }
+		 finally {
+//		 DBVerbindung.closeAll(null, stmt, con);
+		 }
 		return user;
 	}
 	/**
@@ -167,13 +167,15 @@ public class UserMapper {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());
 		}
+		
+		finally{
+//			  DBVerbindung.closeAll(rs, stmt, con);
+			  }
 		return true;
-	}
+	
 
-	// // finally {
-	// // DBVerbindung.closeAll(rs, stmt, con);
-	// // }
-	// //
+	  
+	}
 	/**
 	 * Methode um den User anzumelden
 	 * 
