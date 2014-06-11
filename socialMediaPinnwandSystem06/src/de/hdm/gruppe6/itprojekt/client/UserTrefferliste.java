@@ -16,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,6 +32,10 @@ public class UserTrefferliste{
 
 	PinnwandVerwaltungServiceAsync pinnwandVerwaltung = GWT
 			.create(PinnwandVerwaltungService.class);
+	
+	public UserTrefferliste(){
+		
+	}
 	
 	public Widget zeigeTabelle() {
 		// Erstellen einer flexiblen Tabelle
@@ -123,6 +128,7 @@ public class UserTrefferliste{
 													});
 											} else {
 											Window.alert("Abo wurde angelegt");
+											//RootPanel.get("Navigator").clear();
 											Window.Location.reload();
 											}
 										}

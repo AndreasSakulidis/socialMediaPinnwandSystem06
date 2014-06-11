@@ -7,12 +7,10 @@ package de.hdm.gruppe6.itprojekt.client;
  */
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -21,6 +19,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,7 +64,10 @@ public class PinnwandForm extends Composite {
 	private Button kloeschen = new Button("X");
 	private Label commentUpdatedLabel = new Label();
 	private Label likeLabel = new Label();
+	
+	private ScrollPanel scrollPanel= new ScrollPanel();
 
+	
 
 	public PinnwandForm() {
 
@@ -240,6 +242,12 @@ public class PinnwandForm extends Composite {
 		 * Die Textbeitrï¿½ge werden in einer Flextable gepostet.
 		 */
 		
+	
+
+
+		postFlexTable.getFlexCellFormatter().setColSpan(1, 0, 190);  
+		postFlexTable.getFlexCellFormatter().setColSpan(3, 0, 50);
+		postFlexTable.getFlexCellFormatter().setColSpan(0, 1, 20);
 		
 		postFlexTable.setText(1, 0, a.getText());
 		postFlexTable.setWidget(0, 1, loePinnwand);
@@ -248,17 +256,16 @@ public class PinnwandForm extends Composite {
 		postFlexTable.setWidget(0, 4, liken);
 		postFlexTable.setWidget(0, 5, likeLabel);
 
-
+		postFlexTable.setStyleName("postFlexTable");
 		
 
 		lbId.setText(String.valueOf(a.getId()));
 		postFlexTable.setWidget(1, 5, lbId);
 		lbId.setVisible(false);
 
-		lastUpdatedLabel.setText("Es wurde gepostet am : "
-				+ DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
+		lastUpdatedLabel.setText(String.valueOf(a.getErstellungsZeitpunkt()));
 
-		postFlexTable.setWidget(2, 0, lastUpdatedLabel);
+		postFlexTable.setWidget(3,0, lastUpdatedLabel);
 
 		/**
 		 * Die Flextable wird dem vPanel zugeordnet.
@@ -400,11 +407,77 @@ public class PinnwandForm extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				final MeineDialogBox comment = new MeineDialogBox("Kommentieren");
+				final Label commentL = new Label();
+				final Label lbId = new Label();
+				
+				comment.center();
+				comment.setText("Kommentieren");
 
-				KommentarErstellen kommentarErstellen = new KommentarErstellen();
-				int tid = a.getId();
-				kommentarErstellen.setComment(a.getText(), tid);
-				vPanel.add(kommentarErstellen.setComment(a.getText(), tid));
+				/**
+				 * Die Aktion wird abgebrochen und es wird kein Kommentar gepostet.
+				 */
+				comment.abbrechen.addClickHandler(new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						comment.hide();
+
+
+					}
+
+				});
+
+				/**
+				 * Mit einem Klick auf ok wird ein Kommentar gepostet und in einer
+				 * FlexTable angelegt.
+				 */
+
+				comment.ok.addClickHandler(new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						comment.hide(true);
+						
+						commentL.setText(comment.getContent());
+
+						String text = commentL.getText();
+						String uid = Cookies.getCookie("SocialMedia6ID");
+
+						socialmedia.kommentarAnlegen(text, uid, a.getId(),
+								new AsyncCallback<Kommentar>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										System.out.println(caught.getMessage());
+										Window.alert("Fehler beim Anlegen!");
+									}
+
+									@Override
+									public void onSuccess(Kommentar kommentar) {
+										lbId.setText(String.valueOf(kommentar.getId()));
+										comment.hide(false);
+										Window.alert("Kommentar wurde angelegt!");
+										RootPanel.get("Details").clear();
+										PinnwandForm pinnForm = new PinnwandForm();
+										pinnForm.zeigePost();
+										pinnForm.anzeigen();
+										
+									//	Window.Location.reload();
+
+										
+										
+									}
+								});
+
+					}
+				});
+				
+
+//				KommentarErstellen kommentarErstellen = new KommentarErstellen();
+//				int tid = a.getId();
+//				kommentarErstellen.setComment(a.getText(), tid);
+//			//	vPanel.add(kommentarErstellen.setComment(a.getText(), tid));
 				
 
 			}
@@ -488,6 +561,7 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 					public void onSuccess(ArrayList<Kommentar> result) {
 					
 						kommentarPanel.addStyleName("Kommentare");
+						kommentarTable.addStyleName("KomTable");
 						
 						int zeile=0;
 						String uid = Cookies.getCookie("SocialMedia6ID");
@@ -501,6 +575,8 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 							final Button kbearbeiten = new Button("Bearbeiten");
 							final Button kloeschen = new Button("X");
 							final Label nichnameAnzeigen = new Label();
+							
+							nichnameAnzeigen.addStyleName("Nicknameanzeigen");
 
 
 							
@@ -539,8 +615,7 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 							lID.setText(String.valueOf(k.getId()));
 							lID.setVisible(false);
 							commentUpdatedLabel.setText(String.valueOf(k.getErstellungsZeitpunkt()));
-							
-							//TODO NichnameAnzeigen
+						
 							socialmedia.findeUserAnhandKommentarID(k.getId(),
 									new AsyncCallback<User>() {
 
@@ -551,28 +626,26 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 
 										@Override
 										public void onSuccess(User result) {
-											// TODO Auto-generated method stub
-//											try {
-												System.out.println("Methode Nickname Anzeigen "+result.getNickname());
-//												result.getNickname();
-												nichnameAnzeigen.setText(result.getNickname()+": ");
-//											} catch (Exception e) {
-//												System.out.println("Fehler in Catch "+e.getMessage());
-//											}
+							
+												nichnameAnzeigen.setText(result.getNickname()+" sagt :  ");
+										
 										}
 									});
-							
-							
+							kommentarTable.getFlexCellFormatter().setColSpan(zeile, 3, 290);
+
+						
+						
 							kommentarTable.setWidget(zeile, 1, nichnameAnzeigen);
-							kommentarTable.setWidget(zeile, 2, text);
-							kommentarTable.setWidget(zeile, 3, kloeschen);
-							kommentarTable.setWidget(zeile, 4, kbearbeiten);
-							kommentarTable.setWidget(zeile, 7, commentUpdatedLabel);
-							kommentarTable.setWidget(zeile, 5, lID);
-							
-							commentUpdatedLabel.setText(DateTimeFormat.getMediumDateTimeFormat().format(new Date()));
+							kommentarTable.setWidget(zeile, 3, text);
+							kommentarTable.setWidget(zeile, 7, kloeschen);
+							kommentarTable.setWidget(zeile, 8, kbearbeiten);
+							kommentarTable.setWidget(zeile, 9, commentUpdatedLabel);
+							kommentarTable.setWidget(zeile, 11, lID);
+
 							
 							zeile++;
+							
+//							kommentarTable.setStyleName("kommentarTable");
 							
 							kloeschen.addClickHandler(new ClickHandler(){
 

@@ -49,11 +49,9 @@ public class SocialMediaFrontend extends Composite {
 	private Label userSuchen = new Label("User nach Nickname suchen:");
 	private VerticalPanel suchePanel = new VerticalPanel();
 	final VerticalPanel aboPanel = new VerticalPanel();
-	private Button abo = new Button("Abos anzeigen");
 	private Label trennlinie = new Label("______________");
 	private TextBox tbName = new TextBox();
-	private PasswordTextBox tbPasswort = new PasswordTextBox();
-	private Button loginButton = new Button("Anmelden");
+
 
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -156,8 +154,7 @@ public class SocialMediaFrontend extends Composite {
 		pinnform.zeigePost();
 
 		pinnform.anzeigen();
-//		Window.Location.reload();
-//		pinnform.beitragAnzeigen(a);
+
 
 		Command bearb = new Command() {
 			public void execute() {
@@ -184,8 +181,7 @@ public class SocialMediaFrontend extends Composite {
 		menu.addItem("LogOut", logout);
 
 		RootPanel.get("Header").add(menu);
-
-		// public void suchen(){
+			
 		final Button sendSucheButton = new Button("Suchen");
 		final TextBox nameField = new TextBox();
 		VerticalPanel aboPanel = new VerticalPanel();
@@ -195,7 +191,6 @@ public class SocialMediaFrontend extends Composite {
 		suchePanel.add(sendSucheButton);
 		suchePanel.add(aboPanel);
 		aboPanel.add(trennlinie);
-		aboPanel.add(abo);
 		aboPanel.add(trennlinie);
 		aboPanel.addStyleName("abo");
 		
@@ -212,7 +207,7 @@ public class SocialMediaFrontend extends Composite {
 		// bestimmten Zeitraum
 		aboTable.setText(0, 0, "Nickname");
 		aboTable.setText(0, 1, "Löschen");
-		
+	
 		final String id = Cookies.getCookie("SocialMedia6ID");
 		int uid = Integer.parseInt(id);
 		

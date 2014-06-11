@@ -538,7 +538,7 @@ public class TextbeitragMapper {
 			rs = stmt.executeQuery("SELECT * FROM textbeitrag "
 					+ "WHERE PinnwandID =" + pinnwandID
 					+ " ORDER BY ErstellungsZeitpunkt DESC");
-//			rs = stmt.executeQuery("SELECT * FROM textbeitrag WHERE PinnwandID = 1 OR PinnwandID = 3 ORDER BY ErstellungsZeitpunkt DESC");
+
 
 			while (rs.next()) {
 				Textbeitrag textbeitrag = new Textbeitrag();

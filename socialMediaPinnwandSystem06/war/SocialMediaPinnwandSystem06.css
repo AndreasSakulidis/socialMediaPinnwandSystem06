@@ -16,6 +16,8 @@ div#TopLevelFrame {
 	align: center;
  }
  
+
+ 
 div#Details {
 	margin-left: 20em;
 	min-height: 500px;
@@ -107,6 +109,16 @@ div#Trailer {
   margin: 15px 6px 6px;
 }
 
+.postFlexTable td {
+
+   padding: 7px;
+   width: 50px;
+}
+
+.kommentarTable{
+	 border: 1px solid #BBBBBB;
+   padding: 3px;
+}
 /* Add Stock panel */
 .addPanel {
   margin: 10px 0px 15px 0px;
@@ -141,6 +153,12 @@ div#Trailer {
   margin-bottom:6px;
   
 }
+
+.KomTable{
+	border: 1px;
+  
+}
+
 .title {
 	text-align: center;
 	font-size: 16pt;
@@ -163,8 +181,13 @@ background-color: ghostwhite;
 }
 
 .Userspalte {
-	background-color: ghostwhite;
+	background-color: cadetblue;
 	font-style: italic;
+}
+
+.Nicknameanzeigen{
+	background-color:white;
+	font-style: normal;
 }
 
 .loginPanel {

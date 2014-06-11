@@ -513,32 +513,27 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 
 	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
 			throws Exception {
-		System.out.println("Mehtode FindeAlle User Beiträge");
+
+		ArrayList<Integer> pinnwandID = pinnwandMapper.findePinnwandIDAnhandUserID(userID);
+
 		ArrayList<Textbeitrag>textbeitrag = new ArrayList<Textbeitrag>();
-		ArrayList<Integer> pinnwandID= pinnwandMapper.findePinnwandIDAnhandUserID(userID);
-		System.out.println("pinnwandID " + pinnwandID.size());
-		
 		textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraege(userID));		
-		if(pinnwandID.size()== 0){
 	
-				
-			
+		if(pinnwandID.size()== 0){
+		
 		}
 		
+		
 		else{
-			//Array Mapper hier aufrufen
-			// die Array in der Schleife alle auslesen
-			//ausgeben...
-			//evntl nach der for schleife ???
-		for(Integer t: pinnwandID){
+		for(Integer t : pinnwandID){
 		
 			try{
 				if(t!=0);
 				textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
-				
+
 			}
 			catch(Exception e){
-				System.out.println("Fehler "+e.getMessage());
+				e.getMessage();
 			}
 
 

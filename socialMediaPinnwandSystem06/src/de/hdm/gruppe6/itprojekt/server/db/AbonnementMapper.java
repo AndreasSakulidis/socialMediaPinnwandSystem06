@@ -220,7 +220,7 @@ public class AbonnementMapper {
 																						// �bergeben
 																						// kein
 																						// WERT
-							+ "WHERE AboID=" + aboID + " ORDER BY AboID");
+							+ "WHERE AboID=" + aboID + " ORDER BY ErstellungsZeitpunkt DESC");
 			// F�r jeden Eintrag im Suchergebnis wird nun ein Account-Objekt
 			// erstellt.
 			if (rs.next()) {
