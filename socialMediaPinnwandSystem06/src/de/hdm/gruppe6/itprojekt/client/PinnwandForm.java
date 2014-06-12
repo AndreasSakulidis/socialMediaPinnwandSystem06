@@ -81,10 +81,15 @@ public class PinnwandForm extends Composite {
 		/**
 		 * Die Widgets werden dem addPanel hinzugef�gt.
 		 */
-		addPanel.add(ta);
-		addPanel.add(textbeitragPosten);
-		addPanel.addStyleName("addPanel");
-		addPanel.addStyleName("PinnwandAnzeigen");
+		String uid = Cookies.getCookie("SocialMedia6ID");
+		int userID = Integer.parseInt(uid);
+		if(userID!=0){
+			addPanel.add(ta);
+			addPanel.add(textbeitragPosten);
+			addPanel.addStyleName("addPanel");
+			addPanel.addStyleName("PinnwandAnzeigen");
+		}
+	
 
 		// RootPanel.get("Details").clear();
 

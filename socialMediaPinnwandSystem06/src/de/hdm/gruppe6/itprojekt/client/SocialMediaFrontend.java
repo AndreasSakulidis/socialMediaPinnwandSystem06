@@ -49,7 +49,6 @@ public class SocialMediaFrontend extends Composite {
 	private Label userSuchen = new Label("User nach Nickname suchen:");
 	private VerticalPanel suchePanel = new VerticalPanel();
 	final VerticalPanel aboPanel = new VerticalPanel();
-	private Label trennlinie = new Label("______________");
 	private TextBox tbName = new TextBox();
 
 
@@ -60,7 +59,6 @@ public class SocialMediaFrontend extends Composite {
 
 	public Widget angemeldet() {
 
-		trennlinie.addStyleName("linie");
 
 		/**
 		 * Hier wird die Men�leiste mit den Commands erstellt .
@@ -131,6 +129,7 @@ public class SocialMediaFrontend extends Composite {
 				u.abmelden();
 				tbName.setVisible(true);
 				Cookies.removeCookie("SocialMedia6");
+				Cookies.removeCookie("SocialMedia6ID");
 
 				Anmelden startseite = new Anmelden();
 				startseite.anmelden();
@@ -190,8 +189,6 @@ public class SocialMediaFrontend extends Composite {
 		suchePanel.add(nameField);
 		suchePanel.add(sendSucheButton);
 		suchePanel.add(aboPanel);
-		aboPanel.add(trennlinie);
-		aboPanel.add(trennlinie);
 		aboPanel.addStyleName("abo");
 		
 		
@@ -230,6 +227,7 @@ public class SocialMediaFrontend extends Composite {
 				for (final User u : result) {
 
 					Button a = new Button("-");
+					a.setStyleName("loeschbutton");
 
 					String nickname;
 					
@@ -318,6 +316,7 @@ public class SocialMediaFrontend extends Composite {
 
 		suchePanel.add(aboTable);
 		aboTable.addStyleName("flextable");
+		aboTable.getRowFormatter().addStyleName(0, "aboliste");
 
 		/**
 		 * Mit einem Klick auf den Button Aboliste werden die von dem

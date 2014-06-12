@@ -223,19 +223,19 @@ public class DBVerbindung {
 	// Google Cloud SQL Schlieﬂen, Sehr wichtig
 	public static void closeAll(ResultSet rs, Statement stmt, Connection con) throws Exception {
 		try {
-			if (rs != null) {
-				rs.close();
-			}
-			if (stmt != null) {
-				stmt.close();
-			} 
-			if (con != null) {
-				con.close();
-			}
+//			if (rs != null) {
+//				rs.close();
+//			}
+//			if (stmt != null) {
+//				stmt.close();
+//			} 
+//			if (con != null) {
+//				con.close();
+//			}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new Exception("Connection close Fehler!" + e.toString());
+		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new Exception("Connection close Fehler!" + e.toString());
 		}
 	}
 	

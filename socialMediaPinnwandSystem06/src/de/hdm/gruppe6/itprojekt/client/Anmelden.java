@@ -80,8 +80,10 @@ public class Anmelden {
 		loginPanel.add(tbName);
 
 		loginPanel.add(lbPasswort);
+		lbPasswort.setStyleName("loginPasswortLabel");
 		loginPanel.add(tbPasswort);
 		loginPanel.add(loginButton);
+		loginButton.setStyleName("loginButton");
 
 		// public void setFocus(boolean focus) {
 		// tbName.setFocus(focus);
@@ -109,6 +111,7 @@ public class Anmelden {
 		addPanel.add(lbEmail);
 		addPanel.add(tbEmail);
 		addPanel.add(regButton);
+		regButton.setStyleName("regButton");
 
 		addPanel.addStyleName("addPanelAnmelden");
 
@@ -173,75 +176,68 @@ public class Anmelden {
 		 */
 		loginButton.addClickHandler(new ClickHandler() {
 
-			@Override
-			public void onClick(ClickEvent event) {
-				socialmedia.userAnmelden(tbName.getText(),
-						tbPasswort.getText(), new AsyncCallback<User>() {
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						ClientsideSettings.getLogger().severe("Ein Fehler ist aufgetreten" + caught.getMessage());
-						Window.alert("Ein fehler ist aufgetreten: "
-								+ caught.getMessage());
+			   @Override
+			   public void onClick(ClickEvent event) {
+			    socialmedia.userAnmelden(tbName.getText(),
+			      tbPasswort.getText(), new AsyncCallback<User>() {
 
-					}
+			       @Override
+			       public void onFailure(Throwable caught) {
+			        Window.alert("Ein fehler ist aufgetreten: "
+			          + caught.getMessage());
 
-							@Override
-							public void onSuccess(User result) {
+			       }
 
-								// ------------------------------------------------------------------
+			       @Override
+			       public void onSuccess(User result) {
 
-								if (result.getId() != 0) {
+			        // ------------------------------------------------------------------
+			        try{
+			        if (result.getId() != 0) {
 
-									Cookies.setCookie("SocialMedia6",
-											result.getNickname());
-									Cookies.setCookie("SocialMedia6ID",
-											String.valueOf(result.getId()));
+			         Cookies.setCookie("SocialMedia6",
+			           result.getNickname());
+			         Cookies.setCookie("SocialMedia6ID",
+			           String.valueOf(result.getId()));
 
-									RootPanel.get("Details").clear();
+			         RootPanel.get("Details").clear();
 
-//									Window.alert("Erfolgreich angemeldet... Nickname: "
-//											+ result.getNickname());
-									// + " und Passwort"
-									// + result.getPasswort());
-									tbName.setVisible(false);
-									tbPasswort.setVisible(false);
-									loginButton.setVisible(false);
+			         // Window.alert("Erfolgreich angemeldet... Nickname: "
+			         // + result.getNickname());
+			         // + " und Passwort"
+			         // + result.getPasswort());
+			         tbName.setVisible(false);
+			         tbPasswort.setVisible(false);
+			         loginButton.setVisible(false);
 
-									lbRname.setVisible(false);
-									tbRname.setVisible(false);
-									lbRs.setVisible(false);
-									tbNachname.setVisible(false);
-									lbNick.setVisible(false);
-									tbNick.setVisible(false);
-									lbRPasswort.setVisible(false);
-									tbRPasswort.setVisible(false);
-									lbEmail.setVisible(false);
-									tbEmail.setVisible(false);
-									regButton.setVisible(false);
-									regi.setVisible(false);
-								
+			         lbRname.setVisible(false);
+			         tbRname.setVisible(false);
+			         lbRs.setVisible(false);
+			         tbNachname.setVisible(false);
+			         lbNick.setVisible(false);
+			         tbNick.setVisible(false);
+			         lbRPasswort.setVisible(false);
+			         tbRPasswort.setVisible(false);
+			         lbEmail.setVisible(false);
+			         tbEmail.setVisible(false);
+			         regButton.setVisible(false);
+			         regi.setVisible(false);
 
-									
-								
+			         // Die Startseite wird aufgerufen
+			         SocialMediaFrontend smf = new SocialMediaFrontend();
+			         smf.angemeldet();
+			         // --------------------------------------------------------------------------------------------------------
+			         
+			        }
+			        } catch (Exception e) {
+			         Window.alert("Anmeldung fehlgeschlagen!");
+			        }
+			       }
 
-									// TODO wie bei EntryPoint Klasse
-									SocialMediaFrontend smf = new SocialMediaFrontend();
-									smf.angemeldet();
-									// --------------------------------------------------------------------------------------------------------
-									// TODO ... Alles was da drunter ist, ist
-									// nicht richtig hier!
-								}
-								else{
-										Window.alert("lala");
-								}
-							}
+			      });
 
-
-						});
-
-			}
-		});
+			   }
+			  });
 
 		/**
 		 * Der tbEmail Textbox wird der KeyPressHandler hinzugef�gt.
@@ -298,69 +294,70 @@ public class Anmelden {
 		 * Dem Passworttextbox wird der KeyPressHandler hinzugef�gt.
 		 */
 
-		tbPasswort.addKeyPressHandler(new KeyPressHandler() {
-			public void onKeyPress(KeyPressEvent event) {
+		 tbPasswort.addKeyPressHandler(new KeyPressHandler() {
+			   public void onKeyPress(KeyPressEvent event) {
 
-				if (event.getCharCode() == KeyCodes.KEY_ENTER) {
+			    if (event.getCharCode() == KeyCodes.KEY_ENTER) {
 
-					socialmedia.userAnmelden(tbName.getText(),
-							tbPasswort.getText(), new AsyncCallback<User>() {
+			     socialmedia.userAnmelden(tbName.getText(),
+			       tbPasswort.getText(), new AsyncCallback<User>() {
 
-								public void onSuccess(User result) {
+			        public void onSuccess(User result) {
 
-									// ------------------------------------------------------------------
+			         // ------------------------------------------------------------------
+			         try {
+			          if (result.getId() != 0) {
 
-									if (result.getId() != 0) {
+			           Cookies.setCookie("SocialMedia6",
+			             result.getNickname());
+			           Cookies.setCookie("SocialMedia6ID",
+			             String.valueOf(result
+			               .getId()));
 
-										Cookies.setCookie("SocialMedia6",
-												result.getNickname());
-										Cookies.setCookie("SocialMedia6ID",
-												String.valueOf(result.getId()));
+			           RootPanel.get("Details").clear();
 
-										RootPanel.get("Details").clear();
+			           // Window.alert("Erfolgreich angemeldet... Nickname: "
+			           // + result.getNickname());
+			           // + " und Passwort"
+			           // + result.getPasswort());
+			           tbName.setVisible(false);
+			           tbPasswort.setVisible(false);
+			           loginButton.setVisible(false);
 
-//										Window.alert("Erfolgreich angemeldet... Nickname: "
-//												+ result.getNickname());
-//												+ " und Passwort"
-//												+ result.getPasswort());
-										tbName.setVisible(false);
-										tbPasswort.setVisible(false);
-										loginButton.setVisible(false);
+			           lbRname.setVisible(false);
+			           tbRname.setVisible(false);
+			           lbRs.setVisible(false);
+			           tbNachname.setVisible(false);
+			           lbNick.setVisible(false);
+			           tbNick.setVisible(false);
+			           lbRPasswort.setVisible(false);
+			           tbRPasswort.setVisible(false);
+			           lbEmail.setVisible(false);
+			           tbEmail.setVisible(false);
+			           regButton.setVisible(false);
+			           regi.setVisible(false);
 
-										lbRname.setVisible(false);
-										tbRname.setVisible(false);
-										lbRs.setVisible(false);
-										tbNachname.setVisible(false);
-										lbNick.setVisible(false);
-										tbNick.setVisible(false);
-										lbRPasswort.setVisible(false);
-										tbRPasswort.setVisible(false);
-										lbEmail.setVisible(false);
-										tbEmail.setVisible(false);
-										regButton.setVisible(false);
-										regi.setVisible(false);
+			           // Die Startseite wird aufgerufen
+			           SocialMediaFrontend smf = new SocialMediaFrontend();
+			           smf.angemeldet();
+			           // --------------------------------------------------------------------------------------------------------
+			          }
 
-										// TODO wie bei EntryPoint Klasse
-										SocialMediaFrontend smf = new SocialMediaFrontend();
-										smf.angemeldet();
-										// --------------------------------------------------------------------------------------------------------
-										// TODO ... Alles was da drunter ist,
-										// ist
-										// nicht richtig hier!
-									}
-								}
+			         } catch (Exception e) {
+			          Window.alert("Anmeldung fehlgeschlagen!");
+			         }
+			        }
 
-								@Override
-								public void onFailure(Throwable caught) {
-									Window.alert("Ein fehler ist aufgetreten: "
-											+ caught.getMessage());
+			        @Override
+			        public void onFailure(Throwable caught) {
+			         Window.alert("Ein Fehler ist aufgetreten: "
+			           + caught.getMessage());
 
-								}
-							});
-				}// NEUU
-			}
-		});
-
+			        }
+			       });
+			    }// NEUU
+			   }
+			  });
 		/**
 		 * Dem Widgets werden Stylenames zugeordnet.
 		 */

@@ -95,6 +95,7 @@ public class UserTrefferliste{
 							flexTableUser.setWidget(rowCounter, 3, labNick);
 							flexTableUser.setWidget(rowCounter, 4, labEm);
 							flexTableUser.setWidget(rowCounter, 5, a);
+							a.setStyleName("aboButton");
 
 							a.addClickHandler(new ClickHandler() {
 

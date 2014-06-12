@@ -76,8 +76,10 @@ public class UserBearbeiten {
 				vPanel.add(tbRPasswort);
 				tbRPasswort.setText(result.getPasswort());
 				vPanel.add(bbutton);
+				bbutton.setStyleName("editButton");
 				deleteUserPanel.add(info);
 				deleteUserPanel.add(lbutton);
+				lbutton.setStyleName("deleteProfileButton");
 				deleteUserPanel.addStyleName("deleteUserPanel");
 
 				mainPanel.add(vPanel);

@@ -1,6 +1,8 @@
+/**
+ * @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
+
 /** Add css rules here for your application. */
 
-/* Formatting specific to the StockWatcher application */
 
 body {
   padding: 10px;
@@ -15,8 +17,6 @@ div#TopLevelFrame {
 	margin: 0 auto;      /* standardkonforme horizontale Zentrierung */
 	align: center;
  }
- 
-
  
 div#Details {
 	margin-left: 20em;
@@ -40,11 +40,6 @@ div#Navigator {
 	border: 1px dashed silver;
 }
 
-.sendSucheButton {
-	display: block;
-	font-size: 14pt;
-}
-
 div#Header {
 	clear: both;
 	font-family: Georgia;
@@ -66,31 +61,10 @@ div#Trailer {
 }
 
 
-.watchListHeader {
-  background-color: #2062B8;
-  color: white;
-  font-style: italic;
-  align: center;
-}
-
-/** Example rules used by the template application (remove for your app) */
-
-
-
 /** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
-}
 
-/* .gwt-Button {
-    background:transparent url(images/hborder.png) repeat-x scroll 0px -27px;
-    border:1px outset #CCCCCC;
-    cursor:pointer;
-    font-size:small;
-    margin:0pt;
-    padding:3px 5px;
-    text-decoration:none;
-} */
+
+
 
 .dialogVPanel {
   margin: 15px;
@@ -104,68 +78,31 @@ div#Trailer {
   color: red;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
-}
-
-.postFlexTable td {
-
-   padding: 7px;
-   width: 50px;
-}
-
-.kommentarTable{
-	 border: 1px solid #BBBBBB;
-   padding: 3px;
-}
-/* Add Stock panel */
-.addPanel {
-  margin: 10px 0px 15px 0px;
-}
-
 .PinnwandAnzeigen {
   margin: 10px 0px 15px 0px;
-}
-
-
-/* stock list, the Remove button */
-.gwt-Button-remove {
-  width: 50px;
-}
-
-/* stock list flex table */
-.watchList {
-  border: 1px solid silver;
-  padding: 2px;
-  margin-bottom:6px;
-  align: center;
-}
-
-/* stock list Remove column */
-.watchListRemoveColumn {
-  text-align: center;
 }
 
 .flextable {
   border: 1px solid silver;
   padding: 2px;
-  margin-bottom:6px;
+  margin: 6px 1px;
   
 }
 
-.KomTable{
-	border: 1px;
-  
+.aboliste{
+	background-color: gainsboro;
+	font-style: italic;
 }
-
 .title {
 	text-align: center;
 	font-size: 16pt;
+	padding-bottom: 10px;
 }
 
 .Kommentare {
-	background-color: lavender;
+	background-color: honeyDew;
+	border: 1px solid grey;
+	margin: 0px 0px 6px 6px;
 }
 	
 .linie {
@@ -173,21 +110,21 @@ div#Trailer {
 	}
 
 .Textbeitrag {
-	background-color: lightsteelblue;
+	background-color: gainsboro;
 	border: 1px solid black;
+	margin: 6px 1px;
 }
+
+
 .abo {
 background-color: ghostwhite;
 }
 
 .Userspalte {
-	background-color: cadetblue;
+	background-color: ghostwhite;
 	font-style: italic;
-}
-
-.Nicknameanzeigen{
-	background-color:white;
-	font-style: normal;
+	border: 1px solid grey;
+	margin: 6px 0px 6px 6px;
 }
 
 .loginPanel {
@@ -201,18 +138,13 @@ background-color: ghostwhite;
 	
 }
 
-
 .regi {
 	font-weight: bold;
 	padding-bottom: 20px;
 }
 
 .deleteUserPanel {
-	padding-top: 50px;
-}
-
-.einstellungenPanel {
-	padding-left: 80px;
+	padding-top: 20px;
 }
 
 .hinweis {
@@ -220,15 +152,55 @@ background-color: ghostwhite;
 }
 
 .userliste {
-	background-color: lightsteelblue;
+	background-color: gainsboro;
 	font-style: italic;
 }
 
-.hinweisnick {
-	font-size: 60%;
-	font-color: red;
+.loginButton{
+	color:black;
+	margin: 1px 6px;
+	font-color: black;
+	cursor: hand;
+}
+	
+.regButton {
+  	margin: 6px 1px;
 }
 
-.nick {
-	font-color: red;
+.sendSucheButton {
+	color:black;
+	margin: 6px 1px;
+}
+
+.loginPasswortLabel {
+	padding-left: 10px;
+	margin: 6px 1px;
+}
+
+.textbeitragposten {
+	color:black;
+	margin: 6px 1px;
+}
+
+.deleteProfileButton {
+	color:black;
+	margin: 6px 1px;
+}
+
+.editButton {
+	color:black;
+	margin: 6px 1px;
+}
+
+.loeschbutton {
+	color: black;
+}
+
+.aboButton {
+	color: black;
+}
+
+.bearbeitenLabel {
+	padding-bottom: 10px;
+	font-size: 16pt;	
 }

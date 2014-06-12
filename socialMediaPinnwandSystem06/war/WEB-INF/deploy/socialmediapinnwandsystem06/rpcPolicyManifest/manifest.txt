@@ -1,3 +1,2 @@
 # Module socialmediapinnwandsystem06
 # RPC service class, partial path of RPC policy file
-de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService, C730EED229B4253E154FD74672C77784.gwt.rpc
