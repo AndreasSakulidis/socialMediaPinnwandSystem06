@@ -1,10 +1,6 @@
 package de.hdm.gruppe6.itprojekt.shared.report;
 
-import java.util.Date;
-
-
-
-public class InfosVonUserReport extends SimpleReport {
+public class InfosVonPinnwandReport extends SimpleReport {
 	
 	/** @author Ezgi Demirbilek, Özlem Gül, Gezim Krasniqi, Bharti Kumar, Andreas Sakulidis, Michael Schelkle
  * In Anlehnung an Hr. Prof. Dr. Thies

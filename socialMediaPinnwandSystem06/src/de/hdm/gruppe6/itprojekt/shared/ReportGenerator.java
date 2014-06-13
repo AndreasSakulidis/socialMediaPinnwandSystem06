@@ -1,16 +1,15 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
-import java.util.Date;
-
 import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
-import de.hdm.gruppe6.itprojekt.shared.bo.User;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenBeitraegenReport;
-import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenUsernReport;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonAllenPinnwaendenReport;
 import de.hdm.gruppe6.itprojekt.shared.report.InfosVonBeitragReport;
-import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
+import de.hdm.gruppe6.itprojekt.shared.report.InfosVonPinnwandReport;
 
 
 /**
@@ -44,7 +43,7 @@ import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
  * </p>
  * 
  */
-
+@RemoteServiceRelativePath("reportgenerator")
 public interface ReportGenerator extends RemoteService {
 
 	/**
@@ -58,15 +57,19 @@ public interface ReportGenerator extends RemoteService {
 	
 	public void init() throws IllegalArgumentException;
 	
-	public abstract InfosVonUserReport erstelleInfosVonUserReport(User user, Date anfangszeitpunkt, Date endzeitpunkt)
-	throws  IllegalArgumentException;
+	public abstract InfosVonBeitragReport erstelleInfosVonBeitragReport(Textbeitrag textbeitrag, String anfangszeitpunkt,
+			String endzeitpunkt) 
+			throws IllegalArgumentException;
 	
-	public abstract InfosVonBeitragReport erstelleInfosVonBeitragReport(Textbeitrag textbeitrag, Date anfangszeitpunkt, Date endzeitpunkt) 
+	public abstract InfosVonAllenBeitraegenReport erstelleInfosVonAllenBeitraegenReport(String anfangszeitpunkt,
+			String endzeitpunkt, String sortierung)
 	throws IllegalArgumentException;
 	
-	public abstract InfosVonAllenUsernReport erstelleInfosVonAllenUsernReport(Date anfangszeitpunkt, Date endzeitpunkt)
+	public abstract InfosVonPinnwandReport erstelleInfosVonPinnwandReport(Pinnwand pinnwand)
 	throws IllegalArgumentException;
 	
-	public abstract InfosVonAllenBeitraegenReport erstelleInfosVonAllenBeitraegenReport(Date anfangszeitpunkt, Date endzeitpunkt)
-	throws IllegalArgumentException;
+	public abstract InfosVonAllenPinnwaendenReport erstelleInfosVonAllenPinnwaendenReport(
+			String anfangszeitpunkt, String endzeitpunkt) throws IllegalArgumentException;
+	
+	
 }

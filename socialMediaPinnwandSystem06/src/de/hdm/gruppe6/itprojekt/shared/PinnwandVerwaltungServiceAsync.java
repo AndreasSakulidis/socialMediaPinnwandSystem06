@@ -1,6 +1,7 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -51,10 +52,6 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeUserAnhandID(int userID, AsyncCallback<User> callback);
 
-	
-
-	void zaehleTextbeitraegeVonUser(User user, AsyncCallback<Integer> callback);
-	
 	void kommentarAnlegen(String text, String uid, int tid, AsyncCallback<Kommentar> callback);
 
 	void kommentarEditieren(String text, int id, AsyncCallback<Kommentar> callback);
@@ -70,6 +67,21 @@ public interface PinnwandVerwaltungServiceAsync {
 	void pinnwandEditieren(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Pinnwand> callback);
 
 	void pinnwandLoeschen(Pinnwand pinnwand, User eigentuemer, AsyncCallback<Void> callback);
+
+	void zaehleAbosVonPinnwandAnhandEigentuemer(String eigentuemer,
+			AsyncCallback<Integer> callback);
+
+	void zaehleEigeneBeitraegeVonPinnwandAnhandPinnwandID(int pinnwandID,
+			AsyncCallback<Integer> callback);
+
+	void zaehleLikesVonPinnwandAnhandPinnwandID(int pinnwandID,
+			AsyncCallback<Integer> callback);
+
+	void findePinnwandAnhandEigentuemer(String eigentuemer,
+			AsyncCallback<Pinnwand> callback);
+
+	void findeBeliebtestePinnwandJeZeitraum(String anfangsZeitpunkt,
+			String endZeitpunkt, AsyncCallback<Pinnwand> callback);
 
 	void textbeitragAnlegen(String text, String id, AsyncCallback<Textbeitrag> callback);
 
@@ -115,8 +127,13 @@ public interface PinnwandVerwaltungServiceAsync {
 
 
 	void findeAlleUserBeitraege(int userID,
-			AsyncCallback<ArrayList<Textbeitrag>> callback);
-
+			AsyncCallback<List<Textbeitrag>> callback);
+	
+	void findeAlleJeZeitraumSortiertNachAnzahlLikes(
+			AsyncCallback<Vector<Textbeitrag>> callback);
+	
+	void findeAlleJeZeitraumSortiertNachAnzahlKommentaren(
+			AsyncCallback<Vector<Textbeitrag>> callback);
 
 	void findeAboIDAnhandPinnwandUserID(int uid, int pid,
 			AsyncCallback<Integer> callback);
@@ -132,6 +149,20 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeTextbeitragIDsAnhandPinnwandID(int pinnwandID,
 			AsyncCallback<ArrayList<Integer>> callback);
+	
+	void findeTextbeitragMitMeistenLikes(String anfangsZeitpunkt,
+			String endZeitpunkt, AsyncCallback<Textbeitrag> callback);
+
+	void findeTextbeitragMitMeistenKommentarenJeZeitraum(
+			String anfangsZeitpunkt, String endZeitpunkt,
+			AsyncCallback<Textbeitrag> callback);
+
+	void zaehleKommentareZuTextbeitragJeZeitraum(Textbeitrag textbeitrag,
+			String anfangsZeitpunkt, String endZeitpunkt,
+			AsyncCallback<Integer> callback);
+
+	void zaehleLikesZuTextbeitragJeZeitraum(Textbeitrag textbeitrag, String anfangsZeitpunkt,
+			String endZeitpunkt, AsyncCallback<Integer> callback);
 
 	void findeUserZuTextbeitragID(int textbeitragID,
 			AsyncCallback<String> callback);
@@ -179,6 +210,10 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void kommentarLoeschenAnhandKommentarID(Kommentar kommentar,
 			AsyncCallback<Void> callback);
+
+
+	void findeAllePinnwaendeJeZeitraum(String anfangsZeitpunkt,
+			String endZeitpunkt, AsyncCallback<Vector<Pinnwand>> callback);
 	
 	
 

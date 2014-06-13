@@ -47,9 +47,11 @@ public class SocialMediaFrontend extends Composite {
 
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private Label userSuchen = new Label("User nach Nickname suchen:");
+	private Label nicknameAnzeigen = new Label();
 	private VerticalPanel suchePanel = new VerticalPanel();
 	final VerticalPanel aboPanel = new VerticalPanel();
 	private TextBox tbName = new TextBox();
+	private PinnwandVerwaltungServiceAsync socialmedia = GWT.create(PinnwandVerwaltungService.class);
 
 
 	static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -63,33 +65,33 @@ public class SocialMediaFrontend extends Composite {
 		/**
 		 * Hier wird die Men�leiste mit den Commands erstellt .
 		 */
-//		Command cmd1 = new Command() {
-//			public void execute() {
-//				mainPanel.clear();
-//				RootPanel.get("Details").clear();
-//				RootPanel.get("Details").add(mainPanel);
-//				FormInfosVonUserReport eins = new FormInfosVonUserReport("");
-//				mainPanel.add(eins);
-//			}
-//		};
+		Command cmd1 = new Command() {
+			public void execute() {
+				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
+				FormInfosVonPinnwandReport eins = new FormInfosVonPinnwandReport("");
+				mainPanel.add(eins);
+			}
+		};
 
-//		Command cmd2 = new Command() {
-//			public void execute() {
-//				mainPanel.clear();
-//				RootPanel.get("Details").clear();
-//				RootPanel.get("Details").add(mainPanel);
-//				FormInfosVonBeitragReport zwei = new FormInfosVonBeitragReport(
-//						"");
-//				mainPanel.add(zwei);
-//			}
-//		};
+		Command cmd2 = new Command() {
+			public void execute() {
+				mainPanel.clear();
+				RootPanel.get("Details").clear();
+				RootPanel.get("Details").add(mainPanel);
+				FormInfosVonAllenPinnwaendenReport zwei = new FormInfosVonAllenPinnwaendenReport(
+						"");
+				mainPanel.add(zwei);
+			}
+		};
 
 		Command cmd3 = new Command() {
 			public void execute() {
 				mainPanel.clear();
 				RootPanel.get("Details").clear();
 				RootPanel.get("Details").add(mainPanel);
-				FormInfosVonAllenUsernReport drei = new FormInfosVonAllenUsernReport(
+				FormInfosVonBeitragReport drei = new FormInfosVonBeitragReport(
 						"");
 				mainPanel.add(drei);
 			}
@@ -105,17 +107,6 @@ public class SocialMediaFrontend extends Composite {
 				mainPanel.add(vier);
 			}
 		};
-
-
-		//
-		// Command cmd6 = new Command() {
-		// public void execute() {
-		// mainPanel.clear();
-		// PinnwandAnzeigenForm pAF = new PinnwandAnzeigenForm();
-		// mainPanel.add(pAF.zeigePinnwand()); //TODO Hier wird ein Fehler in
-		// der Konsole ausgegeben
-		// }
-		// };
 
 		Command logout = new Command() {
 			public void execute() {
@@ -145,7 +136,6 @@ public class SocialMediaFrontend extends Composite {
 				PinnwandForm pF = new PinnwandForm();
 				pF.anzeigen();
 				mainPanel.add(pF.zeigePost());
-//				mainPanel.add(pF.zeigeBeitr�ge());
 			}
 		};
 		
@@ -167,10 +157,10 @@ public class SocialMediaFrontend extends Composite {
 		};
 
 		MenuBar reportMenu = new MenuBar(true);
-//		reportMenu.addItem("Infoausgabe von User", cmd1);
-//		reportMenu.addItem("Infoausgabe von Beitrag", cmd2);
-		reportMenu.addItem("Infosausgabe von allen Usern", cmd3);
-		reportMenu.addItem("Infosausgabe von allen Beitreagen", cmd4);
+		reportMenu.addItem("Infoausgabe von Pinnwand", cmd1);
+		reportMenu.addItem("Infoausgabe aller Pinnwaende", cmd2);
+		reportMenu.addItem("Infosausgabe von Beitrag", cmd3);
+		reportMenu.addItem("Infosausgabe aller Beitreage", cmd4);
 		reportMenu.addStyleName("reportmenu");
 
 		MenuBar menu = new MenuBar();
@@ -185,6 +175,7 @@ public class SocialMediaFrontend extends Composite {
 		final TextBox nameField = new TextBox();
 		VerticalPanel aboPanel = new VerticalPanel();
 		sendSucheButton.addStyleName("sendSucheButton");
+		suchePanel.add(nicknameAnzeigen);
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
 		suchePanel.add(sendSucheButton);
@@ -469,6 +460,24 @@ public class SocialMediaFrontend extends Composite {
 
 		});
 
+		final String userNickname = Cookies.getCookie("SocialMedia6ID");
+		int userID = Integer.parseInt(userNickname);
+		nicknameAnzeigen.addStyleName("nicknameAnzeigen");
+		socialmedia.findeUserAnhandID(userID, new AsyncCallback<User>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(User result) {
+				nicknameAnzeigen.setText(result.getNickname());				
+			}
+		});
+		
+		
 		// Add it to the root panel.
 		RootPanel.get("Navigator").add(suchePanel);
 

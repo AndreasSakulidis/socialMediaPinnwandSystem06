@@ -1,6 +1,7 @@
 package de.hdm.gruppe6.itprojekt.shared;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -80,10 +81,6 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public void aZuUserLoeschen(int id, String vorname,
 			String nachname, String nickname, String email, String passwort) throws Exception;
 	 /**
-	  * Z�hlen der Textbeitr�ge von einem User.
-	  */
-	public int zaehleTextbeitraegeVonUser(User user) throws Exception;
-	 /**
 	  * Finden von Textbeitrag anhand von User.
 	  */
 	
@@ -114,6 +111,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 */
 	public Vector<Pinnwand> findeAllePinnwaende() throws Exception;
 	
+	public Vector<Pinnwand> findeAllePinnwaendeJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;
+	
 	public ArrayList<Integer> findePinnwandIDAnhandUserID(int userID) throws Exception;
 	
 	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID) throws Exception;
@@ -121,6 +120,17 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	 * Finden einer Pinnwand anhand seiner ID.
 	 */
 	public Pinnwand findePinnwandAnhandID(int pinnwandID) throws Exception;
+	
+	public Pinnwand findePinnwandAnhandEigentuemer(String eigentuemer) throws Exception;
+	
+	public Pinnwand findeBeliebtestePinnwandJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;
+
+	public int zaehleAbosVonPinnwandAnhandEigentuemer(String eigentuemer) throws IllegalArgumentException;
+	
+	public int zaehleEigeneBeitraegeVonPinnwandAnhandPinnwandID(int pinnwandID) throws IllegalArgumentException;
+	
+	public int zaehleLikesVonPinnwandAnhandPinnwandID(int pinnwandID) throws IllegalArgumentException;
+	
 	/**
 	 * L�schung des Pinnwands.
 	 */
@@ -199,14 +209,24 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	   /**
      * Finden von User zu einem Textbeitrag.
      */
-	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws Exception;
+	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag) throws IllegalArgumentException;
 	  /**
      * Z�hlen von Kommentaren zu einem Textbeitrag.
      */
 	public int zaehleKommentareVonTextbeitrag(Textbeitrag textbeitrag) throws Exception;
-	 
-					
+	
+	public int zaehleKommentareZuTextbeitragJeZeitraum(Textbeitrag textbeitrag, String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;				
     
+	public int zaehleLikesZuTextbeitragJeZeitraum(Textbeitrag textbeitrag, String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;
+	
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlLikes() throws IllegalArgumentException;
+	
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlKommentaren() throws IllegalArgumentException;
+	    
+	public Textbeitrag findeTextbeitragMitMeistenLikes(String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;
+	
+	public Textbeitrag findeTextbeitragMitMeistenKommentarenJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) throws IllegalArgumentException;
+		
 /**
 * 	Anlegen einer Like in der Datenbank.
 */
@@ -223,7 +243,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 		 	
 	public Like findeLikeAnhandID (int likeID) throws Exception; 	 
 	
-	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception;
+	public List<Textbeitrag> findeAlleUserBeitraege(int userID) throws Exception;
 	
 	public String findeUserZuTextbeitragID(int textbeitragID )
 			throws Exception;

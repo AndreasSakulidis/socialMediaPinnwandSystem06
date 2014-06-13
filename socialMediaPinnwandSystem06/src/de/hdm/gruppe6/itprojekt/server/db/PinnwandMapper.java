@@ -188,6 +188,181 @@ public class PinnwandMapper {
 
 		return null;
 	}
+	
+	public Pinnwand findePinnwandAnhandEigentuemer(String eigentuemer) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT PinnwandID, ErstellungsZeitpunkt, Eigentuemer "
+							+ "FROM pinnwand "
+							+ "WHERE Eigentuemer='"
+							+ eigentuemer 
+							+ "'");
+
+			if (rs.next()) {
+				Pinnwand pinnwand = new Pinnwand();
+				pinnwand.setId(rs.getInt("PinnwandID"));
+				pinnwand.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+				pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
+
+				return pinnwand;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
+	
+	public Pinnwand findeBeliebtestePinnwandJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) {
+		Connection con = DBVerbindung.connection();
+
+		try {
+			Statement stmt = con.createStatement();
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT pinnwand.PinnwandID, pinnwand.ErstellungsZeitpunkt, pinnwand.Eigentuemer, COUNT(AboID) AS AboCount "
+							+ "FROM abonnement INNER JOIN pinnwand "
+							+ "ON abonnement.PinnwandID = pinnwand.PinnwandID "
+							+ "WHERE pinnwand.ErstellungsZeitpunkt "
+							+ "BETWEEN '"
+							+ anfangsZeitpunkt 
+							+ "' AND '"
+							+ endZeitpunkt
+							+ "' GROUP BY abonnement.PinnwandID "
+							+ "ORDER BY AboCount DESC LIMIT 1");
+
+			if (rs.next()) {
+				Pinnwand pinnwand = new Pinnwand();
+				pinnwand.setId(rs.getInt("pinnwand.PinnwandID"));
+				pinnwand.setErstellungsZeitpunkt(rs
+						.getTimestamp("pinnwand.ErstellungsZeitpunkt"));
+				pinnwand.setEigentuemer(rs.getString("pinnwand.Eigentuemer"));
+
+				return pinnwand;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
+	
+	public int zaehleAbosVonPinnwandAnhandEigentuemer(String eigentuemer) {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+//		Statement stmt = null;
+
+		try {
+			Statement stmt = con.createStatement();
+
+			 rs = stmt
+					.executeQuery("SELECT COUNT(AboID) AS 'AnzahlAbos'"
+							+ " FROM abonnement INNER JOIN pinnwand "
+							+ "ON pinnwand.PinnwandID = abonnement.PinnwandID "
+							+ "WHERE pinnwand.Eigentuemer='"
+							+ eigentuemer 
+							+ "'");
+			 
+			 if (rs.next()){
+				 return rs.getInt("AnzahlAbos");
+			 }
+			
+
+		} 
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return 0;
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		return 0;
+
+	}
+	
+	public int zaehleEigeneBeitraegeVonPinnwandAnhandPinnwandID(int pinnwandID) {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+//		Statement stmt = null;
+
+		try {
+			Statement stmt = con.createStatement();
+
+			 rs = stmt
+					.executeQuery("SELECT COUNT(TextbeitragID) AS 'AnzahlEigenerTextbeitraege'"
+							+ " FROM textbeitrag "
+							+ "WHERE pinnwandID="
+							+ pinnwandID);
+			 
+			 if (rs.next()){
+				 return rs.getInt("AnzahlEigenerTextbeitraege");
+			 }
+			
+
+		} 
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return 0;
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		return 0;
+
+	}
+	
+	public int zaehleLikesVonPinnwandAnhandPinnwandID(int pinnwandID) {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+//		Statement stmt = null;
+
+		try {
+			Statement stmt = con.createStatement();
+
+			 rs = stmt
+					.executeQuery("SELECT Count(liken.TextbeitragID) AS 'AnzahlLikes' "
+							+ "FROM liken INNER JOIN textbeitrag "
+							+ "ON textbeitrag.TextbeitragID = liken.TextbeitragID "
+							+ "WHERE pinnwandID="
+							+ pinnwandID);
+			 
+			 if (rs.next()){
+				 return rs.getInt("AnzahlLikes");
+			 }
+			
+
+		} 
+		catch (SQLException e2) {
+			e2.printStackTrace();
+			return 0;
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		return 0;
+
+	}
+
+	
 	 /** 
 	  * Alle Datens�tze aus der Tabelle Pinnwand werden herausgelesen.
 	   * @return 
@@ -226,6 +401,48 @@ public class PinnwandMapper {
 		return result;
 	}
 
+	public Vector<Pinnwand> findeAlleJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) {
+		  Connection con = DBVerbindung.connection();
+		  Statement stmt = null;
+		  ResultSet rs = null;
+
+		  Vector<Pinnwand> result = new Vector<Pinnwand>();
+
+		  try {
+		   stmt = con.createStatement();
+
+		   rs = stmt.executeQuery("SELECT pinnwand.PinnwandID, pinnwand.ErstellungsZeitpunkt, "
+		     + "pinnwand.Eigentuemer, COUNT(AboID) AS AnzahlAbos "
+		     + "FROM pinnwand LEFT JOIN abonnement "
+		     + "ON pinnwand.PinnwandID = abonnement.PinnwandID "
+		     + "WHERE pinnwand.ErstellungsZeitpunkt "
+		     + "BETWEEN '"
+		     + anfangsZeitpunkt
+		     + "' AND '"
+		     + endZeitpunkt
+		     + "' GROUP BY pinnwand.PinnwandID "
+		     + "ORDER BY AnzahlAbos DESC");
+
+		   while (rs.next()) {
+		    Pinnwand pinnwand = new Pinnwand();
+		    pinnwand.setId(rs.getInt("PinnwandID"));
+		    pinnwand.setErstellungsZeitpunkt(rs
+		      .getTimestamp("ErstellungsZeitpunkt"));
+		    pinnwand.setEigentuemer(rs.getString("Eigentuemer"));
+		    System.out.println("PinnwandreihenfolgeANHANDANZAHLABOOOOOS:" + pinnwand.getId() + ", Anzahl: " + rs.getInt("AnzahlAbos") );
+		    result.addElement(pinnwand);
+		   }
+		  } catch (SQLException e2) {
+		   e2.printStackTrace();
+		//   throw new Exception("Datenbank fehler!" + e2.toString());
+		  } 
+		//  finally {
+		//   DBVerbindung.closeAll(rs, stmt, con);
+		//  }
+
+		  return result;
+		 }
+	
 	public int findeAnhandUserID(int userID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;

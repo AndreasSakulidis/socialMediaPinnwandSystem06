@@ -1,9 +1,10 @@
 package de.hdm.gruppe6.itprojekt.server;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import de.hdm.gruppe6.itprojekt.server.db.AbonnementMapper;
@@ -192,10 +193,10 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	/**
 	 * Z�hlen der Textbeitr�ge von einem User.
 	 */
-	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
-
-		return this.userMapper.zaehleTextbeitraegeVonUser(user);
-	}
+//	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
+//
+//		return this.userMapper.zaehleTextbeitraegeVonUser(user);
+//	}
 
 	/**
 	 * Finden von Textbeitrag anhand von User.
@@ -263,6 +264,31 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	 */
 	public Pinnwand findePinnwandAnhandID(int pinnwandID) throws Exception {
 		return this.pinnwandMapper.findeAnhandID(pinnwandID);
+	}
+
+	public Pinnwand findePinnwandAnhandEigentuemer(String eigentuemer)
+			throws Exception {
+		return this.pinnwandMapper.findePinnwandAnhandEigentuemer(eigentuemer);
+	}
+	
+	public Pinnwand findeBeliebtestePinnwandJeZeitraum(String anfangsZeitpunkt,
+			String endZeitpunkt) throws IllegalArgumentException {
+		return this.pinnwandMapper.findeBeliebtestePinnwandJeZeitraum(anfangsZeitpunkt, endZeitpunkt);
+		}
+
+	public int zaehleAbosVonPinnwandAnhandEigentuemer(String eigentuemer)
+			throws IllegalArgumentException {
+		return this.pinnwandMapper.zaehleAbosVonPinnwandAnhandEigentuemer(eigentuemer);
+	}
+
+	public int zaehleEigeneBeitraegeVonPinnwandAnhandPinnwandID(int pinnwandID)
+			throws IllegalArgumentException {
+		return this.pinnwandMapper.zaehleEigeneBeitraegeVonPinnwandAnhandPinnwandID(pinnwandID);
+	}
+	
+	public int zaehleLikesVonPinnwandAnhandPinnwandID(int pinnwandID)
+			throws IllegalArgumentException {
+		return this.pinnwandMapper.zaehleLikesVonPinnwandAnhandPinnwandID(pinnwandID);
 	}
 
 	/**
@@ -448,8 +474,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	 */
 
 	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
-			throws Exception {
-
+			throws IllegalArgumentException {
 		return this.textbeitragMapper.findeUserZuTextbeitrag(textbeitrag);
 	}
 
@@ -461,6 +486,30 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 
 		return this.textbeitragMapper
 				.zaehleKommentareVonTextbeitrag(textbeitrag);
+	}
+	
+	public int zaehleKommentareZuTextbeitragJeZeitraum(Textbeitrag textbeitrag,
+			String anfangsZeitpunkt, String endZeitpunkt)
+			throws IllegalArgumentException {
+		return textbeitragMapper.zaehleKommentareZuTextbeitragJeZeitraum(textbeitrag, anfangsZeitpunkt, endZeitpunkt);
+	}
+
+	public int zaehleLikesZuTextbeitragJeZeitraum(Textbeitrag textbeitrag,
+			String anfangsZeitpunkt, String endZeitpunkt)
+			throws IllegalArgumentException {
+		return textbeitragMapper.zaehleLikesZuTextbeitragJeZeitraum(textbeitrag, anfangsZeitpunkt, endZeitpunkt);
+	}
+	
+	@Override
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlLikes()
+			throws IllegalArgumentException {
+		return textbeitragMapper.findeAlleJeZeitraumSortiertNachAnzahlLikes();
+	}
+
+	@Override
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlKommentaren()
+			throws IllegalArgumentException {
+		return textbeitragMapper.findeAlleJeZeitraumSortiertNachAnzahlKommentaren();
 	}
 
 	public int findeAboIDAnhandPinnwandUserID(int uid, int pid)
@@ -511,26 +560,26 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 		return this.likeMapper.findeAnhandID(likeID);
 	}
 
-	public ArrayList<Textbeitrag> findeAlleUserBeitraege(int userID)
+	public List<Textbeitrag> findeAlleUserBeitraege(int userID)
 			throws Exception {
 
 		ArrayList<Integer> pinnwandID = pinnwandMapper.findePinnwandIDAnhandUserID(userID);
 
-		ArrayList<Textbeitrag>textbeitrag = new ArrayList<Textbeitrag>();
+		List<Textbeitrag>textbeitrag = new ArrayList<Textbeitrag>();
 		textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraege(userID));		
 	
-		if(pinnwandID.size()== 0){
+//		if(pinnwandID.size()== 0){
+//		
+//		}
+//		
 		
-		}
-		
-		
-		else{
+//		else{
 		for(Integer t : pinnwandID){
 		
 			try{
 				if(t!=0);
 				textbeitrag.addAll(this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
-
+				Collections.sort(textbeitrag);
 			}
 			catch(Exception e){
 				e.getMessage();
@@ -540,7 +589,7 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 //			textbeitrag.add( this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t));
 //			System.out.println("Impl, findeAlleUserBeoitraege, Pinnwand Text: "+this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t).getText()+" ID: "+this.textbeitragMapper.findeAlleUserBeitraegeAnhandPinnwandID(t).getId());
 		}
-	}
+//	}
 //		return this.textbeitragMapper.findeAlleUserBeitraege(userID);
 		return  textbeitrag;
 		
@@ -679,5 +728,24 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 		kommentarMapper.kommentarLoeschenAnhandKommentarID(kommentar);
 		
 	}
+
+	@Override
+	public Vector<Pinnwand> findeAllePinnwaendeJeZeitraum(
+			String anfangsZeitpunkt, String endZeitpunkt)
+			throws IllegalArgumentException {
+		return this.pinnwandMapper.findeAlleJeZeitraum(anfangsZeitpunkt, endZeitpunkt);
+	 }
+	
+	public Textbeitrag findeTextbeitragMitMeistenLikes(String anfangsZeitpunkt, String endZeitpunkt)
+			throws IllegalArgumentException {
+		return this.textbeitragMapper.findeTextbeitragMitMeistenLikes(anfangsZeitpunkt, endZeitpunkt);
+	}
+	
+	public Textbeitrag findeTextbeitragMitMeistenKommentarenJeZeitraum(
+			String anfangsZeitpunkt, String endZeitpunkt)
+			throws IllegalArgumentException {
+		return textbeitragMapper.findeTextbeitragMitMeistenKommentarenJeZeitraum(anfangsZeitpunkt, endZeitpunkt);
+	}
+
 
 }

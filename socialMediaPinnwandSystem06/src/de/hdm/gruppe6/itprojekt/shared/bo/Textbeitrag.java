@@ -6,7 +6,7 @@ package de.hdm.gruppe6.itprojekt.shared.bo;
  * Realisierung einer exemplarischen Textbeitragbeschreibung. 
  
  */
-public class Textbeitrag extends BusinessObject {
+public class Textbeitrag extends BusinessObject implements Comparable<Textbeitrag>  {
 
 	/**
 	 * 
@@ -78,5 +78,13 @@ public int getUserID() {
 }
 public void setUserID(int userID) {
 	this.userID = userID;
+}
+@Override
+public int compareTo(Textbeitrag a) {
+	if(super.getId()>a.getId())
+		return -1;
+	if(super.getId()<a.getId())
+		return 1;
+	return 0;
 }
 }

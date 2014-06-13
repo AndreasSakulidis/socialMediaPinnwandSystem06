@@ -418,8 +418,7 @@ public class TextbeitragMapper {
 	   * @throws Exception
 	   */
 
-	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag)
-			throws Exception {
+	public User findeUserZuTextbeitrag(Textbeitrag textbeitrag){
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
@@ -428,28 +427,31 @@ public class TextbeitragMapper {
 			stmt = con.createStatement();
 
 			rs = stmt
-					.executeQuery("SELECT user.Vorname, user.Nachname, textbeitrag.Text FROM user INNER JOIN textbeitrag ON user.UserID = textbeitrag.UserID WHERE textbeitrag.TextbeitragID = "
+					.executeQuery("SELECT * FROM user INNER JOIN textbeitrag ON user.UserID = textbeitrag.UserID WHERE textbeitrag.TextbeitragID = "
 							+ textbeitrag.getId());
 
 //			Textbeitrag t = new Textbeitrag();
 //			t.setNameUser(rs.getString("User.Vorname")+" "+rs.getString("Nachname"));
+			if (rs.next()) {
 			User user = new User();
-			user.setId(rs.getInt("TextbeitragID"));
-			user.setVorname(rs.getString("User.Vorname"));
-			user.setNachname(rs.getString("User.Nachname"));
+			user.setId(rs.getInt("user.UserID"));
+			user.setVorname(rs.getString("user.Vorname"));
+			user.setNachname(rs.getString("user.Nachname"));
+			user.setNickname(rs.getString("user.Nickname"));
+			user.setEmail(rs.getString("user.Email"));
 			
-			
-
 			return user;
+			}
 
 		} catch (SQLException e2) {
 			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
+//			throw new Exception("Datenbank fehler!" + e2.toString());
 
 		} 
 //			finally {
 //			DBVerbindung.closeAll(rs, stmt, con);
 //		}
+		return null;
 	}
 	
 	//SELECT UserID FROM textbeitrag WHERE TextbeitragID
@@ -591,6 +593,244 @@ public class TextbeitragMapper {
 //		}
 
 		return null;
+	}
+	
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlLikes() {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT textbeitrag.TextbeitragID, textbeitrag.ErstellungsZeitpunkt, "
+					+ "textbeitrag.Text, COUNT(liken.LikeID) AS AnzahlLikes "
+					+ "FROM textbeitrag Left JOIN liken "
+					+ "ON textbeitrag.TextbeitragID = liken.TextbeitragID "
+					+ "GROUP BY textbeitrag.TextbeitragID "
+					+ "ORDER BY AnzahlLikes DESC");
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+				textbeitrag.setText(rs.getString("Text"));
+
+				result.addElement(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return result;
+	}
+	
+	public Vector<Textbeitrag> findeAlleJeZeitraumSortiertNachAnzahlKommentaren() {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		Vector<Textbeitrag> result = new Vector<Textbeitrag>();
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT textbeitrag.TextbeitragID, textbeitrag.ErstellungsZeitpunkt, "
+					+ "textbeitrag.Text, COUNT(kommentar.KommentarID) AS AnzahlKommentare "
+					+ "FROM textbeitrag Left JOIN kommentar "
+					+ "ON textbeitrag.TextbeitragID = kommentar.TextbeitragID "
+					+ "GROUP BY textbeitrag.TextbeitragID "
+					+ "ORDER BY AnzahlKommentare DESC");
+
+			while (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("ErstellungsZeitpunkt"));
+				textbeitrag.setText(rs.getString("Text"));
+
+				result.addElement(textbeitrag);
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return result;
+	}
+	
+	public Textbeitrag findeTextbeitragMitMeistenLikes(String anfangsZeitpunkt, String endZeitpunkt) {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT *, COUNT(textbeitrag.TextbeitragID) AS mycount "
+					+ "FROM textbeitrag INNER JOIN liken "
+					+ "ON liken.TextbeitragID = textbeitrag.TextbeitragID "
+					+ "WHERE liken.ErstellungsZeitpunkt "
+					+ "BETWEEN '"
+					+ anfangsZeitpunkt
+					+ "' AND '"
+					+ endZeitpunkt					
+					+ "' GROUP BY textbeitrag.TextbeitragID "
+					+ "ORDER BY mycount DESC LIMIT 1 ");
+
+			if (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("textbeitrag.TextbeitragID"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("textbeitrag.ErstellungsZeitpunkt"));
+				textbeitrag.setText(rs.getString("textbeitrag.Text"));
+
+				return textbeitrag;
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+
+		return null;
+	}
+	
+	public Textbeitrag findeTextbeitragMitMeistenKommentarenJeZeitraum(String anfangsZeitpunkt, String endZeitpunkt) {
+		Connection con = DBVerbindung.connection();
+		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			rs = stmt.executeQuery("SELECT textbeitrag.TextbeitragID, textbeitrag.ErstellungsZeitpunkt, "
+					+ "textbeitrag.Text, COUNT(kommentar.KommentarID) AS mycount "
+					+ "FROM kommentar INNER JOIN textbeitrag "
+					+ "ON textbeitrag.TextbeitragID = "
+                    + "kommentar.TextbeitragID "
+                    + "WHERE kommentar.ErstellungsZeitpunkt "
+                    + "BETWEEN '"
+                    + anfangsZeitpunkt
+                    + "' AND '"
+                    + endZeitpunkt
+                    + "' GROUP BY textbeitrag.TextbeitragID "
+                    + "ORDER BY mycount DESC LIMIT 1");
+
+			if (rs.next()) {
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("textbeitrag.TextbeitragID"));
+				textbeitrag.setErstellungsZeitpunkt(rs
+						.getTimestamp("textbeitrag.ErstellungsZeitpunkt"));
+				textbeitrag.setText(rs.getString("textbeitrag.Text"));
+				System.out.println("in TBMAPPER findeTBmitMEistenKommis" + textbeitrag.getId() + "," + textbeitrag.getText());
+				return textbeitrag;
+				
+			}
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		System.out.println("in TBMAPPER findeTBmitMEistenKommisNULLLLLL");
+		return null;
+		
+	}
+	
+	public int zaehleKommentareZuTextbeitragJeZeitraum(Textbeitrag textbeitrag, String anfangsZeitpunkt, String endZeitpunkt) {
+		Connection con = DBVerbindung.connection();
+//		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+			int AnzahlKommentare = 0;
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT textbeitrag.TextbeitragID, textbeitrag.ErstellungsZeitpunkt, "
+							+ "textbeitrag.Text,  COUNT(kommentar.KommentarID) AS AnzahlKommentare "
+							+ "FROM kommentar INNER JOIN textbeitrag "
+							+ "ON kommentar.TextbeitragID = textbeitrag.TextbeitragID "
+							+ "WHERE textbeitrag.TextbeitragID = "
+							+ textbeitrag.getId()
+							+ " AND kommentar.ErstellungsZeitpunkt "
+							+ "BETWEEN '"
+							+ anfangsZeitpunkt
+							+ "' AND '"
+							+ endZeitpunkt
+							+ "'");
+			
+			if(rs.next()){
+				   AnzahlKommentare = rs.getInt("AnzahlKommentare");
+				   
+				}
+			
+			return AnzahlKommentare;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		
+		return 0;
+	}
+	
+	public int zaehleLikesZuTextbeitragJeZeitraum(Textbeitrag textbeitrag, String anfangsZeitpunkt, String endZeitpunkt) {
+		Connection con = DBVerbindung.connection();
+//		ResultSet rs = null;
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+			int AnzahlLikes = 0;
+
+			ResultSet rs = stmt
+					.executeQuery("SELECT textbeitrag.TextbeitragID, textbeitrag.ErstellungsZeitpunkt, "
+							+ "textbeitrag.Text,  COUNT(liken.LikeID) AS AnzahlLikes "
+							+ "FROM liken INNER JOIN textbeitrag "
+							+ "ON liken.TextbeitragID = textbeitrag.TextbeitragID "
+							+ "WHERE textbeitrag.TextbeitragID = "
+							+ textbeitrag.getId()
+							+ " AND liken.ErstellungsZeitpunkt "
+							+ "BETWEEN '"
+							+ anfangsZeitpunkt
+							+ "' AND '"
+							+ endZeitpunkt
+							+ "'");
+			
+			if(rs.next()){
+				   AnzahlLikes = rs.getInt("AnzahlLikes");
+				   
+				}
+			
+			return AnzahlLikes;
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//		}
+		
+		return 0;
 	}
 	
 	

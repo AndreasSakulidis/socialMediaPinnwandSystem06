@@ -11,7 +11,6 @@ import java.util.Vector;
 import de.hdm.gruppe6.itprojekt.shared.bo.Pinnwand;
 import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
-import de.hdm.gruppe6.itprojekt.shared.report.InfosVonUserReport;
 
 /**
  * @author Bharti Kumar, �zlem G�l, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
@@ -540,37 +539,37 @@ public class UserMapper {
 		return result;
 	}
 
-	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
-		Connection con = DBVerbindung.connection();
-		ResultSet rs = null;
-		Statement stmt = null;
-
-		InfosVonUserReport report = new InfosVonUserReport();
-
-		try {
-			stmt = con.createStatement();
-
-			rs = stmt
-					.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM textbeitrag WHERE UserID = "
-							+ user.getId()
-							+ "AND ErstellungsZeitpunkt >= "
-							+ report.getAnfangszeitpunkt()
-							+ "AND ErstellungsZeitpunkt <= "
-							+ report.getEndzeitpunkt());
-
-		} catch (SQLException e2) {
-			e2.printStackTrace();
-			throw new Exception("Datenbank fehler!" + e2.toString());
-
-		}
-
-		finally {
-			DBVerbindung.closeAll(rs, stmt, con);
-
-		}
-		return rs.getInt("AnzahlTextbeitraege");
-
-	}
+//	public int zaehleTextbeitraegeVonUser(User user) throws Exception {
+//		Connection con = DBVerbindung.connection();
+//		ResultSet rs = null;
+//		Statement stmt = null;
+//
+//		InfosVonUserReport report = new InfosVonUserReport();
+//
+//		try {
+//			stmt = con.createStatement();
+//
+//			rs = stmt
+//					.executeQuery("SELECT COUNT(TextbeitragID) AS AnzahlTextbeitraege FROM textbeitrag WHERE UserID = "
+//							+ user.getId()
+//							+ "AND ErstellungsZeitpunkt >= "
+//							+ report.getAnfangszeitpunkt()
+//							+ "AND ErstellungsZeitpunkt <= "
+//							+ report.getEndzeitpunkt());
+//
+//		} catch (SQLException e2) {
+//			e2.printStackTrace();
+//			throw new Exception("Datenbank fehler!" + e2.toString());
+//
+//		}
+//
+//		finally {
+//			DBVerbindung.closeAll(rs, stmt, con);
+//
+//		}
+//		return rs.getInt("AnzahlTextbeitraege");
+//
+//	}
 
 	public Vector<Textbeitrag> findeTextbeitragAnhandVonUser(User user)
 			throws Exception {

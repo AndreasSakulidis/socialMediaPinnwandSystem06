@@ -21,22 +21,29 @@ public abstract class ReportWriter {
 		
 	}
 	
-	  /**
-	   * Übersetzen eines <code>InfosVonUserReport</code> in das
+	 /**
+	   * Übersetzen eines <code>InfosVonPinnwandReport</code> in das
 	   * Zielformat.
 	   * 
 	   * @param r der zu übersetzende Report
 	   */
-
-	public abstract void process(InfosVonUserReport r);
+	public abstract void process(InfosVonPinnwandReport r);
+	
+	
+	 /**
+	   * Übersetzen eines <code>InfosVonAllenPinnwaendenReport</code> in das
+	   * Zielformat.
+	   * 
+	   * @param r der zu übersetzende Report
+	   */
+	public abstract void process(InfosVonAllenPinnwaendenReport r);
 	
 	  /**
 	   * Übersetzen eines <code>InfosVonBeitragReport</code> in das
 	   * Zielformat.
 	   * 
 	   * @param r der zu übersetzende Report
-	   */
-	
+	   */	
 	public abstract void process(InfosVonBeitragReport r);
 	
 	  /**
@@ -44,16 +51,7 @@ public abstract class ReportWriter {
 	   * Zielformat.
 	   * 
 	   * @param r der zu übersetzende Report
-	   */
-	
+	   */	
 	public abstract void process(InfosVonAllenBeitraegenReport r);
 	
-	  /**
-	   * Übersetzen eines <code>InfosVonAllenUsernReport</code> in das
-	   * Zielformat.
-	   * 
-	   * @param r der zu übersetzende Report
-	   */
-	
-	public abstract void process(InfosVonAllenUsernReport r);
 }

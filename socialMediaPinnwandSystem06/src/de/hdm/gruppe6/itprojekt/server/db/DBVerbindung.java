@@ -109,9 +109,9 @@ public class DBVerbindung {
 	 * Die URL um die Datenbank anzusprechen.
 	 */
 //	cloud sql
-//	private static String url = "jdbc:google:rdbms://socialmediapin:socialmediapin:gruppe06/socialMediaDB?user=root";
 	private static String url = "jdbc:google:mysql://socialmediapin:gruppe06/socialMediaDB?user=root";
 //	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
+//	private static String url = "jdbc:google:rdbms://socialmediapin:socialmediapin:gruppe06/socialMediaDB?user=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=";
@@ -172,37 +172,43 @@ public class DBVerbindung {
 //		return con;
 //	}
 	
-	public static Connection connection() throws SQLException, InstantiationException, IllegalAccessException  {
+	public static Connection connection() {
 		//Verbindung erstllen wenn es noch keine gibt
 		if ( con == null ) {
 		//	try {
 
-				try {
-//					Class.forName("com.mysql.jdbc.GoogleDriver").newInstance();
-					Class.forName("com.mysql.jdbc.GoogleDriver");
-
-					DriverManager.registerDriver(new AppEngineDriver());
-					con = DriverManager.getConnection(url);
-					ServersideSettings.getLogger().severe("DB-Verbingung erfolgreich" + con.toString());
-
-				}
-				catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					ServersideSettings.getLogger().severe("Treiber wurde nicht erkannt");
-					System.out.println("Treiber wurde nicht erkannt!");
-				}
 				
+//					Class.forName("com.mysql.jdbc.GoogleDriver").newInstance();
+					try {
+						Class.forName("com.mysql.jdbc.GoogleDriver");
+						con = DriverManager.getConnection(url);
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+//					try {
+//					DriverManager.registerDriver(new AppEngineDriver());
+//					con = DriverManager.getConnection(url);
+//					ServersideSettings.getLogger().severe("DB-Verbingung erfolgreich" + con.toString());
+//
+//				}
+//				catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					ServersideSettings.getLogger().severe("Treiber wurde nicht erkannt");
+//					System.out.println("Treiber wurde nicht erkannt!");
+//				}
+//				
 //				try {
 ////					con = DriverManager.getConnection(url);
 //					System.out.println("DB Verbindung Gelungen ;) "+con.toString());
 //				} 
-//				catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					ServersideSettings.getLogger().severe("DB Verbindung fehlgeschlagen");
-//					System.out.println("DB Verbindung fehlgeschlagen!");
-//				}
+				catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					ServersideSettings.getLogger().severe("DB Verbindung fehlgeschlagen");
+					System.out.println("DB Verbindung fehlgeschlagen!");
+				}
 				
 			} 
 //			catch (SQLException e1) {
@@ -232,7 +238,7 @@ public class DBVerbindung {
 //			if (con != null) {
 //				con.close();
 //			}
-			
+//			
 		} catch (Exception e) {
 //			e.printStackTrace();
 //			throw new Exception("Connection close Fehler!" + e.toString());

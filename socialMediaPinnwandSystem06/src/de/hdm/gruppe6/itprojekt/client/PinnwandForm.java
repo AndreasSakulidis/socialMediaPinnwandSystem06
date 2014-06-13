@@ -7,6 +7,7 @@ package de.hdm.gruppe6.itprojekt.client;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -119,9 +120,9 @@ public class PinnwandForm extends Composite {
 		String uid = Cookies.getCookie("SocialMedia6ID");
 		int userID = Integer.parseInt(uid);
 		socialmedia.findeAlleUserBeitraege(userID,
-				new AsyncCallback<ArrayList<Textbeitrag>>() {
+				new AsyncCallback<List<Textbeitrag>>() {
 					@Override
-					public void onSuccess(ArrayList<Textbeitrag> result) {
+					public void onSuccess(List<Textbeitrag> result) {
 						System.out
 								.println("in der Methode findeAlleUserBeitraege vor der Schleife");
 						System.out.println("Werte von result: " + result.size());
@@ -268,7 +269,7 @@ public class PinnwandForm extends Composite {
 		postFlexTable.setWidget(1, 5, lbId);
 		lbId.setVisible(false);
 
-		lastUpdatedLabel.setText(String.valueOf(a.getErstellungsZeitpunkt()));
+		lastUpdatedLabel.setText(String.valueOf(a.getErstellungsZeitpunkt()).substring(0,19));
 
 		postFlexTable.setWidget(3,0, lastUpdatedLabel);
 
@@ -619,7 +620,7 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 							final Label lID = new Label();
 							lID.setText(String.valueOf(k.getId()));
 							lID.setVisible(false);
-							commentUpdatedLabel.setText(String.valueOf(k.getErstellungsZeitpunkt()));
+							commentUpdatedLabel.setText(String.valueOf(k.getErstellungsZeitpunkt()).substring(0,19));
 						
 							socialmedia.findeUserAnhandKommentarID(k.getId(),
 									new AsyncCallback<User>() {
