@@ -37,8 +37,8 @@ div#Navigator {
 }
 
 .sendSucheButton {
-	display: block;
-	font-size: 14pt;
+	color:black;
+	margin: 6px 1px;
 }
 
 div#Header {
@@ -161,6 +161,8 @@ div#Trailer {
 
 .Kommentare {
 	background-color: lavender;
+	border: 1px solid grey;
+	margin: 0px 0px 6px 6px;
 }
 
 .linie {
@@ -170,10 +172,16 @@ div#Trailer {
 .Textbeitrag {
 	background-color: lightsteelblue;
 	border: 1px solid black;
+	margin: 6px 1px;
 }
 
 .abo {
 	background-color: ghostwhite;
+}
+
+.aboliste{
+	background-color: gainsboro;
+	font-style: italic;
 }
 
 .Userspalte {
@@ -206,11 +214,11 @@ div#Trailer {
 }
 
 .deleteUserPanel {
-	padding-top: 50px;
+	padding-top: 30px;
 }
 
 .einstellungenPanel {
-	padding-left: 80px;
+	padding-left: 0px;
 }
 
 .SuchLabel{
@@ -234,7 +242,16 @@ div#Trailer {
 	font-size: 60%;
 	font-color: red;
 }
+.reportButton{
+	color: black;
+}
 
 .nick {
 	font-color: red;
+}
+
+
+.bearbeitenLabel {
+	padding-bottom: 10px;
+	font-size: 16pt;	
 }

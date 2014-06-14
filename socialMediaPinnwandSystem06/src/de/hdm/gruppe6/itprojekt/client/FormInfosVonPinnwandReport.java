@@ -76,8 +76,8 @@ public class FormInfosVonPinnwandReport extends Composite {
 			}
 		});
 		
-		anzeigeButton.addStyleName("ReportAnzeigen");
-		beliebtestePWButton.addStyleName("ReportAnzeigen");
+		anzeigeButton.addStyleName("reportButton");
+		beliebtestePWButton.addStyleName("reportButton");
 		vPanel.add(aZ);
 
 		/**

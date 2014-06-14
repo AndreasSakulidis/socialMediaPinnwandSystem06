@@ -133,7 +133,7 @@ public class Anmelden {
 						|| tbRname.getText().equals(a)
 						|| tbNachname.getText().equals(a)
 						|| tbNick.getText().equals(a) || tbRPasswort.equals(a)) {
-					Window.alert("Gib eine gï¿½ltige E-Mail Adresse ein!");
+					Window.alert("Gib eine gültige E-Mail Adresse ein!");
 				} else {
 
 					socialmedia.userAnlegen(tbRname.getText(),

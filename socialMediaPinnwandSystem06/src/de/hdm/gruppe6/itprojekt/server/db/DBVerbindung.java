@@ -86,8 +86,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.google.appengine.api.rdbms.AppEngineDriver;
-
 import de.hdm.gruppe6.itprojekt.server.ServersideSettings;
 
 /**  @author Bharti Kumar, Özlem Gül, Michael Schelkle, Andreas Sakulidis, Gezim Krasniqi, Ezgi Demirbilek
@@ -181,6 +179,7 @@ public class DBVerbindung {
 //					Class.forName("com.mysql.jdbc.GoogleDriver").newInstance();
 					try {
 						Class.forName("com.mysql.jdbc.GoogleDriver");
+//						Class.forName("com.mysql.jdbc.Driver");
 						con = DriverManager.getConnection(url);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block

@@ -179,6 +179,7 @@ public class SocialMediaFrontend extends Composite {
 		suchePanel.add(userSuchen);
 		suchePanel.add(nameField);
 		suchePanel.add(sendSucheButton);
+		sendSucheButton.setStyleName("sendSucheButton");
 		suchePanel.add(aboPanel);
 		aboPanel.addStyleName("abo");
 		

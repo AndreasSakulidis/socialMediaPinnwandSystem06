@@ -58,6 +58,7 @@ public class UserBearbeiten {
 			@Override
 			public void onSuccess(User result) {
 				vPanel.add(bearbeiten);
+				bearbeiten.addStyleName("bearbeitenLabel");
 				vPanel.add(lbRname);
 				vPanel.add(tbRname);
 				tbRname.setText(result.getVorname());

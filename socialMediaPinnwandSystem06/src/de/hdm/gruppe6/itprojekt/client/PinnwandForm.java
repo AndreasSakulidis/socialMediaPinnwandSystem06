@@ -13,6 +13,7 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -68,7 +69,7 @@ public class PinnwandForm extends Composite {
 	
 	private ScrollPanel scrollPanel= new ScrollPanel();
 
-	
+	private Timer t;
 
 	public PinnwandForm() {
 
@@ -136,6 +137,7 @@ public class PinnwandForm extends Composite {
 							pinnwandAnzeigen.kommentarAnzeigen(tb);
 							pinnwandAnzeigen.likesAnzeigen(tb);
 							pinnwandAnzeigen.nicknameAnzeigen(tb); 
+							pinnwandAnzeigen.autoRefresh();
 
 							
 							addPanel.add(pinnwandAnzeigen);
@@ -759,4 +761,17 @@ public void kommentarAnzeigen(final Textbeitrag a) {
 		
 		
 	}
+
+public void autoRefresh(){
+	t = new Timer(){
+		public void run(){
+			Window.Location.reload();
+		}
+	};
+	t.scheduleRepeating(300000);
+}
+public void stopAutoRefresh(){
+	t.cancel();
+}
+
 }
