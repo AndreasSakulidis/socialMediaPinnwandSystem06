@@ -241,25 +241,32 @@ public class TextbeitragMapper {
 		return null;
 	}
 
-	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID) throws Exception {
+	public ArrayList<Textbeitrag> findeTextbeitraegeAnhandPinnwandID(int pinnwandID) throws Exception {
 		Connection con = DBVerbindung.connection();
 		ResultSet rs = null;
 		Statement stmt = null;
 
-		ArrayList<Integer> result = new ArrayList<Integer>();
+		ArrayList<Textbeitrag> result = new ArrayList<Textbeitrag>();
+		
+		String sql = "SELECT TextbeitragID, Text  FROM textbeitrag WHERE PinnwandID= " 
+				+ pinnwandID ;
 		try {
 			stmt = con.createStatement();
 
-//			rs = stmt.executeQuery("SELECT TextbeitragID "
-//					+ "FROM textbeitrag" + "WHERE PinnwandID="
-//					+ pinnwandID 
-//					+ " ORDER BY ErstellungsZeitpunkt DESC");
+			System.out.println(sql);
+			rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				Integer textbeitragID = new Integer(rs.getInt("TextbeitragID"));
+				Textbeitrag textbeitrag = new Textbeitrag();
+				textbeitrag.setId(rs.getInt("TextbeitragID"));
+				textbeitrag.setText(rs.getString("Text"));
 
-				result.add(textbeitragID);
+				System.out.println("While in Mapper: "+textbeitrag.getText());
+				System.out.println("While in Mapper Objekt: "+textbeitrag.toString());
+				System.out.println(result.isEmpty()?"Leer":"voll");
+				result.add(textbeitrag);
 			}
+			System.out.println("Mappermethode Anzahl "+result.size());
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 			throw new Exception("Datenbank fehler!" + e2.toString());

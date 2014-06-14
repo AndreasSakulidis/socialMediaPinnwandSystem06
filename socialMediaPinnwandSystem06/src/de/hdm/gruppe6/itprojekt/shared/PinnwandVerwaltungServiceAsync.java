@@ -147,8 +147,7 @@ public interface PinnwandVerwaltungServiceAsync {
 			AsyncCallback<ArrayList<Integer>> callback);
 
 
-	void findeTextbeitragIDsAnhandPinnwandID(int pinnwandID,
-			AsyncCallback<ArrayList<Integer>> callback);
+
 	
 	void findeTextbeitragMitMeistenLikes(String anfangsZeitpunkt,
 			String endZeitpunkt, AsyncCallback<Textbeitrag> callback);
@@ -214,6 +213,15 @@ public interface PinnwandVerwaltungServiceAsync {
 
 	void findeAllePinnwaendeJeZeitraum(String anfangsZeitpunkt,
 			String endZeitpunkt, AsyncCallback<Vector<Pinnwand>> callback);
+
+
+	void findeTextbeitraegeAnhandPinnwandID(int pinnwandID,
+			AsyncCallback<ArrayList<Textbeitrag>> callback);
+
+
+	void aZuUserLoeschenAnhandPID(int id, String vorname, String nachname,
+			String nickname, String email, String passwort,
+			AsyncCallback<Void> callback);
 	
 	
 

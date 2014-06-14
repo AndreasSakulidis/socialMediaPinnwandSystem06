@@ -115,7 +115,7 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	
 	public ArrayList<Integer> findePinnwandIDAnhandUserID(int userID) throws Exception;
 	
-	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID) throws Exception;
+	public ArrayList<Textbeitrag> findeTextbeitraegeAnhandPinnwandID(int pinnwandID) throws Exception;
 	/**
 	 * Finden einer Pinnwand anhand seiner ID.
 	 */
@@ -255,6 +255,8 @@ public interface PinnwandVerwaltungService extends RemoteService {
 	public User findeUserAnhandKommentarID(int kommentarID) throws Exception;
 	
 	public void kommentarLoeschenAnhandKommentarID(Kommentar kommentar) throws Exception;
-		 	
+	
+	public void aZuUserLoeschenAnhandPID(int id, String vorname, String nachname,
+			String nickname, String email, String passwort) throws Exception;
 		 	
 }

@@ -107,8 +107,8 @@ public class DBVerbindung {
 	 * Die URL um die Datenbank anzusprechen.
 	 */
 //	cloud sql
-	private static String url = "jdbc:google:mysql://socialmediapin:gruppe06/socialMediaDB?user=root";
-//	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
+//	private static String url = "jdbc:google:mysql://socialmediapin:gruppe06/socialMediaDB?user=root";
+	private static String url = "jdbc:mysql://localhost:3306/social-media?user=root&password=";
 //	private static String url = "jdbc:google:rdbms://socialmediapin:socialmediapin:gruppe06/socialMediaDB?user=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root&password=root";
 //	private static String url = "jdbc:google:rdbms://localhost:3306/social-media?user=root";
@@ -178,8 +178,8 @@ public class DBVerbindung {
 				
 //					Class.forName("com.mysql.jdbc.GoogleDriver").newInstance();
 					try {
-						Class.forName("com.mysql.jdbc.GoogleDriver");
-//						Class.forName("com.mysql.jdbc.Driver");
+//						Class.forName("com.mysql.jdbc.GoogleDriver");
+						Class.forName("com.mysql.jdbc.Driver");
 						con = DriverManager.getConnection(url);
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block

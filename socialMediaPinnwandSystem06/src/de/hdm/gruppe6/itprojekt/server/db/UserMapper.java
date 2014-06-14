@@ -360,6 +360,25 @@ public class UserMapper {
 //		}
 		return;
 	}
+	
+	public void aloeschenAnhandPinnwandID(User user) throws Exception {
+		Connection con = DBVerbindung.connection();
+		Statement stmt = null;
+
+		try {
+			stmt = con.createStatement();
+
+			stmt.executeUpdate("DELETE abonnement FROM abonnement " + "WHERE abonnement.PinnwandID=" + user.getId()); 
+
+		} catch (SQLException e2) {
+			e2.printStackTrace();
+			throw new Exception("Datenbank fehler!" + e2.toString());
+		} 
+//			finally {
+//			DBVerbindung.closeAll(null, stmt, con);
+//		}
+		return;
+	}
 
 	public Vector<User> findeAnhandNachname(String nachname) throws Exception {
 		Connection con = DBVerbindung.connection();

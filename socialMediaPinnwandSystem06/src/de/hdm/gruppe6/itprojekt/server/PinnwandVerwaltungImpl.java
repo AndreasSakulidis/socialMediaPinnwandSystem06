@@ -32,18 +32,18 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Referenz auf den UserMapper in der Datenbank.
+	 * Referenz zu der UserMapper in der Datenbank.
 	 */
 	private UserMapper userMapper = null;
 
 	/**
-	 * Referenz auf den PinnwandMapper in der Datenbank.
+	 * Referenz zu der PinnwandMapper in der Datenbank.
 	 */
 
 	private PinnwandMapper pinnwandMapper = null;
 
 	/**
-	 * Referenz auf den AbonnementMapper in der Datenbank.
+	 * Referenz zu der AbonnementMapper in der Datenbank.
 	 */
 	private AbonnementMapper abonnementMapper = null;
 
@@ -615,12 +615,9 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 		return this.pinnwandMapper.findePinnwandIDAnhandUserID(userID);
 	}
 
-	@Override
-	public ArrayList<Integer> findeTextbeitragIDsAnhandPinnwandID(int pinnwandID)
-			throws Exception {
-		
-		return this.textbeitragMapper.findeTextbeitragIDsAnhandPinnwandID(pinnwandID);
-	}
+
+	
+	
 
 	@Override
 	public void tZuUserLoeschen(int id, String vorname, String nachname,
@@ -745,6 +742,34 @@ public class PinnwandVerwaltungImpl extends RemoteServiceServlet implements
 			String anfangsZeitpunkt, String endZeitpunkt)
 			throws IllegalArgumentException {
 		return textbeitragMapper.findeTextbeitragMitMeistenKommentarenJeZeitraum(anfangsZeitpunkt, endZeitpunkt);
+	}
+
+	@Override
+	public ArrayList<Textbeitrag> findeTextbeitraegeAnhandPinnwandID(
+			int pinnwandID) throws Exception {
+		System.out.println("PinnwandID in IMpl "+pinnwandID);
+		ArrayList<Textbeitrag>textbeitrag = new ArrayList<Textbeitrag>();
+		//textbeitrag.addAll(this.textbeitragMapper.findeTextbeitraegeAnhandPinnwandID(pinnwandID));
+		
+		//System.out.println("FindeTextbeitragAndhandPinnwandID Anzahl "+textbeitrag.size());
+		
+		return textbeitragMapper.findeAlleUserBeitraege(pinnwandID);
+	}
+
+	@Override
+	public void aZuUserLoeschenAnhandPID(int id, String vorname,
+			String nachname, String nickname, String email, String passwort)
+			throws Exception {
+		User u = new User();
+		u.setId(id);
+		u.setVorname(vorname);
+		u.setNachname(nachname);
+		u.setNickname(nickname);
+		u.setEmail(email);
+		u.setPasswort(passwort);
+		
+		userMapper.aloeschenAnhandPinnwandID(u);
+		
 	}
 
 

@@ -1,5 +1,7 @@
 package de.hdm.gruppe6.itprojekt.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,6 +18,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungService;
 import de.hdm.gruppe6.itprojekt.shared.PinnwandVerwaltungServiceAsync;
+import de.hdm.gruppe6.itprojekt.shared.bo.Textbeitrag;
 import de.hdm.gruppe6.itprojekt.shared.bo.User;
 
 public class UserBearbeiten {
@@ -134,8 +137,83 @@ public class UserBearbeiten {
 
 									@Override
 									public void onSuccess(Void result) {
+										
 										final String id = Cookies.getCookie("SocialMedia6ID");
-										int uid = Integer.parseInt(id);
+										final int uid = Integer.parseInt(id);
+										int pinnwandID = uid;
+									
+										pinnwandVerwaltung.findeTextbeitraegeAnhandPinnwandID(pinnwandID, new AsyncCallback<ArrayList<Textbeitrag>>(){
+											public void onFailure(Throwable caught){
+												Window.alert("Fehler");
+											}
+											public void onSuccess(ArrayList<Textbeitrag> result){
+												
+												
+//												for (Textbeitrag tb : result){
+//												
+//													
+//													
+//													pinnwandVerwaltung.lZuUserLoeschen(uid, null, null,
+//															null, null, null,
+//															new AsyncCallback<Void>() {
+//																@Override
+//																public void onFailure(Throwable caught) {
+//																	Window.alert("Fehler beim kLöschen!");
+//																}
+//
+//																@Override
+//																public void onSuccess(Void result) {
+//																
+//																}
+//															});
+//													
+//													
+//
+//													
+//												}
+												
+												for (Textbeitrag tb : result){
+													int t = tb.getId();
+													String text = tb.getText();
+												
+												
+
+													pinnwandVerwaltung.lZuTextbeitragLoeschen(text, t, new AsyncCallback<Void>(){
+														
+														public void onFailure(Throwable caught){
+															Window.alert("Fehler beim llöschen");
+														}
+														
+														public void onSuccess(Void result){
+															
+														}
+													});	
+													
+													
+
+												
+												
+												pinnwandVerwaltung.kZuTextbeitragLoeschen(text, t,
+														new AsyncCallback<Void>() {
+															@Override
+															public void onFailure(Throwable caught) {
+																Window.alert("Fehler beim kLöschen!");
+															}
+
+															@Override
+															public void onSuccess(Void result) {
+																										
+															}
+														});
+												}
+												
+											}
+											
+										});
+										
+										
+										
+
 										String vorname = tbRname.getText();
 										String nachname = tbNachname.getText();
 										String nickname = tbNick.getText();
@@ -151,6 +229,10 @@ public class UserBearbeiten {
 
 													@Override
 													public void onSuccess(Void result) {
+														
+														
+														
+
 																										
 													}
 												});
@@ -166,7 +248,7 @@ public class UserBearbeiten {
 
 													@Override
 													public void onSuccess(Void result) {
-																										
+														
 													}
 												});
 										
@@ -180,9 +262,27 @@ public class UserBearbeiten {
 
 													@Override
 													public void onSuccess(Void result) {
-																										
+																	
+														
 													}
 												});
+										
+										pinnwandVerwaltung.aZuUserLoeschenAnhandPID(uid, vorname, 
+												nachname, nickname, email, passwort, new AsyncCallback<Void>() {
+
+											@Override
+											public void onFailure(
+													Throwable caught) {
+												
+												
+											}
+
+											@Override
+											public void onSuccess(Void result) {
+												
+												
+											}
+										});
 										
 										pinnwandVerwaltung.aZuUserLoeschen(uid, vorname, nachname,
 												nickname, email, passwort,
@@ -218,6 +318,7 @@ public class UserBearbeiten {
 
 		});
 		Anmelden startseite = new Anmelden();
+		
 
 		bbutton.addClickHandler(new ClickHandler() {
 			@Override
